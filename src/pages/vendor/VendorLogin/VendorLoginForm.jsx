@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { LockIcon, EyeIcon, EyeOffIcon } from '@/icons';
 import { Input } from '@/components/common/Input';
@@ -10,6 +10,7 @@ import { toast } from '@/utils/toast';
 import { slideUp } from '@/animation/animations';
 
 export const VendorLoginForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     identifier: '',
     password: '',
@@ -29,7 +30,8 @@ export const VendorLoginForm = () => {
     setTimeout(() => {
       setIsLoading(false);
       toast.success('Welcome back! Vendor logged in successfully.');
-    }, 900);
+      navigate('/vendor/dashboard');
+    }, 700);
   };
 
   const handleGoogleLogin = () => {

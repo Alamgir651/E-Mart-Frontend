@@ -1,0 +1,82 @@
+import { motion } from 'motion/react';
+import {
+  CartIcon,
+  TruckIcon,
+  DollarSignIcon,
+  BadgeAlertIcon,
+  TrendingUpIcon,
+  TrendingDownIcon,
+} from '@/icons';
+import { cardHover } from '@/animation/animations';
+
+const ICON_MAP = {
+  sales: {
+    icon: CartIcon,
+    bg: 'bg-orange-50 text-orange-500 border border-orange-100',
+  },
+  orders: {
+    icon: TruckIcon,
+    bg: 'bg-emerald-50 text-emerald-500 border border-emerald-100',
+  },
+  revenue: {
+    icon: DollarSignIcon,
+    bg: 'bg-amber-50 text-amber-500 border border-amber-100',
+  },
+  lowStock: {
+    icon: BadgeAlertIcon,
+    bg: 'bg-purple-50 text-purple-500 border border-purple-100',
+  },
+};
+
+export const VendorStatCards = ({ stats = [] }) => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      {stats.map((stat) => {
+        const conf = ICON_MAP[stat.id] || ICON_MAP.sales;
+        const Icon = conf.icon;
+        const isPositive = stat.trend === 'up';
+
+        return (
+          <motion.div
+            key={stat.id}
+            variants={cardHover}
+            initial="rest"
+            whileHover="hover"
+            className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow"
+          >
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-semibold text-slate-500">{stat.title}</span>
+              <div className={`p-2 rounded-xl ${conf.bg}`}>
+                <Icon size={18} />
+              </div>
+            </div>
+
+            <div className="mt-3">
+              <h3 className="text-2xl font-black text-slate-900 tracking-tight">
+                {stat.value}
+              </h3>
+
+              <div className="flex items-center gap-1.5 mt-2 text-xs">
+                {isPositive ? (
+                  <TrendingUpIcon size={14} className="text-emerald-500" />
+                ) : (
+                  <TrendingDownIcon size={14} className="text-rose-500" />
+                )}
+                <span
+                  className={`font-bold ${
+                    isPositive ? 'text-emerald-500' : 'text-rose-500'
+                  }`}
+                >
+                  {stat.change}
+                </span>
+                <span className="text-slate-400">vs last week</span>
+              </div>
+            </div>
+          </motion.div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default VendorStatCards;
