@@ -8,6 +8,7 @@ import {
   TrendingDownIcon,
 } from '@/icons';
 import { cardHover } from '@/animation/animations';
+import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
 
 const ICON_MAP = {
   sales: {
@@ -28,53 +29,59 @@ const ICON_MAP = {
   },
 };
 
+const StatCardItem = ({ stat }) => {
+  const [iconRef, trigger] = useAnimatedIcon();
+  const conf = ICON_MAP[stat.id] || ICON_MAP.sales;
+  const Icon = conf.icon;
+  const isPositive = stat.trend === 'up';
+
+  return (
+    <motion.div
+      variants={cardHover}
+      initial="rest"
+      whileHover="hover"
+      onMouseEnter={trigger.onMouseEnter}
+      onMouseLeave={trigger.onMouseLeave}
+      className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow cursor-pointer"
+    >
+      <div className="flex items-center justify-between">
+        <span className="text-xs font-semibold text-slate-500">{stat.title}</span>
+        <div className={`p-2 rounded-xl ${conf.bg}`}>
+          <Icon ref={iconRef} size={18} />
+        </div>
+      </div>
+
+      <div className="mt-3">
+        <h3 className="text-2xl font-black text-slate-900 tracking-tight">
+          {stat.value}
+        </h3>
+
+        <div className="flex items-center gap-1.5 mt-2 text-xs">
+          {isPositive ? (
+            <TrendingUpIcon size={14} className="text-emerald-500" />
+          ) : (
+            <TrendingDownIcon size={14} className="text-rose-500" />
+          )}
+          <span
+            className={`font-bold ${
+              isPositive ? 'text-emerald-500' : 'text-rose-500'
+            }`}
+          >
+            {stat.change}
+          </span>
+          <span className="text-slate-400">vs last week</span>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 export const VendorStatCards = ({ stats = [] }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      {stats.map((stat) => {
-        const conf = ICON_MAP[stat.id] || ICON_MAP.sales;
-        const Icon = conf.icon;
-        const isPositive = stat.trend === 'up';
-
-        return (
-          <motion.div
-            key={stat.id}
-            variants={cardHover}
-            initial="rest"
-            whileHover="hover"
-            className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow"
-          >
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">{stat.title}</span>
-              <div className={`p-2 rounded-xl ${conf.bg}`}>
-                <Icon size={18} />
-              </div>
-            </div>
-
-            <div className="mt-3">
-              <h3 className="text-2xl font-black text-slate-900 tracking-tight">
-                {stat.value}
-              </h3>
-
-              <div className="flex items-center gap-1.5 mt-2 text-xs">
-                {isPositive ? (
-                  <TrendingUpIcon size={14} className="text-emerald-500" />
-                ) : (
-                  <TrendingDownIcon size={14} className="text-rose-500" />
-                )}
-                <span
-                  className={`font-bold ${
-                    isPositive ? 'text-emerald-500' : 'text-rose-500'
-                  }`}
-                >
-                  {stat.change}
-                </span>
-                <span className="text-slate-400">vs last week</span>
-              </div>
-            </div>
-          </motion.div>
-        );
-      })}
+      {stats.map((stat) => (
+        <StatCardItem key={stat.id} stat={stat} />
+      ))}
     </div>
   );
 };

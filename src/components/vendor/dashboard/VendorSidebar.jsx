@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import logoImg from '@/assets/images/logo.png';
 import boxImg from '@/assets/images/box.png';
+import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
 import {
   LayoutGridIcon,
   ReceiptTextIcon,
@@ -27,6 +28,51 @@ const NAV_ITEMS = [
   { label: 'Settings', path: '/vendor/settings', icon: SettingsIcon },
   { label: 'Support', path: '/vendor/support', icon: CircleHelpIcon },
 ];
+
+const SidebarNavItem = ({ item }) => {
+  const [iconRef, trigger] = useAnimatedIcon();
+  const Icon = item.icon;
+
+  return (
+    <NavLink
+      to={item.path}
+      onMouseEnter={trigger.onMouseEnter}
+      onMouseLeave={trigger.onMouseLeave}
+      className={({ isActive }) =>
+        `group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+          isActive
+            ? 'bg-orange-500 text-white shadow-md shadow-orange-500/25'
+            : 'text-slate-600 hover:bg-orange-50/70 hover:text-orange-600'
+        }`
+      }
+    >
+      {({ isActive }) => (
+        <>
+          <div className="flex items-center gap-3">
+            <Icon
+              ref={iconRef}
+              size={18}
+              className={`transition-colors ${
+                isActive ? 'text-white' : 'text-slate-500 group-hover:text-orange-600'
+              }`}
+            />
+            <span>{item.label}</span>
+          </div>
+
+          {item.badge && (
+            <span
+              className={`px-1.5 py-0.5 text-[10px] font-bold rounded-full ${
+                isActive ? 'bg-white text-orange-600' : 'bg-rose-500 text-white'
+              }`}
+            >
+              {item.badge}
+            </span>
+          )}
+        </>
+      )}
+    </NavLink>
+  );
+};
 
 export const VendorSidebar = ({ isOpen, onClose }) => {
   return (
@@ -56,48 +102,9 @@ export const VendorSidebar = ({ isOpen, onClose }) => {
         </div>
 
         <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
-          {NAV_ITEMS.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.label}
-                to={item.path}
-                className={({ isActive }) =>
-                  `group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-                    isActive
-                      ? 'bg-orange-500 text-white shadow-md shadow-orange-500/25'
-                      : 'text-slate-600 hover:bg-orange-50/70 hover:text-orange-600'
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    <div className="flex items-center gap-3">
-                      <Icon
-                        size={18}
-                        className={`transition-colors ${
-                          isActive ? 'text-white' : 'text-slate-500 group-hover:text-orange-600'
-                        }`}
-                      />
-                      <span>{item.label}</span>
-                    </div>
-
-                    {item.badge && (
-                      <span
-                        className={`px-1.5 py-0.5 text-[10px] font-bold rounded-full ${
-                          isActive
-                            ? 'bg-white text-orange-600'
-                            : 'bg-rose-500 text-white'
-                        }`}
-                      >
-                        {item.badge}
-                      </span>
-                    )}
-                  </>
-                )}
-              </NavLink>
-            );
-          })}
+          {NAV_ITEMS.map((item) => (
+            <SidebarNavItem key={item.label} item={item} />
+          ))}
         </nav>
 
         <div className="p-4">
@@ -108,7 +115,7 @@ export const VendorSidebar = ({ isOpen, onClose }) => {
               </h4>
               <button
                 type="button"
-                className="mt-3 px-3 py-1.5 text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 active:scale-95 transition-all rounded-lg shadow-xs"
+                className="mt-3 px-3 py-1.5 text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 active:scale-95 transition-all rounded-lg shadow-xs cursor-pointer"
               >
                 Add Product
               </button>

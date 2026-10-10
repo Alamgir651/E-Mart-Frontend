@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
 import {
   PlusIcon,
   BoxesIcon,
@@ -34,8 +35,29 @@ const ACTIONS = [
   },
 ];
 
+const ActionCardItem = ({ action, onNavigate }) => {
+  const [iconRef, trigger] = useAnimatedIcon();
+  const Icon = action.icon;
+
+  return (
+    <button
+      type="button"
+      onClick={() => onNavigate(action.path)}
+      onMouseEnter={trigger.onMouseEnter}
+      onMouseLeave={trigger.onMouseLeave}
+      className={`flex flex-col items-center justify-center p-3 rounded-xl transition-all active:scale-95 cursor-pointer text-center ${action.bg}`}
+    >
+      <div className="p-1.5 rounded-lg bg-white/70 shadow-2xs mb-1.5">
+        <Icon ref={iconRef} size={18} />
+      </div>
+      <span className="text-xs font-bold leading-tight">{action.label}</span>
+    </button>
+  );
+};
+
 export const VendorQuickActions = () => {
   const navigate = useNavigate();
+  const [financeIconRef, financeTrigger] = useAnimatedIcon();
 
   return (
     <div className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between">
@@ -47,30 +69,23 @@ export const VendorQuickActions = () => {
 
       <div className="space-y-2.5">
         <div className="grid grid-cols-2 gap-2.5">
-          {ACTIONS.map((action) => {
-            const Icon = action.icon;
-            return (
-              <button
-                key={action.label}
-                type="button"
-                onClick={() => navigate(action.path)}
-                className={`flex flex-col items-center justify-center p-3 rounded-xl transition-all active:scale-95 cursor-pointer text-center ${action.bg}`}
-              >
-                <div className="p-1.5 rounded-lg bg-white/70 shadow-2xs mb-1.5">
-                  <Icon size={18} />
-                </div>
-                <span className="text-xs font-bold leading-tight">{action.label}</span>
-              </button>
-            );
-          })}
+          {ACTIONS.map((action) => (
+            <ActionCardItem
+              key={action.label}
+              action={action}
+              onNavigate={navigate}
+            />
+          ))}
         </div>
 
         <button
           type="button"
           onClick={() => navigate('/vendor/finance')}
+          onMouseEnter={financeTrigger.onMouseEnter}
+          onMouseLeave={financeTrigger.onMouseLeave}
           className="w-full flex items-center justify-center gap-2 p-3 rounded-xl bg-rose-50/80 hover:bg-rose-100/70 text-rose-600 border border-rose-200/50 font-bold text-xs transition-all active:scale-98 cursor-pointer"
         >
-          <BadgePercentIcon size={16} />
+          <BadgePercentIcon ref={financeIconRef} size={16} />
           <span>View Finance Report</span>
         </button>
       </div>

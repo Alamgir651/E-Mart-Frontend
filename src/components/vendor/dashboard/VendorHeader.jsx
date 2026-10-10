@@ -1,6 +1,9 @@
 import { BellIcon, MenuIcon } from '@/icons';
+import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
 
 export const VendorHeader = ({ onOpenSidebar, storeName = 'Fresh Mart', userName = 'User Name' }) => {
+  const [bellRef, bellTrigger] = useAnimatedIcon();
+
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 py-4 bg-white/90 backdrop-blur-md border-b border-slate-100">
       <div className="flex items-center gap-3">
@@ -27,10 +30,12 @@ export const VendorHeader = ({ onOpenSidebar, storeName = 'Fresh Mart', userName
       <div className="flex items-center gap-3 sm:gap-4">
         <button
           type="button"
-          className="relative p-2.5 rounded-full bg-white border border-slate-200/80 shadow-xs hover:border-orange-200 hover:bg-orange-50/40 text-slate-600 hover:text-orange-600 transition-all"
+          onMouseEnter={bellTrigger.onMouseEnter}
+          onMouseLeave={bellTrigger.onMouseLeave}
+          className="relative p-2.5 rounded-full bg-white border border-slate-200/80 shadow-xs hover:border-orange-200 hover:bg-orange-50/40 text-slate-600 hover:text-orange-600 transition-all cursor-pointer"
           aria-label="Notifications"
         >
-          <BellIcon size={19} />
+          <BellIcon ref={bellRef} size={19} />
           <span className="absolute top-2 right-2 w-2 h-2 bg-orange-500 rounded-full ring-2 ring-white" />
         </button>
 

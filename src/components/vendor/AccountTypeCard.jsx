@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { CheckIcon } from '@/icons';
 import { buttonTap } from '@/animation/animations';
+import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
 
 const icons = {
   individual: (
@@ -26,11 +27,15 @@ export const AccountTypeCard = ({
   isSelected,
   onSelect,
 }) => {
+  const [iconRef, trigger] = useAnimatedIcon();
+
   return (
     <motion.button
       type="button"
       variants={buttonTap}
       whileTap="tap"
+      onMouseEnter={trigger.onMouseEnter}
+      onMouseLeave={trigger.onMouseLeave}
       onClick={() => onSelect(item.id)}
       className={`relative w-full rounded-2xl p-6 text-center transition-all cursor-pointer flex flex-col items-center justify-between min-h-[220px] ${
         isSelected
@@ -40,7 +45,7 @@ export const AccountTypeCard = ({
     >
       {isSelected && (
         <span className="absolute top-3.5 right-3.5 w-5 h-5 rounded-full bg-orange-600 text-white flex items-center justify-center shadow-xs">
-          <CheckIcon size={12} className="stroke-[3]" />
+          <CheckIcon ref={iconRef} size={12} className="stroke-[3]" />
         </span>
       )}
 
