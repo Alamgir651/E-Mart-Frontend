@@ -22,7 +22,7 @@ export const VendorOverviewPage = () => {
   const ranges = ['Today', 'Last 7 Days', 'Last 30 Days', 'This Month', 'All Time'];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <VendorHeroBanner />
 
       <div className="flex items-center justify-end relative">
@@ -30,7 +30,7 @@ export const VendorOverviewPage = () => {
           <button
             type="button"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="flex items-center gap-2 px-4 py-2 bg-white rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 shadow-2xs hover:border-slate-300 transition-all cursor-pointer"
+            className="flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 sm:py-2 bg-white rounded-xl border border-slate-200 text-xs font-semibold text-slate-700 shadow-2xs hover:border-slate-300 transition-all cursor-pointer"
           >
             <span>{selectedRange}</span>
             <ChevronDownIcon size={14} className="text-slate-400" />
@@ -58,7 +58,7 @@ export const VendorOverviewPage = () => {
 
       <VendorStatCards stats={VENDOR_KPIS} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-5">
         <div className="lg:col-span-5">
           <VendorSalesChart data={SALES_CHART_DATA} />
         </div>
@@ -67,7 +67,7 @@ export const VendorOverviewPage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5">
         <VendorTopProducts products={TOP_SELLING_PRODUCTS} />
         <VendorLowStock products={LOW_STOCK_PRODUCTS} />
         <VendorQuickActions />

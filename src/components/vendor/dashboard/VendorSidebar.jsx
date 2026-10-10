@@ -39,7 +39,7 @@ const SidebarNavItem = ({ item }) => {
       onMouseEnter={trigger.onMouseEnter}
       onMouseLeave={trigger.onMouseLeave}
       className={({ isActive }) =>
-        `group flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+        `group flex items-center justify-between px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all ${
           isActive
             ? 'bg-orange-500 text-white shadow-md shadow-orange-500/25'
             : 'text-slate-600 hover:bg-orange-50/70 hover:text-orange-600'
@@ -48,20 +48,20 @@ const SidebarNavItem = ({ item }) => {
     >
       {({ isActive }) => (
         <>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3">
             <Icon
               ref={iconRef}
-              size={18}
-              className={`transition-colors ${
+              size={17}
+              className={`transition-colors shrink-0 ${
                 isActive ? 'text-white' : 'text-slate-500 group-hover:text-orange-600'
               }`}
             />
-            <span>{item.label}</span>
+            <span className="truncate">{item.label}</span>
           </div>
 
           {item.badge && (
             <span
-              className={`px-1.5 py-0.5 text-[10px] font-bold rounded-full ${
+              className={`px-1.5 py-0.5 text-[10px] font-bold rounded-full shrink-0 ${
                 isActive ? 'bg-white text-orange-600' : 'bg-rose-500 text-white'
               }`}
             >
@@ -85,13 +85,13 @@ export const VendorSidebar = ({ isOpen, onClose }) => {
       )}
 
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col w-64 bg-[#fbf9f5] border-r border-slate-200/80 transition-transform duration-300 lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col w-64 max-w-[85vw] bg-[#fbf9f5] border-r border-slate-200/80 transition-transform duration-300 lg:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-200/50">
+        <div className="flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 border-b border-slate-200/50">
           <NavLink to="/vendor/dashboard" className="flex items-center gap-2">
-            <img src={logoImg} alt="E-Mart" className="h-10 w-auto object-contain" />
+            <img src={logoImg} alt="E-Mart" className="h-9 sm:h-10 w-auto object-contain" />
           </NavLink>
           <button
             onClick={onClose}
@@ -101,21 +101,21 @@ export const VendorSidebar = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        <nav className="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+        <nav className="flex-1 px-3 sm:px-4 py-3 sm:py-4 space-y-1 overflow-y-auto">
           {NAV_ITEMS.map((item) => (
             <SidebarNavItem key={item.label} item={item} />
           ))}
         </nav>
 
-        <div className="p-4">
-          <div className="relative overflow-hidden rounded-2xl bg-amber-50/90 border border-amber-200/60 p-4 shadow-sm">
-            <div className="pr-16">
-              <h4 className="text-xs font-black text-slate-800 leading-snug">
+        <div className="p-3 sm:p-4">
+          <div className="relative overflow-hidden rounded-2xl bg-amber-50/90 border border-amber-200/60 p-3 sm:p-4 shadow-sm">
+            <div className="pr-14 sm:pr-16">
+              <h4 className="text-[11px] sm:text-xs font-black text-slate-800 leading-snug">
                 Grow Your Business with Emart
               </h4>
               <button
                 type="button"
-                className="mt-3 px-3 py-1.5 text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 active:scale-95 transition-all rounded-lg shadow-xs cursor-pointer"
+                className="mt-2.5 sm:mt-3 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 active:scale-95 transition-all rounded-lg shadow-xs cursor-pointer"
               >
                 Add Product
               </button>
@@ -123,7 +123,7 @@ export const VendorSidebar = ({ isOpen, onClose }) => {
             <img
               src={boxImg}
               alt="Promo Box"
-              className="absolute -right-1 bottom-1 w-20 h-auto object-contain pointer-events-none drop-shadow-md"
+              className="absolute -right-1 bottom-1 w-16 sm:w-20 h-auto object-contain pointer-events-none drop-shadow-md"
             />
           </div>
         </div>

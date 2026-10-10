@@ -6,15 +6,15 @@ export const VendorSalesChart = ({ data = [] }) => {
   const maxValue = Math.max(...data.map((d) => d.value), 100);
 
   return (
-    <div className="flex flex-col justify-between p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-base font-black text-slate-900 tracking-tight">
+    <div className="flex flex-col justify-between p-3.5 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <h3 className="text-sm sm:text-base font-black text-slate-900 tracking-tight">
           Sales Overview
         </h3>
-        <span className="text-[11px] font-semibold text-slate-400">Weekly</span>
+        <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400">Weekly</span>
       </div>
 
-      <div className="relative flex items-end justify-between gap-3 h-48 px-2 pt-8 pb-2">
+      <div className="relative flex items-end justify-between gap-1.5 sm:gap-3 h-40 sm:h-48 px-1 sm:px-2 pt-6 pb-1">
         {data.map((item, idx) => {
           const heightPercent = Math.round((item.value / maxValue) * 100);
           const isHovered = hoveredIdx === idx;
@@ -30,7 +30,7 @@ export const VendorSalesChart = ({ data = [] }) => {
                 <motion.div
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="absolute -top-7 px-2 py-0.5 rounded-md bg-slate-900 text-white text-[10px] font-bold shadow-md pointer-events-none z-10 whitespace-nowrap"
+                  className="absolute -top-7 px-1.5 py-0.5 rounded-md bg-slate-900 text-white text-[9px] sm:text-[10px] font-bold shadow-md pointer-events-none z-10 whitespace-nowrap"
                 >
                   ${item.value * 20}
                 </motion.div>
@@ -40,13 +40,13 @@ export const VendorSalesChart = ({ data = [] }) => {
                 initial={{ height: 0 }}
                 animate={{ height: `${heightPercent}%` }}
                 transition={{ duration: 0.6, delay: idx * 0.05, ease: 'easeOut' }}
-                className={`w-full max-w-[28px] rounded-t-lg transition-colors duration-200 ${
+                className={`w-full max-w-[20px] sm:max-w-[28px] rounded-t-md sm:rounded-t-lg transition-colors duration-200 ${
                   isHovered ? 'bg-orange-600 shadow-md shadow-orange-500/30' : 'bg-orange-500'
                 }`}
               />
 
               <span
-                className={`mt-3 text-xs font-semibold transition-colors ${
+                className={`mt-2 text-[10px] sm:text-xs font-semibold transition-colors ${
                   isHovered ? 'text-orange-600 font-bold' : 'text-slate-400'
                 }`}
               >

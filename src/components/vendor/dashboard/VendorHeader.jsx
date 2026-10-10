@@ -5,45 +5,47 @@ export const VendorHeader = ({ onOpenSidebar, storeName = 'Fresh Mart', userName
   const [bellRef, bellTrigger] = useAnimatedIcon();
 
   return (
-    <header className="sticky top-0 z-30 flex items-center justify-between px-4 sm:px-8 py-4 bg-white/90 backdrop-blur-md border-b border-slate-100">
-      <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-30 flex items-center justify-between px-3 sm:px-8 py-2.5 sm:py-4 bg-white/95 backdrop-blur-md border-b border-slate-100">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <button
           onClick={onOpenSidebar}
           type="button"
-          className="p-2 -ml-2 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors lg:hidden"
+          className="p-1.5 -ml-1 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors lg:hidden shrink-0"
           aria-label="Open sidebar"
         >
-          <MenuIcon size={22} />
+          <MenuIcon size={20} />
         </button>
 
-        <div>
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-2">
-            <span>Good Morning! {userName}</span>
-            <span className="inline-block animate-pulse">👋</span>
+        <div className="min-w-0">
+          <h1 className="text-xs xs:text-sm sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-1">
+            <span>Good Morning!</span>
+            <span className="hidden sm:inline">{userName}</span>
+            <span className="inline-block animate-pulse shrink-0">👋</span>
           </h1>
-          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            Here's what's happening with your store today.
+          <p className="text-[10px] sm:text-sm text-slate-500 mt-0.5 leading-tight">
+            <span className="sm:hidden">Store overview & updates</span>
+            <span className="hidden sm:inline">Here's what's happening with your store today.</span>
           </p>
         </div>
       </div>
 
-      <div className="flex items-center gap-3 sm:gap-4">
+      <div className="flex items-center gap-1.5 sm:gap-4 shrink-0 pl-1.5">
         <button
           type="button"
           onMouseEnter={bellTrigger.onMouseEnter}
           onMouseLeave={bellTrigger.onMouseLeave}
-          className="relative p-2.5 rounded-full bg-white border border-slate-200/80 shadow-xs hover:border-orange-200 hover:bg-orange-50/40 text-slate-600 hover:text-orange-600 transition-all cursor-pointer"
+          className="relative p-1.5 sm:p-2.5 rounded-full bg-white border border-slate-200/80 shadow-xs hover:border-orange-200 hover:bg-orange-50/40 text-slate-600 hover:text-orange-600 transition-all cursor-pointer"
           aria-label="Notifications"
         >
-          <BellIcon ref={bellRef} size={19} />
-          <span className="absolute top-2 right-2 w-2 h-2 bg-orange-500 rounded-full ring-2 ring-white" />
+          <BellIcon ref={bellRef} size={17} />
+          <span className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-2 h-2 bg-orange-500 rounded-full ring-2 ring-white" />
         </button>
 
-        <div className="flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs hover:border-slate-300 transition-all cursor-pointer">
+        <div className="flex items-center gap-2 p-1 sm:pl-1.5 sm:pr-3 sm:py-1.5 rounded-full bg-white border border-slate-200/80 shadow-xs hover:border-slate-300 transition-all cursor-pointer">
           <img
             src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&auto=format&fit=crop&q=80"
             alt={storeName}
-            className="w-8 h-8 rounded-full object-cover ring-1 ring-orange-200"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover ring-1 ring-orange-200"
           />
           <div className="hidden sm:block text-left leading-none">
             <p className="text-xs font-bold text-slate-800">{storeName}</p>
