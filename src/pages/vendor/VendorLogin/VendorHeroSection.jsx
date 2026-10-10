@@ -13,7 +13,7 @@ export const VendorHeroSection = () => {
         animate="visible"
         className="mb-8 sm:mb-12"
       >
-        <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 p-2 shadow-lg shadow-orange-500/20 flex items-center justify-center backdrop-blur-sm">
+        <div className="w-20 h-20 sm:w-24 sm:h-24">
           <img
             src={logoImg}
             alt="E-Mart Logo"
@@ -50,9 +50,7 @@ export const VendorHeroSection = () => {
         </motion.div>
       </div>
 
-      <div className="pt-6 hidden lg:block text-xs text-slate-500 font-medium">
-        &copy; {new Date().getFullYear()} E-Mart Marketplace Inc. All rights reserved.
-      </div>
+      
     </div>
   );
 };

@@ -99,11 +99,12 @@ export const VendorLoginForm = () => {
           Login
         </Button>
 
-        <div className="relative my-4 flex items-center justify-center">
-          <div className="border-t border-slate-200 w-full" />
-          <span className="bg-white px-3 text-[11px] font-bold text-slate-400 tracking-wider uppercase absolute">
+        <div className="my-4 flex items-center gap-3">
+          <div className="h-px flex-1 bg-slate-200" />
+          <span className="text-[11px] font-bold text-slate-400 tracking-wider uppercase select-none">
             OR
           </span>
+          <div className="h-px flex-1 bg-slate-200" />
         </div>
 
         <GoogleButton onClick={handleGoogleLogin} />

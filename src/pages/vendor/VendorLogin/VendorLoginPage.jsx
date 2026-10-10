@@ -4,18 +4,23 @@ import VendorLoginForm from './VendorLoginForm';
 
 export const VendorLoginPage = () => {
   return (
-    <main className="min-h-screen relative w-full flex items-center justify-center overflow-x-hidden bg-slate-900">
+    <main className="min-h-screen relative w-full flex items-center justify-center overflow-x-hidden bg-stone-100">
       <div className="absolute inset-0 z-0">
         <img
           src={bgLogin}
           alt="E-Mart Vendor Background"
           className="w-full h-full object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-white/90 via-white/75 to-white/40 lg:from-white/85 lg:via-white/70 lg:to-transparent backdrop-blur-[2px]" />
+
+        <div className="hidden lg:block absolute inset-y-0 left-0 w-[42%] bg-gradient-to-r from-white/95 via-white/70 to-transparent pointer-events-none" />
+
+        <div className="absolute inset-y-0 right-0 w-full sm:w-1/2 lg:w-[35%] bg-gradient-to-l from-white/70 via-white/20 to-transparent pointer-events-none" />
+
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-white/80 to-transparent pointer-events-none" />
       </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 lg:py-12 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
-        <section className="w-full lg:w-7/12 flex justify-center lg:justify-start">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-8 lg:py-12 flex flex-col lg:flex-row items-center justify-center lg:justify-between gap-10 lg:gap-16">
+        <section className="hidden lg:flex w-full lg:w-7/12 justify-start">
           <VendorHeroSection />
         </section>
 
