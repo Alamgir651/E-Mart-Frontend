@@ -7,64 +7,57 @@ import { RegistrationStepper } from '@/components/vendor/RegistrationStepper';
 import { AccountTypeCard } from '@/components/vendor/AccountTypeCard';
 import { BusinessDetailsForm } from '@/components/vendor/BusinessDetailsForm';
 import { StoreDetailsForm } from '@/components/vendor/StoreDetailsForm';
+import { ReviewSubmitStep } from '@/components/vendor/ReviewSubmitStep';
+import { AccountReviewModal } from '@/components/vendor/AccountReviewModal';
 import { VendorRegisterHero } from './VendorRegisterHero';
 import { ACCOUNT_TYPES } from '@/mock/vendor/vendorRegister.mock';
-import { fadeIn, slideUp } from '@/animation/animations';
+import { slideUp } from '@/animation/animations';
 import { toast } from '@/utils/toast';
 
 export const VendorRegisterPage = () => {
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(4);
   const [selectedType, setSelectedType] = useState('individual');
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
+
   const [businessData, setBusinessData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    password: '',
-    cnic: '',
+    fullName: 'Ali Raza',
+    email: 'aliraza@gmail.com',
+    phone: '3544976',
+    password: 'password123',
+    cnic: '35201-1234567-1',
     description: '',
   });
+
   const [storeData, setStoreData] = useState({
-    storeName: '',
-    category: '',
+    storeName: 'Fresh Mart',
+    category: 'Grocery & Vegetables',
     description: '',
-    addressSearch: '',
-    addressLine: '',
-    city: '',
-    area: '',
+    addressSearch: 'Gulberg Lahore',
+    addressLine: '123 Main Street, Gulberg, Lahore',
+    city: 'Lahore',
+    area: 'Gulberg',
     banners: [],
   });
 
-  const handleBusinessChange = (field, value) => {
-    setBusinessData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleStoreChange = (field, value) => {
-    setStoreData((prev) => ({ ...prev, [field]: value }));
-  };
-
   const handleNext = () => {
-    if (currentStep === 1) {
-      setCurrentStep(2);
-    } else if (currentStep === 2) {
-      setCurrentStep(3);
-      toast.success('Business details confirmed.');
-    } else if (currentStep === 3) {
-      toast.success('Store details saved. Moving to Step 4.');
-      setCurrentStep(4);
+    if (currentStep === 1) setCurrentStep(2);
+    else if (currentStep === 2) setCurrentStep(3);
+    else if (currentStep === 3) setCurrentStep(4);
+    else if (currentStep === 4) {
+      setIsReviewModalOpen(true);
+      toast.success('Application submitted for review!');
     }
   };
 
   const handleBack = () => {
-    if (currentStep > 1) {
-      setCurrentStep((prev) => prev - 1);
-    }
+    if (currentStep > 1) setCurrentStep((prev) => prev - 1);
   };
 
   const stepTitles = {
     1: { title: 'Create Vendor Account', subtitle: 'Select your business type to get started' },
     2: { title: 'Business Details', subtitle: 'Tell us about your business' },
     3: { title: 'Store Details', subtitle: 'Add your store information and location' },
-    4: { title: 'Review Details', subtitle: 'Verify and submit your application' },
+    4: { title: 'Review & Submit', subtitle: 'Please review your information before submitting.' },
   };
 
   return (
@@ -87,32 +80,27 @@ export const VendorRegisterPage = () => {
           </div>
 
           {currentStep === 1 && (
-            <motion.div
-              variants={slideUp}
-              className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 my-6 max-w-4xl"
-            >
+            <motion.div variants={slideUp} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 my-6 max-w-4xl">
               {ACCOUNT_TYPES.map((type) => (
-                <AccountTypeCard
-                  key={type.id}
-                  item={type}
-                  isSelected={selectedType === type.id}
-                  onSelect={setSelectedType}
-                />
+                <AccountTypeCard key={type.id} item={type} isSelected={selectedType === type.id} onSelect={setSelectedType} />
               ))}
             </motion.div>
           )}
 
           {currentStep === 2 && (
-            <BusinessDetailsForm
-              formData={businessData}
-              onChange={handleBusinessChange}
-            />
+            <BusinessDetailsForm formData={businessData} onChange={(f, v) => setBusinessData((p) => ({ ...p, [f]: v }))} />
           )}
 
           {currentStep === 3 && (
-            <StoreDetailsForm
+            <StoreDetailsForm storeData={storeData} onChange={(f, v) => setStoreData((p) => ({ ...p, [f]: v }))} />
+          )}
+
+          {currentStep === 4 && (
+            <ReviewSubmitStep
+              businessData={businessData}
               storeData={storeData}
-              onChange={handleStoreChange}
+              selectedType={selectedType}
+              onEditStep={(step) => setCurrentStep(step)}
             />
           )}
         </div>
@@ -126,27 +114,22 @@ export const VendorRegisterPage = () => {
               </Link>
             </div>
           ) : (
-            <Button
-              variant="outline"
-              onClick={handleBack}
-              className="!w-auto px-6 py-2.5 flex items-center gap-2"
-            >
+            <Button variant="outline" onClick={handleBack} className="!w-auto px-6 py-2.5 flex items-center gap-2">
               <ArrowLeftIcon size={15} />
               <span>Back</span>
             </Button>
           )}
 
           <div className="w-full sm:w-auto ml-auto">
-            <Button
-              onClick={handleNext}
-              className="!w-auto px-9 py-3 flex items-center gap-2"
-            >
-              <span>Continue</span>
-              <ArrowRightIcon size={16} />
+            <Button onClick={handleNext} className="!w-auto px-8 py-3 flex items-center gap-2">
+              <span>{currentStep === 4 ? 'Submit for Verification' : 'Continue'}</span>
+              {currentStep < 4 && <ArrowRightIcon size={16} />}
             </Button>
           </div>
         </div>
       </section>
+
+      <AccountReviewModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)} />
     </main>
   );
 };
