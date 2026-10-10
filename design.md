@@ -44,6 +44,20 @@ This document defines the production-grade frontend architecture, multi-portal s
   - `src/mock/admin/` – Platform users, vendor KYC verifications, platform revenues, audit logs
 - **Standard:** Follow strict typed schemas mirroring target production backend REST/GraphQL response payloads to allow zero-effort API integration.
 
+### 1.6 Password Field & Input Animation Standards
+- **Show/Hide Password Standard:** Every password input field across all portals (Customer, Vendor, Admin) must include an interactive visibility toggle using `EyeIcon` and `EyeOffIcon` from `@/icons`.
+- **Autofill Overrides:** Browser autofill must never turn input backgrounds blue; normalized via `:-webkit-autofill` in `src/index.css`.
+- **Container Hover Animation:** Animated icons embedded in input fields or feature cards must trigger their motion animation when hovering anywhere over the parent container (`group`), not solely on the icon boundary.
+
+### 1.7 Strict Input Field Validation & Sanitization Standard
+- **Centralized Helper Location:** `src/utils/validators.js`
+- **Real-Time Character Sanitization (Mandatory on `onChange`):**
+  - **Name Fields (Full Name, Contact, Owner):** Only letters and spaces permitted (`/[^a-zA-Z\s]/g`). Numbers and special symbols must be strictly blocked as the user types.
+  - **Phone Number Fields:** Only numeric digits permitted (`/\D/g`). Letters, symbols, and excess spaces are stripped out immediately.
+  - **CNIC / National ID Fields:** Only digits and hyphens permitted, formatted automatically (`XXXXX-XXXXXXX-X`).
+  - **Email Fields:** Disallow whitespace and validate standard RFC structure (`user@domain.com`).
+- **Rule for Future Development:** Every new input field across the application must strictly adhere to these real-time sanitizers to ensure data cleanliness and eliminate invalid inputs at the source.
+
 ---
 
 ## 2. Multi-Portal System Design Architecture
