@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import dashboardBanner from '@/assets/images/dashboard.png';
 import { ChevronDownIcon } from '@/icons';
+import VendorHeroBanner from '@/components/vendor/dashboard/VendorHeroBanner';
 import VendorStatCards from '@/components/vendor/dashboard/VendorStatCards';
 import VendorSalesChart from '@/components/vendor/dashboard/VendorSalesChart';
 import VendorRecentOrders from '@/components/vendor/dashboard/VendorRecentOrders';
@@ -23,13 +23,7 @@ export const VendorOverviewPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-xs border border-orange-100/60 bg-gradient-to-r from-amber-50 to-orange-50">
-        <img
-          src={dashboardBanner}
-          alt="Grow with Emart"
-          className="w-full h-auto object-cover max-h-56 sm:max-h-72"
-        />
-      </div>
+      <VendorHeroBanner />
 
       <div className="flex items-center justify-end relative">
         <div className="relative">
