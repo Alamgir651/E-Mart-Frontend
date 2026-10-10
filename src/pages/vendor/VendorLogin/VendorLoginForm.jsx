@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { LockIcon, EyeIcon, EyeOffIcon } from '@/icons';
 import { Input } from '@/components/common/Input';
@@ -112,9 +113,9 @@ export const VendorLoginForm = () => {
 
       <div className="mt-6 text-center text-xs text-slate-500">
         Don&apos;t have an account?{' '}
-        <a href="#register" className="font-bold text-orange-600 hover:text-orange-700 ml-1">
+        <Link to="/vendor/register" className="font-bold text-orange-600 hover:text-orange-700 ml-1">
           Register
-        </a>
+        </Link>
       </div>
     </motion.div>
   );
