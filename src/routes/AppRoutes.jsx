@@ -1,0 +1,27 @@
+import { Suspense } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { vendorRoutes } from './vendor.routes';
+import Toaster from '@/components/common/Toaster';
+
+const RouteLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-slate-900">
+    <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
+  </div>
+);
+
+export const AppRoutes = () => {
+  return (
+    <BrowserRouter>
+      <Toaster />
+      <Suspense fallback={<RouteLoader />}>
+        <Routes>
+          <Route path="/" element={<Navigate to="/vendor/login" replace />} />
+          {vendorRoutes}
+          <Route path="*" element={<Navigate to="/vendor/login" replace />} />
+        </Routes>
+      </Suspense>
+    </BrowserRouter>
+  );
+};
+
+export default AppRoutes;
