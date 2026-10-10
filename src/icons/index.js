@@ -35,5 +35,9 @@ export {
   BadgeAlertIcon,
   PlusIcon,
   BadgePercentIcon,
+  DownloadIcon,
+  PhoneIcon,
+  ClockIcon,
+  MessageSquareIcon,
 } from 'lucide-animated';
 

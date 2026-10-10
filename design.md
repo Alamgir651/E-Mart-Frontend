@@ -44,11 +44,18 @@ This document defines the production-grade frontend architecture, multi-portal s
   - `src/mock/admin/` – Platform users, vendor KYC verifications, platform revenues, audit logs
 - **Standard:** Follow strict typed schemas mirroring target production backend REST/GraphQL response payloads to allow zero-effort API integration.
 
-### 1.6 Password Field & Section/Container Icon Animation Standards
+### 1.6 Password Field & Mandatory Section-Level Icon Hover Animation Standard
 - **Show/Hide Password Standard:** Every password input field across all portals (Customer, Vendor, Admin) must include an interactive visibility toggle using `EyeIcon` and `EyeOffIcon` from `@/icons`.
 - **Autofill Overrides:** Browser autofill must never turn input backgrounds blue; normalized via `:-webkit-autofill` in `src/index.css`.
-- **Section / Container Hover Animation Standard:** Animated icons embedded in any section, card, row, navigation item, or input field MUST trigger their motion animation when hovering anywhere over the parent section/container, not solely on the icon boundary itself.
-  - **Standard Hook:** Use `useAnimatedIcon` from `src/utils/useAnimatedIcon.js` to attach `[iconRef, trigger]` to the parent section's `onMouseEnter`/`onMouseLeave` and pass `ref={iconRef}` to the animated icon.
+- **Mandatory Section-Level Icon Hover Animation Standard (Universal Rule):**
+  - **No Isolated Icon-Only Hover:** Icons must **never** trigger motion animation only when the cursor touches the isolated icon boundary.
+  - **Section/Container Trigger:** Whenever an animated icon exists inside any card, button, link, row, navigation item, or section:
+    1. Pass `animateOnHover={false}` to the `<Icon />` element to suppress localized icon self-hovering.
+    2. Import and use `useAnimatedIcon` from `src/utils/useAnimatedIcon.js`.
+    3. Attach `onMouseEnter={trigger.onMouseEnter}` and `onMouseLeave={trigger.onMouseLeave}` to the parent container/card/section.
+    4. Pass `ref={iconRef}` to the animated icon.
+  - As soon as the vendor enters or moves their cursor anywhere into the section/card, the icon triggers its animation smoothly and contextually.
+
 
 ### 1.7 Strict Input Field Validation & Sanitization Standard
 - **Centralized Helper Location:** `src/utils/validators.js`

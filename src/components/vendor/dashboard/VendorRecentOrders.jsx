@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const STATUS_STYLES = {
   warning: 'bg-orange-50 text-orange-600 border border-orange-200/60',
@@ -7,6 +7,8 @@ const STATUS_STYLES = {
 };
 
 export const VendorRecentOrders = ({ orders = [] }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="p-3.5 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between">
       <div className="flex items-center justify-between mb-3 sm:mb-4">
@@ -36,10 +38,12 @@ export const VendorRecentOrders = ({ orders = [] }) => {
           <tbody className="divide-y divide-slate-50">
             {orders.map((order) => {
               const badgeStyle = STATUS_STYLES[order.statusType] || STATUS_STYLES.warning;
+              const cleanId = order.id.replace('#', '');
 
               return (
                 <tr
                   key={order.id}
+                  onClick={() => navigate(`/vendor/orders/${cleanId}`)}
                   className="hover:bg-slate-50/70 transition-colors group cursor-pointer"
                 >
                   <td className="py-2.5 font-bold text-slate-800 group-hover:text-orange-600 transition-colors whitespace-nowrap">
