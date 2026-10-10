@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon, ArrowLeftIcon } from '@/icons';
@@ -9,48 +9,59 @@ import { BusinessDetailsForm } from '@/components/vendor/BusinessDetailsForm';
 import { StoreDetailsForm } from '@/components/vendor/StoreDetailsForm';
 import { ReviewSubmitStep } from '@/components/vendor/ReviewSubmitStep';
 import { AccountReviewModal } from '@/components/vendor/AccountReviewModal';
+import { AccountApprovedModal } from '@/components/vendor/AccountApprovedModal';
 import { VendorRegisterHero } from './VendorRegisterHero';
 import { ACCOUNT_TYPES } from '@/mock/vendor/vendorRegister.mock';
 import { slideUp } from '@/animation/animations';
 import { toast } from '@/utils/toast';
+import {
+  setStep,
+  nextStep,
+  prevStep,
+  setAccountType,
+  setBusinessField,
+  setStoreField,
+  setReviewModalOpen,
+  setApprovedModalOpen,
+  submitRegistration,
+} from '@/features/vendor/vendorRegisterSlice';
 
 export const VendorRegisterPage = () => {
-  const [currentStep, setCurrentStep] = useState(4);
-  const [selectedType, setSelectedType] = useState('individual');
-  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-
-  const [businessData, setBusinessData] = useState({
-    fullName: 'Ali Raza',
-    email: 'aliraza@gmail.com',
-    phone: '3544976',
-    password: 'password123',
-    cnic: '35201-1234567-1',
-    description: '',
-  });
-
-  const [storeData, setStoreData] = useState({
-    storeName: 'Fresh Mart',
-    category: 'Grocery & Vegetables',
-    description: '',
-    addressSearch: 'Gulberg Lahore',
-    addressLine: '123 Main Street, Gulberg, Lahore',
-    city: 'Lahore',
-    area: 'Gulberg',
-    banners: [],
-  });
+  const dispatch = useDispatch();
+  const {
+    currentStep,
+    selectedAccountType,
+    businessDetails,
+    storeDetails,
+    isReviewModalOpen,
+    isApprovedModalOpen,
+  } = useSelector((state) => state.vendorRegister);
 
   const handleNext = () => {
-    if (currentStep === 1) setCurrentStep(2);
-    else if (currentStep === 2) setCurrentStep(3);
-    else if (currentStep === 3) setCurrentStep(4);
-    else if (currentStep === 4) {
-      setIsReviewModalOpen(true);
+    if (currentStep === 1) {
+      dispatch(nextStep());
+    } else if (currentStep === 2) {
+      if (!businessDetails.fullName || !businessDetails.email) {
+        toast.error('Please enter Full Name and Email Address.');
+        return;
+      }
+      dispatch(nextStep());
+      toast.success('Business details saved.');
+    } else if (currentStep === 3) {
+      if (!storeDetails.storeName) {
+        toast.error('Please enter Store Name.');
+        return;
+      }
+      dispatch(nextStep());
+      toast.success('Store details saved.');
+    } else if (currentStep === 4) {
+      dispatch(submitRegistration());
       toast.success('Application submitted for review!');
     }
   };
 
   const handleBack = () => {
-    if (currentStep > 1) setCurrentStep((prev) => prev - 1);
+    dispatch(prevStep());
   };
 
   const stepTitles = {
@@ -82,25 +93,36 @@ export const VendorRegisterPage = () => {
           {currentStep === 1 && (
             <motion.div variants={slideUp} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 my-6 max-w-4xl">
               {ACCOUNT_TYPES.map((type) => (
-                <AccountTypeCard key={type.id} item={type} isSelected={selectedType === type.id} onSelect={setSelectedType} />
+                <AccountTypeCard
+                  key={type.id}
+                  item={type}
+                  isSelected={selectedAccountType === type.id}
+                  onSelect={(id) => dispatch(setAccountType(id))}
+                />
               ))}
             </motion.div>
           )}
 
           {currentStep === 2 && (
-            <BusinessDetailsForm formData={businessData} onChange={(f, v) => setBusinessData((p) => ({ ...p, [f]: v }))} />
+            <BusinessDetailsForm
+              formData={businessDetails}
+              onChange={(field, value) => dispatch(setBusinessField({ field, value }))}
+            />
           )}
 
           {currentStep === 3 && (
-            <StoreDetailsForm storeData={storeData} onChange={(f, v) => setStoreData((p) => ({ ...p, [f]: v }))} />
+            <StoreDetailsForm
+              storeData={storeDetails}
+              onChange={(field, value) => dispatch(setStoreField({ field, value }))}
+            />
           )}
 
           {currentStep === 4 && (
             <ReviewSubmitStep
-              businessData={businessData}
-              storeData={storeData}
-              selectedType={selectedType}
-              onEditStep={(step) => setCurrentStep(step)}
+              businessData={businessDetails}
+              storeData={storeDetails}
+              selectedType={selectedAccountType}
+              onEditStep={(step) => dispatch(setStep(step))}
             />
           )}
         </div>
@@ -129,7 +151,19 @@ export const VendorRegisterPage = () => {
         </div>
       </section>
 
-      <AccountReviewModal isOpen={isReviewModalOpen} onClose={() => setIsReviewModalOpen(false)} />
+      <AccountReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => dispatch(setReviewModalOpen(false))}
+        onGotIt={() => {
+          dispatch(setReviewModalOpen(false));
+          dispatch(setApprovedModalOpen(true));
+        }}
+      />
+
+      <AccountApprovedModal
+        isOpen={isApprovedModalOpen}
+        onClose={() => dispatch(setApprovedModalOpen(false))}
+      />
     </main>
   );
 };

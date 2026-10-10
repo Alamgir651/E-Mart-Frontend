@@ -3,8 +3,16 @@ import pendingImg from '@/assets/images/pending.png';
 import { CheckIcon } from '@/icons';
 import { scaleUp } from '@/animation/animations';
 
-export const AccountReviewModal = ({ isOpen, onClose }) => {
+export const AccountReviewModal = ({ isOpen, onClose, onGotIt }) => {
   if (!isOpen) return null;
+
+  const handleAction = () => {
+    if (onGotIt) {
+      onGotIt();
+    } else if (onClose) {
+      onClose();
+    }
+  };
 
   return (
     <AnimatePresence>
@@ -77,7 +85,7 @@ export const AccountReviewModal = ({ isOpen, onClose }) => {
 
           <button
             type="button"
-            onClick={onClose}
+            onClick={handleAction}
             className="w-full py-3 bg-orange-600 hover:bg-orange-500 text-white font-bold rounded-xl text-xs shadow-lg shadow-orange-600/25 transition-all cursor-pointer"
           >
             Got it, thanks!
