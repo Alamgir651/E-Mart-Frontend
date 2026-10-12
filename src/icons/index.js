@@ -44,6 +44,9 @@ export {
   FileTextIcon,
   RefreshCwIcon,
   HistoryIcon,
+  CalendarDaysIcon,
+  CreditCardIcon,
+  SendIcon,
 } from 'lucide-animated';
 
 export { TrashIcon } from './TrashIcon';

@@ -52,6 +52,7 @@ const SidebarNavItem = ({ item }) => {
             <Icon
               ref={iconRef}
               size={17}
+              animateOnHover={false}
               className={`transition-colors shrink-0 ${
                 isActive ? 'text-white' : 'text-slate-500 group-hover:text-orange-600'
               }`}
