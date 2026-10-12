@@ -39,5 +39,10 @@ export {
   PhoneIcon,
   ClockIcon,
   MessageSquareIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  SquarePenIcon,
 } from 'lucide-animated';
+
+export { TrashIcon } from './TrashIcon';
 

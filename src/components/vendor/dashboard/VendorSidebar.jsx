@@ -113,12 +113,12 @@ export const VendorSidebar = ({ isOpen, onClose }) => {
               <h4 className="text-[11px] sm:text-xs font-black text-slate-800 leading-snug">
                 Grow Your Business with Emart
               </h4>
-              <button
-                type="button"
-                className="mt-2.5 sm:mt-3 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 active:scale-95 transition-all rounded-lg shadow-xs cursor-pointer"
+              <NavLink
+                to="/vendor/products/new"
+                className="inline-block mt-2.5 sm:mt-3 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 active:scale-95 transition-all rounded-lg shadow-xs cursor-pointer"
               >
                 Add Product
-              </button>
+              </NavLink>
             </div>
             <img
               src={boxImg}
