@@ -47,6 +47,7 @@ export {
   CalendarDaysIcon,
   CreditCardIcon,
   SendIcon,
+  MessageSquareIcon,
 } from 'lucide-animated';
 
 export { TrashIcon } from './TrashIcon';
@@ -54,4 +55,6 @@ export { CameraIcon } from './CameraIcon';
 export { StarIcon } from './StarIcon';
 export { ShieldAlertIcon } from './ShieldAlertIcon';
 export { MegaphoneIcon } from './MegaphoneIcon';
+export { PaperclipIcon } from './PaperclipIcon';
+export { TicketIcon } from './TicketIcon';
 

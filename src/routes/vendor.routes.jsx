@@ -18,6 +18,9 @@ const VendorNotificationsPage = lazy(() => import('@/pages/vendor/VendorNotifica
 const ProductDeactivatedPage = lazy(() => import('@/pages/vendor/VendorNotifications/ProductDeactivatedPage'));
 const ProductRemovedPage = lazy(() => import('@/pages/vendor/VendorNotifications/ProductRemovedPage'));
 const VendorSettingsPage = lazy(() => import('@/pages/vendor/VendorSettings/VendorSettingsPage'));
+const VendorSupportPage = lazy(() => import('@/pages/vendor/VendorSupport/VendorSupportPage'));
+const CreateTicketPage = lazy(() => import('@/pages/vendor/VendorSupport/CreateTicketPage'));
+const TicketDetailsPage = lazy(() => import('@/pages/vendor/VendorSupport/TicketDetailsPage'));
 
 export const vendorRoutes = (
   <>
@@ -40,6 +43,10 @@ export const vendorRoutes = (
       <Route path="notifications/deactivated/:id" element={<ProductDeactivatedPage />} />
       <Route path="notifications/removed/:id" element={<ProductRemovedPage />} />
       <Route path="settings" element={<VendorSettingsPage />} />
+      <Route path="support" element={<VendorSupportPage />} />
+      <Route path="support/new" element={<CreateTicketPage />} />
+      <Route path="support/create" element={<CreateTicketPage />} />
+      <Route path="support/:id" element={<TicketDetailsPage />} />
       <Route path="*" element={<Navigate to="/vendor/dashboard" replace />} />
     </Route>
   </>
