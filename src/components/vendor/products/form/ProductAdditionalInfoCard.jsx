@@ -24,12 +24,12 @@ export const ProductAdditionalInfoCard = ({ formData, onChange }) => {
 
   return (
     <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs space-y-4">
-      <h3 className="text-sm sm:text-base font-black text-slate-900">
+      <h3 className="text-sm sm:text-base font-semibold text-slate-900">
         Additional Information
       </h3>
 
       <div>
-        <label className="block text-xs font-bold text-slate-800 mb-1.5">
+        <label className="block text-xs font-semibold text-slate-800 mb-1.5">
           Product Tags <span className="text-slate-400 font-normal">(Optional)</span>
         </label>
         <div className="flex flex-wrap items-center gap-2 p-2 bg-white border border-slate-200/90 rounded-xl focus-within:ring-2 focus-within:ring-orange-500/20 focus-within:border-orange-500">
@@ -60,7 +60,7 @@ export const ProductAdditionalInfoCard = ({ formData, onChange }) => {
       </div>
 
       <div>
-        <label className="block text-xs font-bold text-slate-800 mb-1.5">
+        <label className="block text-xs font-semibold text-slate-800 mb-1.5">
           Country of Origin <span className="text-slate-400 font-normal">(Optional)</span>
         </label>
         <input
@@ -73,7 +73,7 @@ export const ProductAdditionalInfoCard = ({ formData, onChange }) => {
       </div>
 
       <div>
-        <label className="block text-xs font-bold text-slate-800 mb-1.5">
+        <label className="block text-xs font-semibold text-slate-800 mb-1.5">
           Storage Instructions <span className="text-slate-400 font-normal">(Optional)</span>
         </label>
         <input

@@ -40,7 +40,7 @@ export const OrderStatusStepper = ({ currentStatus, onStatusChange }) => {
       className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between hover:shadow-md transition-shadow cursor-pointer"
     >
       <div className="flex items-center justify-between mb-5">
-        <h3 className="text-sm font-black text-slate-900 tracking-tight">
+        <h3 className="text-sm font-semibold text-slate-900 tracking-tight">
           Order Status
         </h3>
 
@@ -48,7 +48,7 @@ export const OrderStatusStepper = ({ currentStatus, onStatusChange }) => {
           <button
             type="button"
             onClick={() => setIsOpen(!isOpen)}
-            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-orange-200 bg-orange-50/70 text-orange-600 font-bold text-xs hover:bg-orange-100 transition-colors cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-orange-200 bg-orange-50/70 text-orange-600 font-semibold text-xs hover:bg-orange-100 transition-colors cursor-pointer"
           >
             <span>Update Status</span>
             <ChevronDownIcon ref={chevronRef} animateOnHover={false} size={12} />

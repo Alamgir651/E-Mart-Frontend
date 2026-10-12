@@ -46,7 +46,7 @@ export const VendorLoginForm = () => {
       className="w-full max-w-md bg-white/95 backdrop-blur-md rounded-3xl p-7 sm:p-10 shadow-2xl shadow-slate-900/15 border border-white/80"
     >
       <div className="mb-6">
-        <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
           Welcome Back
         </h2>
         <p className="text-xs sm:text-sm text-slate-500 mt-1">

@@ -30,17 +30,17 @@ export const CustomerInfoCard = ({ customer, phone, address }) => {
       onMouseLeave={handleSectionLeave}
       className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between hover:shadow-md transition-shadow cursor-pointer"
     >
-      <h3 className="text-sm font-black text-slate-900 tracking-tight mb-4">
+      <h3 className="text-sm font-semibold text-slate-900 tracking-tight mb-4">
         Customer Information
       </h3>
 
       <div className="flex items-start gap-3.5">
-        <div className="w-11 h-11 rounded-full bg-sky-100 text-sky-700 font-extrabold text-sm flex items-center justify-center shrink-0">
+        <div className="w-11 h-11 rounded-full bg-sky-100 text-sky-700 font-semibold text-sm flex items-center justify-center shrink-0">
           {initials}
         </div>
 
         <div className="space-y-1.5 min-w-0">
-          <h4 className="text-sm font-bold text-slate-900">{customer}</h4>
+          <h4 className="text-sm font-semibold text-slate-900">{customer}</h4>
 
           <div className="flex items-center gap-1.5 text-xs text-slate-600">
             <PhoneIcon

@@ -12,7 +12,7 @@ export const StockHistoryTable = ({ history = [] }) => {
       <div className="flex items-center gap-2">
         <HistoryIcon size={16} className="text-orange-600" />
         <div>
-          <h4 className="text-xs sm:text-sm font-bold text-slate-900">
+          <h4 className="text-xs sm:text-sm font-semibold text-slate-900">
             Stock History
           </h4>
           <p className="text-[11px] text-slate-400">

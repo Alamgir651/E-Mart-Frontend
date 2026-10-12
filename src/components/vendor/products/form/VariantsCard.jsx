@@ -29,7 +29,7 @@ export const VariantsCard = ({ formData, onChange }) => {
 
   return (
     <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs space-y-4">
-      <h3 className="text-sm sm:text-base font-black text-slate-900">
+      <h3 className="text-sm sm:text-base font-semibold text-slate-900">
         Product Variants <span className="text-slate-400 font-normal text-xs">(Optional)</span>
       </h3>
 

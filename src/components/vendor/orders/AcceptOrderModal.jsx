@@ -33,7 +33,7 @@ export const AcceptOrderModal = ({ isOpen, order, onClose, onConfirm }) => {
         >
           <div className="flex items-start justify-between gap-3 mb-3">
             <div>
-              <h3 className="text-xl font-black text-slate-900 tracking-tight">
+              <h3 className="text-xl font-semibold text-slate-900 tracking-tight">
                 Accept Order
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">

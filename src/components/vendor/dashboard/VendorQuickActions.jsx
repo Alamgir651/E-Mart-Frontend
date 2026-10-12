@@ -50,7 +50,7 @@ const ActionCardItem = ({ action, onNavigate }) => {
       <div className="p-1 sm:p-1.5 rounded-lg bg-white/70 shadow-2xs mb-1 sm:mb-1.5">
         <Icon ref={iconRef} size={16} />
       </div>
-      <span className="text-[10px] xs:text-[11px] sm:text-xs font-bold leading-tight">
+      <span className="text-[10px] xs:text-[11px] sm:text-xs font-semibold leading-tight">
         {action.label}
       </span>
     </button>
@@ -64,7 +64,7 @@ export const VendorQuickActions = () => {
   return (
     <div className="p-3.5 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between">
       <div className="mb-3 sm:mb-4">
-        <h3 className="text-sm sm:text-base font-black text-slate-900 tracking-tight">
+        <h3 className="text-sm sm:text-base font-semibold text-slate-900 tracking-tight">
           Quick Actions
         </h3>
       </div>
@@ -85,7 +85,7 @@ export const VendorQuickActions = () => {
           onClick={() => navigate('/vendor/finance')}
           onMouseEnter={financeTrigger.onMouseEnter}
           onMouseLeave={financeTrigger.onMouseLeave}
-          className="w-full flex items-center justify-center gap-2 p-2.5 sm:p-3 rounded-xl bg-rose-50/80 hover:bg-rose-100/70 text-rose-600 border border-rose-200/50 font-bold text-[11px] sm:text-xs transition-all active:scale-98 cursor-pointer"
+          className="w-full flex items-center justify-center gap-2 p-2.5 sm:p-3 rounded-xl bg-rose-50/80 hover:bg-rose-100/70 text-rose-600 border border-rose-200/50 font-semibold text-[11px] sm:text-xs transition-all active:scale-98 cursor-pointer"
         >
           <BadgePercentIcon ref={financeIconRef} size={15} />
           <span>View Finance Report</span>

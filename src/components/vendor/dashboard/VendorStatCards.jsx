@@ -52,7 +52,7 @@ const StatCardItem = ({ stat }) => {
       </div>
 
       <div className="mt-2.5 sm:mt-3">
-        <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+        <h3 className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight">
           {stat.value}
         </h3>
 
@@ -63,7 +63,7 @@ const StatCardItem = ({ stat }) => {
             <TrendingDownIcon size={13} className="text-rose-500" />
           )}
           <span
-            className={`font-bold ${
+            className={`font-semibold ${
               isPositive ? 'text-emerald-500' : 'text-rose-500'
             }`}
           >

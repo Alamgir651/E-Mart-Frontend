@@ -12,12 +12,12 @@ export const VendorRecentOrders = ({ orders = [] }) => {
   return (
     <div className="p-3.5 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between">
       <div className="flex items-center justify-between mb-3 sm:mb-4">
-        <h3 className="text-sm sm:text-base font-black text-slate-900 tracking-tight">
+        <h3 className="text-sm sm:text-base font-semibold text-slate-900 tracking-tight">
           Recent Orders
         </h3>
         <Link
           to="/vendor/orders"
-          className="text-xs font-bold text-orange-600 hover:text-orange-700 transition-colors"
+          className="text-xs font-semibold text-orange-600 hover:text-orange-700 transition-colors"
         >
           View All
         </Link>
@@ -46,19 +46,19 @@ export const VendorRecentOrders = ({ orders = [] }) => {
                   onClick={() => navigate(`/vendor/orders/${cleanId}`)}
                   className="hover:bg-slate-50/70 transition-colors group cursor-pointer"
                 >
-                  <td className="py-2.5 font-bold text-slate-800 group-hover:text-orange-600 transition-colors whitespace-nowrap">
+                  <td className="py-2.5 font-semibold text-slate-800 group-hover:text-orange-600 transition-colors whitespace-nowrap">
                     {order.id}
                   </td>
                   <td className="py-2.5 text-slate-600 font-medium whitespace-nowrap">
                     {order.customer}
                   </td>
                   <td className="py-2.5 text-center text-slate-500">{order.items}</td>
-                  <td className="py-2.5 font-bold text-slate-900 whitespace-nowrap">
+                  <td className="py-2.5 font-semibold text-slate-900 whitespace-nowrap">
                     {order.total}
                   </td>
                   <td className="py-2.5 whitespace-nowrap">
                     <span
-                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold ${badgeStyle}`}
+                      className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-semibold ${badgeStyle}`}
                     >
                       {order.status}
                     </span>

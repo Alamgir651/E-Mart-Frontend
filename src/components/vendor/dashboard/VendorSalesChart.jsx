@@ -8,7 +8,7 @@ export const VendorSalesChart = ({ data = [] }) => {
   return (
     <div className="flex flex-col justify-between p-3.5 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full">
       <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h3 className="text-sm sm:text-base font-black text-slate-900 tracking-tight">
+        <h3 className="text-sm sm:text-base font-semibold text-slate-900 tracking-tight">
           Sales Overview
         </h3>
         <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400">Weekly</span>

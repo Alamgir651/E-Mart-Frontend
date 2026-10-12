@@ -82,7 +82,7 @@ export const VendorRegisterPage = () => {
           <RegistrationStepper currentStep={currentStep} />
 
           <div className="mt-5 mb-2">
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
               {stepTitles[currentStep]?.title}
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">

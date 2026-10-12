@@ -24,7 +24,7 @@ export const VendorHeroBanner = () => {
         variants={slideRight}
         className="relative z-10 flex flex-col justify-center px-4 sm:px-8 md:px-10 max-w-[70%] sm:max-w-[55%]"
       >
-        <h2 className="text-xs xs:text-sm sm:text-xl md:text-2xl font-black text-slate-900 tracking-tight leading-tight">
+        <h2 className="text-xs xs:text-sm sm:text-xl md:text-2xl font-semibold text-slate-900 tracking-tight leading-tight">
           Deliver Quality. Build <br />
           Trust.{' '}
           <span className="text-orange-500">Grow with Emart.</span>

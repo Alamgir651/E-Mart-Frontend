@@ -107,13 +107,13 @@ export const AddEditProductPage = () => {
           to="/vendor/products"
           onMouseEnter={backTrigger.onMouseEnter}
           onMouseLeave={backTrigger.onMouseLeave}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-orange-600 transition-colors mb-2 cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-orange-600 transition-colors mb-2 cursor-pointer"
         >
           <ArrowLeftIcon ref={backRef} animateOnHover={false} size={14} />
           <span>Back to Products</span>
         </Link>
 
-        <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight">
           {isEditing ? `Edit Product: ${existingProduct?.name || ''}` : 'Add New Product'}
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-0.5">

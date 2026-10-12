@@ -60,19 +60,19 @@ export const VendorOrderDetailPage = () => {
           to="/vendor/orders"
           onMouseEnter={backTrigger.onMouseEnter}
           onMouseLeave={backTrigger.onMouseLeave}
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-orange-600 transition-colors mb-2 cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-orange-600 transition-colors mb-2 cursor-pointer"
         >
           <ArrowLeftIcon ref={backRef} animateOnHover={false} size={14} />
           <span>Back to Orders</span>
         </Link>
 
         <div className="flex items-center gap-3">
-          <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight">
             Order {order.id}
           </h1>
 
           <span
-            className={`px-3 py-0.5 rounded-full text-xs font-bold border ${
+            className={`px-3 py-0.5 rounded-full text-xs font-semibold border ${
               STATUS_PILLS[order.status] || STATUS_PILLS.Completed
             }`}
           >

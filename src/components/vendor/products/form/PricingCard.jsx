@@ -1,16 +1,16 @@
 export const PricingCard = ({ formData, onChange }) => {
   return (
     <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs space-y-5">
-      <h3 className="text-sm sm:text-base font-black text-slate-900">
+      <h3 className="text-sm sm:text-base font-semibold text-slate-900">
         Pricing Information
       </h3>
 
       <div>
-        <label className="block text-xs sm:text-sm font-bold text-slate-800 mb-1.5">
+        <label className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1.5">
           Selling Price <span className="text-orange-600">*</span>
         </label>
         <div className="relative max-w-md">
-          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-sm">
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-semibold text-sm">
             $
           </span>
           <input
@@ -19,7 +19,7 @@ export const PricingCard = ({ formData, onChange }) => {
             value={formData.price || ''}
             onChange={(e) => onChange('price', e.target.value)}
             placeholder="0.00"
-            className="w-full pl-8 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-slate-200/90 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all font-bold"
+            className="w-full pl-8 pr-4 py-2.5 text-xs sm:text-sm bg-white border border-slate-200/90 rounded-xl focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 outline-none transition-all font-semibold"
           />
         </div>
       </div>
@@ -27,7 +27,7 @@ export const PricingCard = ({ formData, onChange }) => {
       <div className="pt-2 border-t border-slate-100">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-xs sm:text-sm font-bold text-slate-800">
+            <h4 className="text-xs sm:text-sm font-semibold text-slate-800">
               Discount (Optional)
             </h4>
             <p className="text-[11px] text-slate-500">
@@ -52,7 +52,7 @@ export const PricingCard = ({ formData, onChange }) => {
         {formData.hasDiscount && (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-4 border-t border-slate-100 animate-in fade-in">
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Discount Type</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Discount Type</label>
               <select
                 value={formData.discountType || 'Percentage'}
                 onChange={(e) => onChange('discountType', e.target.value)}
@@ -63,7 +63,7 @@ export const PricingCard = ({ formData, onChange }) => {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Value</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Value</label>
               <input
                 type="text"
                 value={formData.discountValue || ''}
@@ -73,7 +73,7 @@ export const PricingCard = ({ formData, onChange }) => {
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">Start Date</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">Start Date</label>
               <input
                 type="text"
                 value={formData.discountStartDate || ''}
@@ -83,7 +83,7 @@ export const PricingCard = ({ formData, onChange }) => {
               />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">End Date</label>
+              <label className="block text-xs font-semibold text-slate-700 mb-1">End Date</label>
               <input
                 type="text"
                 value={formData.discountEndDate || ''}

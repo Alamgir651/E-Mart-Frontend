@@ -17,7 +17,7 @@ export const VendorFeatureItem = ({ title, description }) => {
         <CheckIcon ref={iconRef} size={11} className="stroke-[3]" />
       </div>
       <div>
-        <h3 className="font-bold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-orange-600 transition-colors">
+        <h3 className="font-semibold text-slate-900 text-sm sm:text-base leading-snug group-hover:text-orange-600 transition-colors">
           {title}
         </h3>
         <p className="text-slate-600 text-xs sm:text-sm leading-relaxed mt-0.5">

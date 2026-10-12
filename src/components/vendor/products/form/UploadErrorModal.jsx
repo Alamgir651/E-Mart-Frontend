@@ -23,7 +23,7 @@ export const UploadErrorModal = ({
           <span className="text-2xl font-black leading-none">!</span>
         </div>
 
-        <h3 className="text-xl font-black text-slate-900">Upload Error</h3>
+        <h3 className="text-xl font-semibold text-slate-900">Upload Error</h3>
         <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
           Your product could not be uploaded. Please fill in all required fields before publishing.
         </p>

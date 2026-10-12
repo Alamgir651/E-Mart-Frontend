@@ -17,7 +17,7 @@ export const VendorHeader = ({ onOpenSidebar, storeName = 'Fresh Mart', userName
         </button>
 
         <div className="min-w-0">
-          <h1 className="text-xs xs:text-sm sm:text-2xl font-black text-slate-900 tracking-tight flex items-center gap-1">
+          <h1 className="text-xs xs:text-sm sm:text-2xl font-semibold text-slate-900 tracking-tight flex items-center gap-1">
             <span>Good Morning!</span>
             <span className="hidden sm:inline">{userName}</span>
             <span className="inline-block animate-pulse shrink-0">👋</span>
@@ -48,7 +48,7 @@ export const VendorHeader = ({ onOpenSidebar, storeName = 'Fresh Mart', userName
             className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover ring-1 ring-orange-200"
           />
           <div className="hidden sm:block text-left leading-none">
-            <p className="text-xs font-bold text-slate-800">{storeName}</p>
+            <p className="text-xs font-semibold text-slate-800">{storeName}</p>
             <p className="text-[10px] text-slate-400 mt-0.5">Seller</p>
           </div>
         </div>

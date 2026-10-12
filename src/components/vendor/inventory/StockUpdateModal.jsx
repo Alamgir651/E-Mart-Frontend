@@ -32,7 +32,7 @@ export const StockUpdateModal = ({
           />
           <div>
             <div className="flex items-center gap-2.5">
-              <h2 className="text-lg sm:text-xl font-black text-slate-900">
+              <h2 className="text-lg sm:text-xl font-semibold text-slate-900">
                 {product.name} ({product.unit})
               </h2>
               <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-[#eaf8ef] text-[#16a34a] border border-[#bbf7d0]">

@@ -1,7 +1,7 @@
 export const OrderSummaryCard = ({ order }) => {
   return (
     <div className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between">
-      <h3 className="text-sm font-black text-slate-900 tracking-tight mb-4">
+      <h3 className="text-sm font-semibold text-slate-900 tracking-tight mb-4">
         Order Summary
       </h3>
 
@@ -22,8 +22,8 @@ export const OrderSummaryCard = ({ order }) => {
         </div>
 
         <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between">
-          <span className="text-sm font-bold text-slate-900">Total</span>
-          <span className="text-base font-black text-orange-500">{order.total}</span>
+          <span className="text-sm font-semibold text-slate-900">Total</span>
+          <span className="text-base font-semibold text-orange-500">{order.total}</span>
         </div>
       </div>
 
@@ -32,11 +32,11 @@ export const OrderSummaryCard = ({ order }) => {
           Payment Method
         </span>
         <div className="flex items-center gap-2">
-          <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-extrabold border border-emerald-200">
+          <span className="px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 text-[10px] font-semibold border border-emerald-200">
             COD
           </span>
           <div>
-            <p className="text-xs font-bold text-slate-800 leading-none">
+            <p className="text-xs font-semibold text-slate-800 leading-none">
               {order.paymentMethod || 'Cash'}
             </p>
             <p className="text-[10px] text-slate-400 mt-0.5">

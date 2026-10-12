@@ -23,7 +23,7 @@ export const UploadSuccessModal = ({
           <CircleCheckIcon size={28} />
         </div>
 
-        <h3 className="text-xl font-black text-slate-900">Upload Success</h3>
+        <h3 className="text-xl font-semibold text-slate-900">Upload Success</h3>
         <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
           Your product has been added successfully. You can view it on your products table or add another product.
         </p>
@@ -35,7 +35,7 @@ export const UploadSuccessModal = ({
             className="w-12 h-12 rounded-lg object-cover bg-white border border-slate-200 shrink-0"
           />
           <div className="min-w-0">
-            <h4 className="text-xs sm:text-sm font-bold text-slate-900 truncate">
+            <h4 className="text-xs sm:text-sm font-semibold text-slate-900 truncate">
               {product.name}
             </h4>
             <p className="text-[11px] text-slate-500 mt-0.5">

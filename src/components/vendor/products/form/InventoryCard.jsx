@@ -3,13 +3,13 @@ import { ChevronDownIcon } from '@/icons';
 export const InventoryCard = ({ formData, onChange }) => {
   return (
     <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs space-y-5">
-      <h3 className="text-sm sm:text-base font-black text-slate-900">
+      <h3 className="text-sm sm:text-base font-semibold text-slate-900">
         Inventory Information
       </h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs sm:text-sm font-bold text-slate-800 mb-1.5">
+          <label className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1.5">
             Stock Qty <span className="text-orange-600">*</span>
           </label>
           <input
@@ -22,7 +22,7 @@ export const InventoryCard = ({ formData, onChange }) => {
         </div>
 
         <div>
-          <label className="block text-xs sm:text-sm font-bold text-slate-800 mb-1.5">
+          <label className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1.5">
             Low Stock Alert <span className="text-orange-600">*</span>
           </label>
           <input
@@ -36,7 +36,7 @@ export const InventoryCard = ({ formData, onChange }) => {
       </div>
 
       <div>
-        <label className="block text-xs sm:text-sm font-bold text-slate-800 mb-1.5">
+        <label className="block text-xs sm:text-sm font-semibold text-slate-800 mb-1.5">
           Stock Status
         </label>
         <div className="relative max-w-sm">
@@ -56,7 +56,7 @@ export const InventoryCard = ({ formData, onChange }) => {
 
       <div className="flex items-center justify-between pt-2 border-t border-slate-100">
         <div>
-          <h4 className="text-xs sm:text-sm font-bold text-slate-800">
+          <h4 className="text-xs sm:text-sm font-semibold text-slate-800">
             Allow Purchase
           </h4>
           <p className="text-[11px] text-slate-500">

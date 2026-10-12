@@ -71,7 +71,7 @@ export const InventoryTable = ({
                           className="w-10 h-10 rounded-xl object-cover bg-slate-100 border border-slate-200/80 shrink-0"
                         />
                         <div>
-                          <h4 className="font-bold text-slate-800 group-hover:text-orange-600 transition-colors">
+                          <h4 className="font-semibold text-slate-800 group-hover:text-orange-600 transition-colors">
                             {item.name}
                           </h4>
                           <span className="text-[11px] text-slate-400">

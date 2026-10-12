@@ -3,7 +3,7 @@ export const DeliveryProofCard = ({ deliveryProof }) => {
 
   return (
     <div className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full">
-      <h3 className="text-sm font-black text-slate-900 tracking-tight mb-4">
+      <h3 className="text-sm font-semibold text-slate-900 tracking-tight mb-4">
         Delivery Proof
       </h3>
 
@@ -26,7 +26,7 @@ export const DeliveryProofCard = ({ deliveryProof }) => {
               <span className="text-[10px] text-slate-400 font-semibold block">
                 Completed Timestamp
               </span>
-              <p className="text-xs font-bold text-slate-800 mt-1">
+              <p className="text-xs font-semibold text-slate-800 mt-1">
                 {deliveryProof.completedAt || '08:15 PM, Sep 22, 2026'}
               </p>
             </div>

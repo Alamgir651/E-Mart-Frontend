@@ -86,7 +86,7 @@ export const AccountApprovedModal = ({ isOpen, onClose }) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.3 }}
           >
-            <h2 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-2">
+            <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight mb-2">
               Account Approved!
             </h2>
             <p className="text-xs sm:text-sm text-slate-500 max-w-xs mx-auto mb-7 leading-relaxed">

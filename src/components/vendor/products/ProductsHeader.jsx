@@ -12,13 +12,13 @@ export const ProductsHeader = ({ activeTab, onTabChange, counts, onAddProduct })
   return (
     <div className="space-y-4">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-        <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
           Products
         </h1>
 
         <button
           onClick={onAddProduct}
-          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md shadow-orange-500/20 active:scale-98 transition-all cursor-pointer self-start sm:self-auto"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-orange-600 hover:bg-orange-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-md shadow-orange-500/20 active:scale-98 transition-all cursor-pointer self-start sm:self-auto"
         >
           <PlusIcon size={16} strokeWidth={2.5} />
           <span>Add Product</span>
@@ -34,7 +34,7 @@ export const ProductsHeader = ({ activeTab, onTabChange, counts, onAddProduct })
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className={`flex items-center gap-2 pb-3 px-1 text-xs sm:text-sm font-bold transition-all relative whitespace-nowrap cursor-pointer ${
+              className={`flex items-center gap-2 pb-3 px-1 text-xs sm:text-sm font-semibold transition-all relative whitespace-nowrap cursor-pointer ${
                 isActive
                   ? 'text-orange-600'
                   : 'text-slate-500 hover:text-slate-800'
@@ -42,7 +42,7 @@ export const ProductsHeader = ({ activeTab, onTabChange, counts, onAddProduct })
             >
               <span>{tab.label}</span>
               <span
-                className={`text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-full ${
+                className={`text-[10px] sm:text-xs font-semibold px-2 py-0.5 rounded-full ${
                   isActive
                     ? 'bg-orange-600 text-white'
                     : 'bg-slate-200/80 text-slate-600'

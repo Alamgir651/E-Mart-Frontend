@@ -15,7 +15,7 @@ export const RiderInfoCard = ({ rider }) => {
       onMouseLeave={phoneTrigger.onMouseLeave}
       className="p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between hover:shadow-md transition-shadow cursor-pointer"
     >
-      <h3 className="text-sm font-black text-slate-900 tracking-tight mb-4">
+      <h3 className="text-sm font-semibold text-slate-900 tracking-tight mb-4">
         Rider Information
       </h3>
 
@@ -27,7 +27,7 @@ export const RiderInfoCard = ({ rider }) => {
         />
 
         <div className="space-y-1 min-w-0">
-          <h4 className="text-sm font-bold text-slate-900">{rider.name}</h4>
+          <h4 className="text-sm font-semibold text-slate-900">{rider.name}</h4>
 
           <div className="flex items-center gap-1.5 text-xs text-slate-600">
             <PhoneIcon
@@ -40,7 +40,7 @@ export const RiderInfoCard = ({ rider }) => {
           </div>
 
           <div className="flex items-center gap-1.5 text-xs text-slate-600">
-            <span className="text-amber-500 font-bold">★ {rider.rating}</span>
+            <span className="text-amber-500 font-semibold">★ {rider.rating}</span>
             <span className="text-slate-400">({rider.deliveries} deliveries)</span>
           </div>
         </div>

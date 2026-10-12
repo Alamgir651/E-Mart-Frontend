@@ -111,12 +111,12 @@ export const VendorSidebar = ({ isOpen, onClose }) => {
         <div className="p-3 sm:p-4">
           <div className="relative overflow-hidden rounded-2xl bg-amber-50/90 border border-amber-200/60 p-3 sm:p-4 shadow-sm">
             <div className="pr-14 sm:pr-16">
-              <h4 className="text-[11px] sm:text-xs font-black text-slate-800 leading-snug">
+              <h4 className="text-[11px] sm:text-xs font-semibold text-slate-800 leading-snug">
                 Grow Your Business with Emart
               </h4>
               <NavLink
                 to="/vendor/products/new"
-                className="inline-block mt-2.5 sm:mt-3 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-bold text-white bg-orange-500 hover:bg-orange-600 active:scale-95 transition-all rounded-lg shadow-xs cursor-pointer"
+                className="inline-block mt-2.5 sm:mt-3 px-2.5 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-[11px] font-semibold text-white bg-orange-500 hover:bg-orange-600 active:scale-95 transition-all rounded-lg shadow-xs cursor-pointer"
               >
                 Add Product
               </NavLink>

@@ -5,7 +5,7 @@ export const InventoryDetailsCard = ({ product }) => {
     <div className="bg-slate-50/70 border border-slate-200/80 rounded-2xl p-4 sm:p-5 space-y-3.5">
       <div className="flex items-center gap-2">
         <ArchiveIcon size={16} className="text-orange-600" />
-        <h3 className="text-xs sm:text-sm font-bold text-slate-900">
+        <h3 className="text-xs sm:text-sm font-semibold text-slate-900">
           Inventory Details
         </h3>
       </div>

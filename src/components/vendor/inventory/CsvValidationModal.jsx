@@ -28,7 +28,7 @@ export const CsvValidationModal = ({
         </button>
 
         <div>
-          <h2 className="text-lg sm:text-xl font-black text-slate-900">
+          <h2 className="text-lg sm:text-xl font-semibold text-slate-900">
             CSV Validation / Preview
           </h2>
           <p className="text-xs text-slate-500 mt-0.5">
@@ -42,7 +42,7 @@ export const CsvValidationModal = ({
               <FileTextIcon size={20} />
             </div>
             <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-800">
+              <h4 className="text-xs sm:text-sm font-semibold text-slate-800">
                 {fileName}
               </h4>
               <p className="text-[11px] text-slate-500 mt-0.5">
@@ -132,7 +132,7 @@ export const CsvValidationModal = ({
         </div>
 
         <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs space-y-1">
-          <h4 className="font-bold text-slate-900">
+          <h4 className="font-semibold text-slate-900">
             Correct {invalidCount} invalid rows to continue
           </h4>
           <p className="text-slate-600 text-[11px] leading-relaxed">

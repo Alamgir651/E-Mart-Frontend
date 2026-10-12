@@ -53,7 +53,7 @@ export const ProductImagesCard = ({ formData, onChange }) => {
 
   return (
     <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs space-y-5">
-      <h3 className="text-sm sm:text-base font-black text-slate-900">
+      <h3 className="text-sm sm:text-base font-semibold text-slate-900">
         Product Images <span className="text-orange-600">*</span>
       </h3>
 

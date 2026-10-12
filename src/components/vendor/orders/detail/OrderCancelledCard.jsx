@@ -10,7 +10,7 @@ export const OrderCancelledCard = ({ order }) => {
           </div>
 
           <div className="space-y-1.5 min-w-0 flex-1">
-            <h4 className="text-sm font-bold text-rose-600">
+            <h4 className="text-sm font-semibold text-rose-600">
               Order Cancelled by {order.cancelSource || 'Store'}
             </h4>
             <p className="text-xs text-slate-500">

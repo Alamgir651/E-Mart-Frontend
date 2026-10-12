@@ -13,7 +13,7 @@ export const OrdersHeader = ({
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+        <h1 className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight">
           Orders
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
@@ -30,7 +30,7 @@ export const OrdersHeader = ({
               key={tab.id}
               type="button"
               onClick={() => onTabChange(tab.id)}
-              className={`flex items-center gap-2 pb-2.5 px-1 sm:px-2 text-xs sm:text-sm font-bold transition-all relative whitespace-nowrap cursor-pointer ${
+              className={`flex items-center gap-2 pb-2.5 px-1 sm:px-2 text-xs sm:text-sm font-semibold transition-all relative whitespace-nowrap cursor-pointer ${
                 isActive
                   ? 'text-orange-600'
                   : 'text-slate-500 hover:text-slate-800'
@@ -38,7 +38,7 @@ export const OrdersHeader = ({
             >
               <span>{tab.label}</span>
               <span
-                className={`px-1.5 py-0.5 rounded-full text-[10px] font-bold ${
+                className={`px-1.5 py-0.5 rounded-full text-[10px] font-semibold ${
                   isActive
                     ? 'bg-orange-500 text-white'
                     : 'bg-slate-100 text-slate-600'

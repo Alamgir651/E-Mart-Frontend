@@ -1,13 +1,13 @@
 export const ProductPublishCard = ({ formData, onChange }) => {
   return (
     <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-7 shadow-xs space-y-4">
-      <h3 className="text-sm sm:text-base font-black text-slate-900">
+      <h3 className="text-sm sm:text-base font-semibold text-slate-900">
         Publish Product
       </h3>
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h4 className="text-xs sm:text-sm font-bold text-slate-800">
+          <h4 className="text-xs sm:text-sm font-semibold text-slate-800">
             Product Status
           </h4>
           <p className="text-[11px] text-slate-500">

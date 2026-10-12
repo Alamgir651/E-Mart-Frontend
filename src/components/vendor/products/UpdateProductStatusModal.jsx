@@ -28,7 +28,7 @@ export const UpdateProductStatusModal = ({ isOpen, product, onClose, onConfirm }
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-xs">
       <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-slate-100 p-5 sm:p-6 overflow-hidden animate-in fade-in zoom-in-95 duration-150">
         <div className="flex items-center justify-between pb-3.5 border-b border-slate-100">
-          <h2 className="text-base sm:text-lg font-black text-slate-900 tracking-tight">
+          <h2 className="text-base sm:text-lg font-semibold text-slate-900 tracking-tight">
             Update Product Status
           </h2>
           <button
@@ -48,7 +48,7 @@ export const UpdateProductStatusModal = ({ isOpen, product, onClose, onConfirm }
               className="w-12 h-12 rounded-lg object-cover bg-white border border-slate-200 shrink-0"
             />
             <div className="min-w-0">
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 truncate">
+              <h4 className="text-xs sm:text-sm font-semibold text-slate-900 truncate">
                 {product.name}
               </h4>
               <p className="text-[11px] text-slate-500 mt-0.5">
@@ -61,7 +61,7 @@ export const UpdateProductStatusModal = ({ isOpen, product, onClose, onConfirm }
           </div>
 
           <div>
-            <label className="block text-xs sm:text-sm font-bold text-slate-900 mb-2">
+            <label className="block text-xs sm:text-sm font-semibold text-slate-900 mb-2">
               Select New Status
             </label>
 
@@ -91,7 +91,7 @@ export const UpdateProductStatusModal = ({ isOpen, product, onClose, onConfirm }
                     </div>
 
                     <div className="text-xs sm:text-sm">
-                      <div className="flex items-center gap-1.5 font-bold text-slate-800">
+                      <div className="flex items-center gap-1.5 font-semibold text-slate-800">
                         <span className={`w-2 h-2 rounded-full ${item.dotColor}`} />
                         <span>{item.label}</span>
                       </div>
@@ -106,7 +106,7 @@ export const UpdateProductStatusModal = ({ isOpen, product, onClose, onConfirm }
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-800 mb-1.5">
+            <label className="block text-xs font-semibold text-slate-800 mb-1.5">
               Reason for Change <span className="text-slate-400 font-normal">(Optional)</span>
             </label>
             <textarea
@@ -128,7 +128,7 @@ export const UpdateProductStatusModal = ({ isOpen, product, onClose, onConfirm }
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-xs sm:text-sm font-bold text-white bg-orange-600 hover:bg-orange-700 rounded-xl shadow-md shadow-orange-500/20 active:scale-98 transition-all cursor-pointer"
+              className="px-4 py-2 text-xs sm:text-sm font-semibold text-white bg-orange-600 hover:bg-orange-700 rounded-xl shadow-md shadow-orange-500/20 active:scale-98 transition-all cursor-pointer"
             >
               Update Status
             </button>

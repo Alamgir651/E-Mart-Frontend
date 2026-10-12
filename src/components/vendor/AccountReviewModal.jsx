@@ -32,7 +32,7 @@ export const AccountReviewModal = ({ isOpen, onClose, onGotIt }) => {
             />
           </div>
 
-          <h2 className="text-2xl font-black text-slate-900 tracking-tight mb-1.5">
+          <h2 className="text-2xl font-semibold text-slate-900 tracking-tight mb-1.5">
             Account Under Review
           </h2>
           <p className="text-xs text-slate-500 max-w-xs mx-auto mb-6 leading-relaxed">

@@ -36,7 +36,7 @@ export const QuickStockUpdateCard = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <RefreshCwIcon size={15} className="text-orange-600" />
-          <h3 className="text-xs sm:text-sm font-bold text-slate-900">
+          <h3 className="text-xs sm:text-sm font-semibold text-slate-900">
             Quick Stock Update
           </h3>
         </div>

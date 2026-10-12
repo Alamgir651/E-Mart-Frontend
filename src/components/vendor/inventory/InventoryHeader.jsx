@@ -1,7 +1,7 @@
 export const InventoryHeader = () => {
   return (
     <div>
-      <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+      <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
         Inventory
       </h1>
       <p className="text-xs sm:text-sm text-slate-500 mt-0.5">

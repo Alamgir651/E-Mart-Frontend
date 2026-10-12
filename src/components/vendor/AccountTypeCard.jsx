@@ -56,7 +56,7 @@ export const AccountTypeCard = ({
       </div>
 
       <div className="space-y-1.5 my-auto">
-        <h3 className="font-bold text-slate-900 text-base leading-snug">
+        <h3 className="font-semibold text-slate-900 text-base leading-snug">
           {item.title}
         </h3>
         <p className="text-slate-500 text-xs leading-relaxed max-w-[200px] mx-auto">

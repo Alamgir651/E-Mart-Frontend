@@ -29,7 +29,7 @@ export const VendorRegisterHero = () => {
           transition={{ ...smoothTransition, delay: 0.1 }}
           className="space-y-2 sm:space-y-3"
         >
-          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-slate-900 tracking-tight leading-[1.15]">
+          <h1 className="text-3xl sm:text-4xl lg:text-[40px] font-semibold text-slate-900 tracking-tight leading-[1.15]">
             Become a Vendor <br />
             With E-Mart
           </h1>
