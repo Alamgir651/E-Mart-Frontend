@@ -9,6 +9,7 @@ const VendorOrdersPage = lazy(() => import('@/pages/vendor/VendorOrders/VendorOr
 const VendorOrderDetailPage = lazy(() => import('@/pages/vendor/VendorOrders/VendorOrderDetailPage'));
 const VendorProductsPage = lazy(() => import('@/pages/vendor/VendorProducts/VendorProductsPage'));
 const AddEditProductPage = lazy(() => import('@/pages/vendor/VendorProducts/AddEditProductPage'));
+const VendorInventoryPage = lazy(() => import('@/pages/vendor/VendorInventory/VendorInventoryPage'));
 
 export const vendorRoutes = (
   <>
@@ -22,6 +23,7 @@ export const vendorRoutes = (
       <Route path="products" element={<VendorProductsPage />} />
       <Route path="products/new" element={<AddEditProductPage />} />
       <Route path="products/edit/:id" element={<AddEditProductPage />} />
+      <Route path="inventory" element={<VendorInventoryPage />} />
       <Route path="*" element={<Navigate to="/vendor/dashboard" replace />} />
     </Route>
   </>

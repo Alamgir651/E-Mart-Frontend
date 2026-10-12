@@ -38,10 +38,12 @@ export {
   DownloadIcon,
   PhoneIcon,
   ClockIcon,
-  MessageSquareIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
   SquarePenIcon,
+  FileTextIcon,
+  RefreshCwIcon,
+  HistoryIcon,
 } from 'lucide-animated';
 
 export { TrashIcon } from './TrashIcon';
