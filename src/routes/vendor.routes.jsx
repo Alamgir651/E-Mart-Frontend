@@ -14,6 +14,9 @@ const VendorFinancePage = lazy(() => import('@/pages/vendor/VendorFinance/Vendor
 const VendorPayoutDetailsPage = lazy(() => import('@/pages/vendor/VendorFinance/VendorPayoutDetailsPage'));
 const VendorAnalyticsPage = lazy(() => import('@/pages/vendor/VendorAnalytics/VendorAnalyticsPage'));
 const VendorStorePage = lazy(() => import('@/pages/vendor/VendorStore/VendorStorePage'));
+const VendorNotificationsPage = lazy(() => import('@/pages/vendor/VendorNotifications/VendorNotificationsPage'));
+const ProductDeactivatedPage = lazy(() => import('@/pages/vendor/VendorNotifications/ProductDeactivatedPage'));
+const ProductRemovedPage = lazy(() => import('@/pages/vendor/VendorNotifications/ProductRemovedPage'));
 
 export const vendorRoutes = (
   <>
@@ -32,6 +35,9 @@ export const vendorRoutes = (
       <Route path="finance/payouts/:id" element={<VendorPayoutDetailsPage />} />
       <Route path="analytics" element={<VendorAnalyticsPage />} />
       <Route path="store" element={<VendorStorePage />} />
+      <Route path="notifications" element={<VendorNotificationsPage />} />
+      <Route path="notifications/deactivated/:id" element={<ProductDeactivatedPage />} />
+      <Route path="notifications/removed/:id" element={<ProductRemovedPage />} />
       <Route path="*" element={<Navigate to="/vendor/dashboard" replace />} />
     </Route>
   </>

@@ -51,4 +51,7 @@ export {
 
 export { TrashIcon } from './TrashIcon';
 export { CameraIcon } from './CameraIcon';
+export { StarIcon } from './StarIcon';
+export { ShieldAlertIcon } from './ShieldAlertIcon';
+export { MegaphoneIcon } from './MegaphoneIcon';
 
