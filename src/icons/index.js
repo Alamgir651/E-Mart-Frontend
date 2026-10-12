@@ -50,4 +50,5 @@ export {
 } from 'lucide-animated';
 
 export { TrashIcon } from './TrashIcon';
+export { CameraIcon } from './CameraIcon';
 
