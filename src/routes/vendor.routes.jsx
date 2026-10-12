@@ -17,6 +17,7 @@ const VendorStorePage = lazy(() => import('@/pages/vendor/VendorStore/VendorStor
 const VendorNotificationsPage = lazy(() => import('@/pages/vendor/VendorNotifications/VendorNotificationsPage'));
 const ProductDeactivatedPage = lazy(() => import('@/pages/vendor/VendorNotifications/ProductDeactivatedPage'));
 const ProductRemovedPage = lazy(() => import('@/pages/vendor/VendorNotifications/ProductRemovedPage'));
+const VendorSettingsPage = lazy(() => import('@/pages/vendor/VendorSettings/VendorSettingsPage'));
 
 export const vendorRoutes = (
   <>
@@ -38,6 +39,7 @@ export const vendorRoutes = (
       <Route path="notifications" element={<VendorNotificationsPage />} />
       <Route path="notifications/deactivated/:id" element={<ProductDeactivatedPage />} />
       <Route path="notifications/removed/:id" element={<ProductRemovedPage />} />
+      <Route path="settings" element={<VendorSettingsPage />} />
       <Route path="*" element={<Navigate to="/vendor/dashboard" replace />} />
     </Route>
   </>

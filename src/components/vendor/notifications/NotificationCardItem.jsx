@@ -99,6 +99,7 @@ export const NotificationCardItem = ({ item, onViewDetails }) => {
             <span>View details</span>
             <ArrowRightIcon
               size={13}
+              animateOnHover={false}
               className="transition-transform group-hover:translate-x-0.5"
             />
           </button>

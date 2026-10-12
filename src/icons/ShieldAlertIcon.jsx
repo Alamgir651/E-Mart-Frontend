@@ -32,13 +32,21 @@ export const ShieldAlertIcon = forwardRef(
         }}
         {...props}
       >
-        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        <motion.path
+          d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+          animate={{
+            rotate: isHovered ? [0, -6, 6, -3, 3, 0] : 0,
+            scale: isHovered ? 1.05 : 1,
+          }}
+          transition={{ duration: 0.45 }}
+          style={{ originX: '12px', originY: '12px' }}
+        />
         <motion.line
           x1="12"
           y1="8"
           x2="12"
           y2="12"
-          animate={{ y: isHovered ? -1 : 0 }}
+          animate={{ y: isHovered ? -1.5 : 0 }}
           transition={{ type: 'spring', stiffness: 350, damping: 20 }}
         />
         <line x1="12" y1="16" x2="12.01" y2="16" />
