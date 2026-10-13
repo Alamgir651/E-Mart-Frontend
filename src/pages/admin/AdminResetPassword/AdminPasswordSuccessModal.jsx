@@ -1,13 +1,13 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { CheckIcon } from '@/icons';
 import { Button } from '@/components/common/Button';
 import { modalBackdrop, modalContent } from '@/animation/animations';
 
 export const AdminPasswordSuccessModal = ({ isOpen, onLoginContinue }) => {
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <motion.div
         variants={modalBackdrop}
         initial="hidden"
@@ -53,6 +53,8 @@ export const AdminPasswordSuccessModal = ({ isOpen, onLoginContinue }) => {
         </div>
       </motion.div>
     </div>
+      )}
+    </AnimatePresence>
   );
 };
 

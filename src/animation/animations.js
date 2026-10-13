@@ -76,4 +76,32 @@ export const buttonTap = {
   tap: { scale: 0.98 },
 };
 
+export const modalBackdrop = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { duration: 0.25 },
+  },
+  exit: {
+    opacity: 0,
+    transition: { duration: 0.2 },
+  },
+};
+
+export const modalContent = {
+  hidden: { opacity: 0, scale: 0.95, y: 16 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: smoothTransition,
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    y: 16,
+    transition: { duration: 0.2 },
+  },
+};
+
 export const getStaggerDelay = (index, step = 0.08) => index * step;
