@@ -13,6 +13,8 @@ import UploadErrorModal from '@/components/vendor/products/form/UploadErrorModal
 
 const DEFAULT_BLANK_PRODUCT = {
   name: '',
+  sku: '',
+  barcode: '',
   unit: '1kg',
   category: 'Fruits & Vegetables',
   brand: '',

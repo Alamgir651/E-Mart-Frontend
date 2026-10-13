@@ -21,7 +21,7 @@ import { toast } from '@/utils/toast';
 
 export const VendorFinancePage = () => {
   const navigate = useNavigate();
-  const { getRoute } = usePortalBase();
+  const { isAdminStore, getRoute } = usePortalBase();
   const [balance, setBalance] = useState(INITIAL_PAYOUT_BALANCE);
   const [bankAccount, setBankAccount] = useState(INITIAL_BANK_ACCOUNT);
   const [payouts, setPayouts] = useState(PAYOUT_HISTORY);
@@ -69,45 +69,53 @@ export const VendorFinancePage = () => {
 
       <FinanceMetricsGrid />
 
-      <PayoutBannerCard
-        amount={`$${balance.available.toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
-        nextDate={balance.nextPayoutDate}
-        onRequestPayout={() => setIsRequestModalOpen(true)}
-      />
+      {!isAdminStore && (
+        <>
+          <PayoutBannerCard
+            amount={`$${balance.available.toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+            nextDate={balance.nextPayoutDate}
+            onRequestPayout={() => setIsRequestModalOpen(true)}
+          />
 
-      <PayoutBalanceCard
-        available={`$${balance.available.toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
-        minimum={`$${balance.minimumAmount.toFixed(2)}`}
-        autoPayoutEnabled={balance.autoPayout}
-        autoPayoutFrequency={balance.frequency}
-      />
+          <PayoutBalanceCard
+            available={`$${balance.available.toLocaleString('en-US', { minimumFractionDigits: 2 })}`}
+            minimum={`$${balance.minimumAmount.toFixed(2)}`}
+            autoPayoutEnabled={balance.autoPayout}
+            autoPayoutFrequency={balance.frequency}
+          />
 
-      <BankAccountCard
-        bankAccount={bankAccount}
-        onEdit={() => setIsEditBankModalOpen(true)}
-      />
+          <BankAccountCard
+            bankAccount={bankAccount}
+            onEdit={() => setIsEditBankModalOpen(true)}
+          />
+        </>
+      )}
 
       <EarningsOverviewChart data={EARNINGS_CHART_DATA} />
 
-      <PayoutHistoryTable
-        payouts={payouts}
-        onViewDetails={(item) => navigate(getRoute(`/finance/payouts/${item.id}`))}
-      />
+      {!isAdminStore && (
+        <>
+          <PayoutHistoryTable
+            payouts={payouts}
+            onViewDetails={(item) => navigate(getRoute(`/finance/payouts/${item.id}`))}
+          />
 
-      <RequestPayoutModal
-        isOpen={isRequestModalOpen}
-        availableBalance={balance.available}
-        bankAccount={bankAccount}
-        onClose={() => setIsRequestModalOpen(false)}
-        onSubmitPayout={handleRequestPayout}
-      />
+          <RequestPayoutModal
+            isOpen={isRequestModalOpen}
+            availableBalance={balance.available}
+            bankAccount={bankAccount}
+            onClose={() => setIsRequestModalOpen(false)}
+            onSubmitPayout={handleRequestPayout}
+          />
 
-      <EditBankAccountModal
-        isOpen={isEditBankModalOpen}
-        bankAccount={bankAccount}
-        onClose={() => setIsEditBankModalOpen(false)}
-        onSave={handleSaveBank}
-      />
+          <EditBankAccountModal
+            isOpen={isEditBankModalOpen}
+            bankAccount={bankAccount}
+            onClose={() => setIsEditBankModalOpen(false)}
+            onSave={handleSaveBank}
+          />
+        </>
+      )}
     </div>
   );
 };

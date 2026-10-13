@@ -14,16 +14,37 @@ import { toast } from '@/utils/toast';
 
 export const VendorNotificationsPage = () => {
   const navigate = useNavigate();
-  const { getRoute } = usePortalBase();
+  const { isAdminStore, getRoute } = usePortalBase();
   const [activeTab, setActiveTab] = useState('all');
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
   const [isSuspendedModalOpen, setIsSuspendedModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
 
+  const relevantNotifications = useMemo(() => {
+    if (isAdminStore) {
+      return notifications.filter((n) => n.category !== 'payouts' && n.category !== 'products');
+    }
+    return notifications;
+  }, [notifications, isAdminStore]);
+
+  const displayedTabs = useMemo(() => {
+    const rawTabs = isAdminStore
+      ? NOTIFICATION_TABS.filter((t) => t.id !== 'payouts' && t.id !== 'products')
+      : NOTIFICATION_TABS;
+
+    return rawTabs.map((tab) => ({
+      ...tab,
+      count:
+        tab.id === 'all'
+          ? relevantNotifications.length
+          : relevantNotifications.filter((n) => n.category === tab.id).length,
+    }));
+  }, [isAdminStore, relevantNotifications]);
+
   const filteredNotifications = useMemo(() => {
-    if (activeTab === 'all') return notifications;
-    return notifications.filter((n) => n.category === activeTab);
-  }, [notifications, activeTab]);
+    if (activeTab === 'all') return relevantNotifications;
+    return relevantNotifications.filter((n) => n.category === activeTab);
+  }, [relevantNotifications, activeTab]);
 
   const handleMarkAllAsRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
@@ -48,7 +69,7 @@ export const VendorNotificationsPage = () => {
       <NotificationsHeader onOpenSettings={() => setIsSettingsModalOpen(true)} />
 
       <NotificationsFilterTabs
-        tabs={NOTIFICATION_TABS}
+        tabs={displayedTabs}
         activeTab={activeTab}
         onTabChange={setActiveTab}
         onMarkAllAsRead={handleMarkAllAsRead}
@@ -65,7 +86,7 @@ export const VendorNotificationsPage = () => {
       </div>
 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs text-slate-500 font-medium">
-        <span>Showing {filteredNotifications.length} of 26 notifications</span>
+        <span>Showing {filteredNotifications.length} of {relevantNotifications.length} notifications</span>
 
         <button
           type="button"

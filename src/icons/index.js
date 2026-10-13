@@ -58,4 +58,4 @@ export { MegaphoneIcon } from './MegaphoneIcon';
 export { PaperclipIcon } from './PaperclipIcon';
 export { TicketIcon } from './TicketIcon';
 export { MailIcon } from './MailIcon';
-
+export { BarcodeIcon } from './BarcodeIcon';
