@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { vendorRoutes } from './vendor.routes';
+import { adminRoutes } from './admin.routes';
 import Toaster from '@/components/common/Toaster';
 
 const RouteLoader = () => (
@@ -17,6 +18,7 @@ export const AppRoutes = () => {
         <Routes>
           <Route path="/" element={<Navigate to="/vendor/login" replace />} />
           {vendorRoutes}
+          {adminRoutes}
           <Route path="*" element={<Navigate to="/vendor/login" replace />} />
         </Routes>
       </Suspense>
