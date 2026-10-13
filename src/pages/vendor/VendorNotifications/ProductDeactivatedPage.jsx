@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { CheckIcon } from '@/icons';
 import { DEACTIVATED_PRODUCT_DATA } from '@/mock/vendor/vendorNotifications.mock';
 import NotificationDetailHeader from '@/components/vendor/notifications/details/NotificationDetailHeader';
@@ -12,6 +13,7 @@ import { toast } from '@/utils/toast';
 
 export const ProductDeactivatedPage = () => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const product = DEACTIVATED_PRODUCT_DATA;
 
   const nextSteps = [
@@ -25,7 +27,7 @@ export const ProductDeactivatedPage = () => {
       <NotificationDetailHeader
         title="Product Deactivated"
         subtitle="Review the admin action and the changes needed for your product."
-        onBack={() => navigate('/vendor/notifications')}
+        onBack={() => navigate(getRoute('/notifications'))}
       />
 
       <DetailBannerBox
@@ -52,9 +54,9 @@ export const ProductDeactivatedPage = () => {
           <WhatToDoNextCard
             steps={nextSteps}
             primaryBtnText="View inactive product"
-            onPrimaryClick={() => navigate('/vendor/products')}
+            onPrimaryClick={() => navigate(getRoute('/products'))}
             secondaryBtnText="Contact Support"
-            onSecondaryClick={() => navigate('/vendor/support')}
+            onSecondaryClick={() => navigate(getRoute('/support'))}
           />
         </div>
 

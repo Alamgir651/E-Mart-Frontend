@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 
 const STATUS_STYLES = {
   warning: 'bg-orange-50 text-orange-600 border border-orange-200/60',
@@ -8,6 +9,7 @@ const STATUS_STYLES = {
 
 export const VendorRecentOrders = ({ orders = [] }) => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
 
   return (
     <div className="p-3.5 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between">
@@ -16,7 +18,7 @@ export const VendorRecentOrders = ({ orders = [] }) => {
           Recent Orders
         </h3>
         <Link
-          to="/vendor/orders"
+          to={getRoute('/orders')}
           className="text-xs font-semibold text-orange-600 hover:text-orange-700 transition-colors"
         >
           View All
@@ -43,7 +45,7 @@ export const VendorRecentOrders = ({ orders = [] }) => {
               return (
                 <tr
                   key={order.id}
-                  onClick={() => navigate(`/vendor/orders/${cleanId}`)}
+                  onClick={() => navigate(getRoute(`/orders/${cleanId}`))}
                   className="hover:bg-slate-50/70 transition-colors group cursor-pointer"
                 >
                   <td className="py-2.5 font-semibold text-slate-800 group-hover:text-orange-600 transition-colors whitespace-nowrap">

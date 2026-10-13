@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { TicketIcon, ChevronDownIcon } from '@/icons';
 import { toast } from '@/utils/toast';
 import TicketAttachmentsUploader from './TicketAttachmentsUploader';
@@ -17,6 +18,7 @@ const PRIORITIES = ['Low', 'Medium', 'High', 'Urgent'];
 
 export const CreateTicketForm = ({ initialCategory = '', onSubmit }) => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [ticketRef, ticketTrigger] = useAnimatedIcon();
 
   const [subject, setSubject] = useState('');
@@ -57,7 +59,7 @@ export const CreateTicketForm = ({ initialCategory = '', onSubmit }) => {
 
     onSubmit?.(newTicket);
     toast.success('Support ticket submitted successfully!');
-    navigate('/vendor/support');
+    navigate(getRoute('/support'));
   };
 
   return (
@@ -169,7 +171,7 @@ export const CreateTicketForm = ({ initialCategory = '', onSubmit }) => {
       <div className="pt-2 flex items-center justify-end gap-3 border-t border-slate-100">
         <button
           type="button"
-          onClick={() => navigate('/vendor/support')}
+          onClick={() => navigate(getRoute('/support'))}
           className="px-4 sm:px-5 py-2.5 border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl transition-all cursor-pointer"
         >
           Cancel

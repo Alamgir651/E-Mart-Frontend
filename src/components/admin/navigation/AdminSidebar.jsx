@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import logoImg from '@/assets/images/logo.png';
 import { BoxesIcon, ChevronDownIcon, XIcon } from '@/icons';
@@ -9,8 +9,15 @@ import AdminStoreMenuItem from './AdminStoreMenuItem';
 
 export const AdminSidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
-  const [isStoreMenuOpen, setIsStoreMenuOpen] = useState(false);
+  const isStoreRoute = location.pathname.startsWith('/admin/store');
+  const [isStoreMenuOpen, setIsStoreMenuOpen] = useState(isStoreRoute);
   const [storeIconRef, storeTrigger] = useAnimatedIcon();
+
+  useEffect(() => {
+    if (isStoreRoute) {
+      setIsStoreMenuOpen(true);
+    }
+  }, [isStoreRoute]);
 
   return (
     <>

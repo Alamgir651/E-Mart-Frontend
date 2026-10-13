@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
+import { usePortalBase } from '@/utils/usePortalBase';
 import {
   PlusIcon,
   BoxesIcon,
@@ -59,7 +60,14 @@ const ActionCardItem = ({ action, onNavigate }) => {
 
 export const VendorQuickActions = () => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [financeIconRef, financeTrigger] = useAnimatedIcon();
+
+  const handleNavigate = (path) => {
+    // If path starts with /vendor, map it via getRoute
+    const subPath = path.replace(/^\/vendor/, '');
+    navigate(getRoute(subPath));
+  };
 
   return (
     <div className="p-3.5 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between">
@@ -75,14 +83,14 @@ export const VendorQuickActions = () => {
             <ActionCardItem
               key={action.label}
               action={action}
-              onNavigate={navigate}
+              onNavigate={handleNavigate}
             />
           ))}
         </div>
 
         <button
           type="button"
-          onClick={() => navigate('/vendor/finance')}
+          onClick={() => handleNavigate('/vendor/finance')}
           onMouseEnter={financeTrigger.onMouseEnter}
           onMouseLeave={financeTrigger.onMouseLeave}
           className="w-full flex items-center justify-center gap-2 p-2.5 sm:p-3 rounded-xl bg-rose-50/80 hover:bg-rose-100/70 text-rose-600 border border-rose-200/50 font-semibold text-[11px] sm:text-xs transition-all active:scale-98 cursor-pointer"

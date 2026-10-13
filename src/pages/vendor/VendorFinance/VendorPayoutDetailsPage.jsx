@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { PAYOUT_HISTORY } from '@/mock/vendor/vendorFinance.mock';
 import PayoutDetailsHeader from '@/components/vendor/finance/details/PayoutDetailsHeader';
 import PayoutReferenceCard from '@/components/vendor/finance/details/PayoutReferenceCard';
@@ -11,6 +12,7 @@ import { toast } from '@/utils/toast';
 export const VendorPayoutDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
 
   const payout = useMemo(() => {
     return PAYOUT_HISTORY.find((item) => item.id === id) || PAYOUT_HISTORY[0];
@@ -21,13 +23,13 @@ export const VendorPayoutDetailsPage = () => {
   };
 
   const handleContactSupport = () => {
-    navigate('/vendor/support');
+    navigate(getRoute('/support'));
   };
 
   return (
     <div className="space-y-4 sm:space-y-5">
       <PayoutDetailsHeader
-        onBack={() => navigate('/vendor/finance')}
+        onBack={() => navigate(getRoute('/finance'))}
         onDownloadReceipt={handleDownloadReceipt}
       />
 

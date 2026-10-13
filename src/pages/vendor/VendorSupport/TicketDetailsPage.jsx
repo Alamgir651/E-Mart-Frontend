@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { ArrowLeftIcon } from '@/icons';
 import { SUPPORT_TICKETS } from '@/mock/vendor/vendorSupport.mock';
 import TicketMetaCard from '@/components/vendor/support/details/TicketMetaCard';
@@ -10,6 +11,7 @@ import WriteReplyCard from '@/components/vendor/support/details/WriteReplyCard';
 export const TicketDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [backRef, backTrigger] = useAnimatedIcon();
 
   const foundTicket = SUPPORT_TICKETS.find((t) => t.id === id) || SUPPORT_TICKETS[0];
@@ -37,7 +39,7 @@ export const TicketDetailsPage = () => {
       <div className="flex items-start gap-3 sm:gap-4">
         <button
           type="button"
-          onClick={() => navigate('/vendor/support')}
+          onClick={() => navigate(getRoute('/support'))}
           onMouseEnter={backTrigger.onMouseEnter}
           onMouseLeave={backTrigger.onMouseLeave}
           className="mt-1 w-9 h-9 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"

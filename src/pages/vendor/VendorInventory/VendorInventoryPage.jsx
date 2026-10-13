@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { INITIAL_INVENTORY } from '@/mock/vendor/vendorInventory.mock';
 import InventoryHeader from '@/components/vendor/inventory/InventoryHeader';
 import InventoryFilterBar from '@/components/vendor/inventory/InventoryFilterBar';
@@ -11,6 +12,7 @@ import { toast } from '@/utils/toast';
 
 export const VendorInventoryPage = () => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [inventory, setInventory] = useState(INITIAL_INVENTORY);
   const [searchQuery, setSearchQuery] = useState('');
   const [stockFilter, setStockFilter] = useState('All Products');
@@ -105,7 +107,7 @@ export const VendorInventoryPage = () => {
         onToggleSelect={handleToggleSelect}
         onToggleSelectAll={handleToggleSelectAll}
         onAddStock={(prod) => setActiveStockProduct(prod)}
-        onEditProduct={(prod) => navigate(`/vendor/products/edit/${prod.id.replace('INV-', 'PRD-')}`)}
+        onEditProduct={(prod) => navigate(getRoute(`/products/edit/${prod.id.replace('INV-', 'PRD-')}`))}
       />
 
       <ProductsPagination

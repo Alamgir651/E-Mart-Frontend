@@ -7,9 +7,11 @@ import ProductsTable from '@/components/vendor/products/ProductsTable';
 import ProductsPagination from '@/components/vendor/products/ProductsPagination';
 import UpdateProductStatusModal from '@/components/vendor/products/UpdateProductStatusModal';
 import { toast } from '@/utils/toast';
+import { usePortalBase } from '@/utils/usePortalBase';
 
 export const VendorProductsPage = () => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [products, setProducts] = useState(INITIAL_PRODUCTS);
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -81,7 +83,7 @@ export const VendorProductsPage = () => {
   };
 
   const handleEditProduct = (product) => {
-    navigate(`/vendor/products/edit/${product.id}`);
+    navigate(getRoute(`/products/edit/${product.id}`));
   };
 
   const handleDeleteProduct = (productId) => {
@@ -98,7 +100,7 @@ export const VendorProductsPage = () => {
           setCurrentPage(1);
         }}
         counts={counts}
-        onAddProduct={() => navigate('/vendor/products/new')}
+        onAddProduct={() => navigate(getRoute('/products/new'))}
       />
 
       <ProductsFilterBar

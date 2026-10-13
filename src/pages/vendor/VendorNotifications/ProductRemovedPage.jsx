@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { CheckIcon } from '@/icons';
 import { REMOVED_PRODUCT_DATA } from '@/mock/vendor/vendorNotifications.mock';
 import NotificationDetailHeader from '@/components/vendor/notifications/details/NotificationDetailHeader';
@@ -12,6 +13,7 @@ import { toast } from '@/utils/toast';
 
 export const ProductRemovedPage = () => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const product = REMOVED_PRODUCT_DATA;
 
   const nextParagraphs = [
@@ -24,7 +26,7 @@ export const ProductRemovedPage = () => {
       <NotificationDetailHeader
         title="Product Removed"
         subtitle="Review why your listing was removed and the options available to you."
-        onBack={() => navigate('/vendor/notifications')}
+        onBack={() => navigate(getRoute('/notifications'))}
       />
 
       <DetailBannerBox
@@ -51,7 +53,7 @@ export const ProductRemovedPage = () => {
           <WhatToDoNextCard
             paragraphs={nextParagraphs}
             primaryBtnText="Contact Support"
-            onPrimaryClick={() => navigate('/vendor/support')}
+            onPrimaryClick={() => navigate(getRoute('/support'))}
             secondaryBtnText="View removal record"
             onSecondaryClick={() => toast.info(`Viewing removal record for ${product.id}`)}
           />

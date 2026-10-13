@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 import {
   NOTIFICATION_TABS,
   INITIAL_NOTIFICATIONS,
@@ -13,6 +14,7 @@ import { toast } from '@/utils/toast';
 
 export const VendorNotificationsPage = () => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [activeTab, setActiveTab] = useState('all');
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATIONS);
   const [isSuspendedModalOpen, setIsSuspendedModalOpen] = useState(false);
@@ -32,7 +34,8 @@ export const VendorNotificationsPage = () => {
     if (item.detailAction === 'modal') {
       setIsSuspendedModalOpen(true);
     } else if (item.detailAction === 'route' && item.route) {
-      navigate(item.route);
+      const subPath = item.route.replace(/^\/vendor/, '');
+      navigate(getRoute(subPath));
     }
   };
 
@@ -78,7 +81,7 @@ export const VendorNotificationsPage = () => {
         onClose={() => setIsSuspendedModalOpen(false)}
         onContactSupport={() => {
           setIsSuspendedModalOpen(false);
-          navigate('/vendor/support');
+          navigate(getRoute('/support'));
         }}
       />
 

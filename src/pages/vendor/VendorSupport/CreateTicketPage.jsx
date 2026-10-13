@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { ArrowLeftIcon } from '@/icons';
 import { COMMON_TOPICS } from '@/mock/vendor/vendorSupport.mock';
 import CreateTicketForm from '@/components/vendor/support/create/CreateTicketForm';
@@ -9,6 +10,7 @@ import SupportHoursCard from '@/components/vendor/support/create/SupportHoursCar
 
 export const CreateTicketPage = () => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [backRef, backTrigger] = useAnimatedIcon();
   const [selectedCategory, setSelectedCategory] = useState('');
 
@@ -17,7 +19,7 @@ export const CreateTicketPage = () => {
       <div className="flex items-start gap-3 sm:gap-4">
         <button
           type="button"
-          onClick={() => navigate('/vendor/support')}
+          onClick={() => navigate(getRoute('/support'))}
           onMouseEnter={backTrigger.onMouseEnter}
           onMouseLeave={backTrigger.onMouseLeave}
           className="mt-1 w-9 h-9 rounded-xl border border-slate-200/80 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 transition-all cursor-pointer shadow-2xs shrink-0 active:scale-95"

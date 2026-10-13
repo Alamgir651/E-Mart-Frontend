@@ -1,5 +1,6 @@
 import { lazy } from 'react';
 import { Route, Navigate } from 'react-router-dom';
+import { adminStoreRoutes } from './store.routes';
 
 const AdminLoginPage = lazy(() => import('@/pages/admin/AdminLogin/AdminLoginPage'));
 const AdminTwoFactorPage = lazy(() => import('@/pages/admin/AdminTwoFactor/AdminTwoFactorPage'));
@@ -15,6 +16,7 @@ export const adminRoutes = (
     <Route path="/admin" element={<AdminLayout />}>
       <Route index element={<Navigate to="/admin/dashboard" replace />} />
       <Route path="dashboard" element={<AdminOverviewPage />} />
+      {adminStoreRoutes}
       <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
     </Route>
   </>

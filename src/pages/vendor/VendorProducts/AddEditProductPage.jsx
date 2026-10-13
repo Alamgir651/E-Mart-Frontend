@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeftIcon } from '@/icons';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { INITIAL_PRODUCTS } from '@/mock/vendor/vendorProducts.mock';
 import ProductStepIndicator from '@/components/vendor/products/form/ProductStepIndicator';
 import ProductBasicInfoStep from '@/components/vendor/products/form/ProductBasicInfoStep';
@@ -40,6 +41,7 @@ const DEFAULT_BLANK_PRODUCT = {
 export const AddEditProductPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [backRef, backTrigger] = useAnimatedIcon();
   const [step, setStep] = useState(1);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -104,7 +106,7 @@ export const AddEditProductPage = () => {
     <div className="space-y-4 sm:space-y-5 max-w-5xl mx-auto pb-10">
       <div>
         <Link
-          to="/vendor/products"
+          to={getRoute('/products')}
           onMouseEnter={backTrigger.onMouseEnter}
           onMouseLeave={backTrigger.onMouseLeave}
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-orange-600 transition-colors mb-2 cursor-pointer"
@@ -128,7 +130,7 @@ export const AddEditProductPage = () => {
           formData={formData}
           onChange={handleFieldChange}
           onNext={() => setStep(2)}
-          onCancel={() => navigate('/vendor/products')}
+          onCancel={() => navigate(getRoute('/products'))}
         />
       )}
 
@@ -138,7 +140,7 @@ export const AddEditProductPage = () => {
           onChange={handleFieldChange}
           onNext={() => setStep(3)}
           onBack={() => setStep(1)}
-          onCancel={() => navigate('/vendor/products')}
+          onCancel={() => navigate(getRoute('/products'))}
         />
       )}
 
@@ -161,7 +163,7 @@ export const AddEditProductPage = () => {
         }}
         onBackToProducts={() => {
           setShowSuccessModal(false);
-          navigate('/vendor/products');
+          navigate(getRoute('/products'));
         }}
       />
 

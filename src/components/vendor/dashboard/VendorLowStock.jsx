@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 
 export const VendorLowStock = ({ products = [] }) => {
+  const { getRoute } = usePortalBase();
+
   return (
     <div className="p-3.5 sm:p-5 bg-white rounded-2xl border border-slate-100 shadow-xs h-full flex flex-col justify-between">
       <div className="flex items-center justify-between mb-3 sm:mb-4">
@@ -8,7 +11,7 @@ export const VendorLowStock = ({ products = [] }) => {
           Low Stock Products
         </h3>
         <Link
-          to="/vendor/inventory"
+          to={getRoute('/inventory')}
           className="text-xs font-semibold text-orange-600 hover:text-orange-700 transition-colors"
         >
           View All

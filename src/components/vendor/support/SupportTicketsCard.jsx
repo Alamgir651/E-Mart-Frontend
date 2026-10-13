@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { TicketIcon, PlusIcon } from '@/icons';
 
 const STATUS_CONFIG = {
@@ -11,6 +12,7 @@ const STATUS_CONFIG = {
 
 export const SupportTicketsCard = ({ tickets = [] }) => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [ticketRef, ticketTrigger] = useAnimatedIcon();
   const [plusRef, plusTrigger] = useAnimatedIcon();
 
@@ -32,7 +34,7 @@ export const SupportTicketsCard = ({ tickets = [] }) => {
 
         <button
           type="button"
-          onClick={() => navigate('/vendor/support/new')}
+          onClick={() => navigate(getRoute('/support/new'))}
           onMouseEnter={plusTrigger.onMouseEnter}
           onMouseLeave={plusTrigger.onMouseLeave}
           className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-orange-500 hover:bg-orange-600 active:scale-95 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-sm shadow-orange-500/20 transition-all cursor-pointer"
@@ -83,7 +85,7 @@ export const SupportTicketsCard = ({ tickets = [] }) => {
                   </td>
                   <td className="py-3.5 px-4 sm:px-3 text-right">
                     <Link
-                      to={`/vendor/support/${ticket.id}`}
+                      to={getRoute(`/support/${ticket.id}`)}
                       className="text-orange-600 hover:text-orange-700 font-semibold text-xs transition-colors cursor-pointer"
                     >
                       View

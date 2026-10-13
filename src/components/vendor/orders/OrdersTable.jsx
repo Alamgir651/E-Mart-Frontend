@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 import OrderActionButtons from './OrderActionButtons';
 
 const STATUS_BADGES = {
@@ -17,6 +18,7 @@ export const OrdersTable = ({
   onReject,
 }) => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [selectedIds, setSelectedIds] = useState([]);
 
   const allSelected = orders.length > 0 && selectedIds.length === orders.length;
@@ -76,7 +78,7 @@ export const OrdersTable = ({
                     />
                   </td>
                   <td
-                    onClick={() => navigate(`/vendor/orders/${order.id.replace('#', '')}`)}
+                    onClick={() => navigate(getRoute(`/orders/${order.id.replace('#', '')}`))}
                     className="py-3.5 px-3 font-bold text-slate-900 hover:text-orange-600 transition-colors cursor-pointer"
                   >
                     {order.id}
@@ -105,7 +107,7 @@ export const OrdersTable = ({
                       isNew={isNew}
                       onAccept={() => onAccept(order)}
                       onReject={() => onReject(order)}
-                      onView={() => navigate(`/vendor/orders/${order.id.replace('#', '')}`)}
+                      onView={() => navigate(getRoute(`/orders/${order.id.replace('#', '')}`))}
                     />
                   </td>
                 </tr>

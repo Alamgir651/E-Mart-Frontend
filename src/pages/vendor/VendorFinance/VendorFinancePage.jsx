@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePortalBase } from '@/utils/usePortalBase';
 import {
   FINANCE_METRICS,
   INITIAL_PAYOUT_BALANCE,
@@ -20,6 +21,7 @@ import { toast } from '@/utils/toast';
 
 export const VendorFinancePage = () => {
   const navigate = useNavigate();
+  const { getRoute } = usePortalBase();
   const [balance, setBalance] = useState(INITIAL_PAYOUT_BALANCE);
   const [bankAccount, setBankAccount] = useState(INITIAL_BANK_ACCOUNT);
   const [payouts, setPayouts] = useState(PAYOUT_HISTORY);
@@ -89,7 +91,7 @@ export const VendorFinancePage = () => {
 
       <PayoutHistoryTable
         payouts={payouts}
-        onViewDetails={(item) => navigate(`/vendor/finance/payouts/${item.id}`)}
+        onViewDetails={(item) => navigate(getRoute(`/finance/payouts/${item.id}`))}
       />
 
       <RequestPayoutModal

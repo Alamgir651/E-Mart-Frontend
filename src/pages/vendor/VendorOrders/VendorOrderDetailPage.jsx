@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeftIcon } from '@/icons';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
+import { usePortalBase } from '@/utils/usePortalBase';
 import { INITIAL_ORDERS } from '@/mock/vendor/vendorOrders.mock';
 import CustomerInfoCard from '@/components/vendor/orders/detail/CustomerInfoCard';
 import RiderInfoCard from '@/components/vendor/orders/detail/RiderInfoCard';
@@ -23,6 +24,7 @@ const STATUS_PILLS = {
 
 export const VendorOrderDetailPage = () => {
   const { id } = useParams();
+  const { getRoute } = usePortalBase();
   const [backRef, backTrigger] = useAnimatedIcon();
 
   const formattedId = id?.startsWith('#') ? id : `#${id}`;
@@ -57,7 +59,7 @@ export const VendorOrderDetailPage = () => {
     <div className="space-y-4">
       <div>
         <Link
-          to="/vendor/orders"
+          to={getRoute('/orders')}
           onMouseEnter={backTrigger.onMouseEnter}
           onMouseLeave={backTrigger.onMouseLeave}
           className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-orange-600 transition-colors mb-2 cursor-pointer"
