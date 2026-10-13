@@ -1,0 +1,33 @@
+export const ADMIN_NAV_ITEMS = [
+  { id: 'dashboard', label: 'Dashboard', path: '/admin/dashboard', icon: 'LayoutDashboardIcon' },
+  { id: 'vendors', label: 'Vendors', path: '/admin/vendors', badge: 12, icon: 'UserIcon' },
+  { id: 'riders', label: 'Riders', path: '/admin/riders', badge: 5, icon: 'TruckIcon' },
+  { id: 'customers', label: 'Customers', path: '/admin/customers', icon: 'UserIcon' },
+  { id: 'orders', label: 'Orders', path: '/admin/orders', icon: 'CartIcon' },
+  { id: 'products', label: 'Products', path: '/admin/products', icon: 'BoxIcon' },
+  { id: 'categories', label: 'Categories', path: '/admin/categories', icon: 'BoxesIcon' },
+  { id: 'inventory', label: 'Inventory', path: '/admin/inventory', icon: 'ArchiveIcon' },
+  { id: 'payouts', label: 'Payouts', path: '/admin/payouts', badge: 8, icon: 'WalletIcon' },
+  { id: 'refunds', label: 'Refunds', path: '/admin/refunds', badge: 3, icon: 'ReceiptTextIcon' },
+  { id: 'pos', label: 'POS', path: '/admin/pos', icon: 'CreditCardIcon' },
+  { id: 'promotions', label: 'Promotions', path: '/admin/promotions', icon: 'BadgePercentIcon' },
+  { id: 'support', label: 'Support Tickets', path: '/admin/support', badge: 4, icon: 'MessageSquareIcon' },
+  { id: 'reports', label: 'Reports', path: '/admin/reports', icon: 'ChartColumnIncreasingIcon' },
+  { id: 'notifications', label: 'Notifications', path: '/admin/notifications', badge: 8, icon: 'BellIcon' },
+  { id: 'store-management', label: 'Store Management', path: '/admin/store', icon: 'BoxesIcon' },
+  { id: 'settings', label: 'Settings', path: '/admin/settings', icon: 'SettingsIcon' },
+];
+
+export const ADMIN_STORE_MENU_ITEMS = [
+  { id: 'dashboard', label: 'Dashboard', path: '/admin/dashboard', icon: 'LayoutDashboardIcon' },
+  { id: 'orders', label: 'Orders', path: '/admin/orders', icon: 'CartIcon' },
+  { id: 'products', label: 'Products', path: '/admin/products', icon: 'BoxIcon' },
+  { id: 'inventory', label: 'Inventory', path: '/admin/inventory', icon: 'ArchiveIcon' },
+  { id: 'customers', label: 'Customers', path: '/admin/customers', icon: 'UserIcon' },
+  { id: 'finance', label: 'Finance', path: '/admin/finance', icon: 'DollarSignIcon' },
+  { id: 'analytics', label: 'Report & Analytics', path: '/admin/analytics', icon: 'ChartColumnIncreasingIcon' },
+  { id: 'store', label: 'Store Management', path: '/admin/store', icon: 'BoxesIcon' },
+  { id: 'notifications', label: 'Notifications', path: '/admin/notifications', icon: 'BellIcon' },
+  { id: 'settings', label: 'Settings', path: '/admin/settings', icon: 'SettingsIcon' },
+  { id: 'support', label: 'Support', path: '/admin/support', icon: 'CircleHelpIcon' },
+];

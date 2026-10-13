@@ -1,0 +1,230 @@
+export const ADMIN_STAT_CARDS = [
+  {
+    id: 'orders',
+    title: 'Total Orders',
+    value: '1,248',
+    trend: '12%',
+    trendUp: true,
+    accent: 'orange',
+    accentBorder: 'border-l-orange-500',
+    iconBg: 'bg-orange-50 text-orange-600',
+  },
+  {
+    id: 'revenue',
+    title: 'Total Revenue',
+    value: '$12,450',
+    trend: '8%',
+    trendUp: true,
+    accent: 'emerald',
+    accentBorder: 'border-l-emerald-500',
+    iconBg: 'bg-emerald-50 text-emerald-600',
+  },
+  {
+    id: 'vendors',
+    title: 'Total Vendors',
+    value: '186',
+    trend: '6%',
+    trendUp: true,
+    accent: 'blue',
+    accentBorder: 'border-l-blue-500',
+    iconBg: 'bg-blue-50 text-blue-600',
+  },
+  {
+    id: 'riders',
+    title: 'Total Riders',
+    value: '52',
+    trend: '4%',
+    trendUp: true,
+    accent: 'purple',
+    accentBorder: 'border-l-purple-500',
+    iconBg: 'bg-purple-50 text-purple-600',
+  },
+  {
+    id: 'customers',
+    title: 'Total Customers',
+    value: '3,420',
+    trend: '10%',
+    trendUp: true,
+    accent: 'teal',
+    accentBorder: 'border-l-teal-500',
+    iconBg: 'bg-teal-50 text-teal-600',
+  },
+];
+
+export const SALES_CHART_DATA = [
+  { date: 'Sep 1', orders: 60, height: '30%', label: '60 orders' },
+  { date: 'Sep 4', orders: 75, height: '38%', label: '75 orders' },
+  { date: 'Sep 7', orders: 130, height: '65%', label: '130 orders' },
+  { date: 'Sep 10', orders: 145, height: '72%', label: '145 orders' },
+  { date: 'Sep 13', orders: 110, height: '55%', label: '110 orders' },
+  { date: 'Sep 16', orders: 165, height: '82%', label: '165 orders' },
+  { date: 'Sep 19', orders: 180, height: '90%', label: '180 orders' },
+  { date: 'Sep 22', orders: 155, height: '78%', label: '155 orders' },
+  { date: 'Sep 25', orders: 200, height: '100%', label: '200 orders' },
+];
+
+export const TOP_PRODUCTS = [
+  {
+    id: 1,
+    name: 'Fresh Red Apples',
+    category: 'Fruits & Vegetables',
+    sold: '1,245 sold',
+    trend: '12%',
+    image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=120',
+  },
+  {
+    id: 2,
+    name: 'Organic Bananas',
+    category: 'Fruits & Vegetables',
+    sold: '980 sold',
+    trend: '8%',
+    image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=120',
+  },
+  {
+    id: 3,
+    name: 'Chicken Breast',
+    category: 'Meat & Seafood',
+    sold: '865 sold',
+    trend: '5%',
+    image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=120',
+  },
+  {
+    id: 4,
+    name: 'Tide Detergent',
+    category: 'Home Care',
+    sold: '740 sold',
+    trend: '2%',
+    image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?w=120',
+  },
+  {
+    id: 5,
+    name: 'Coca-Cola 1.5L',
+    category: 'Beverages',
+    sold: '680 sold',
+    trend: '10%',
+    image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=120',
+  },
+];
+
+export const REPORTED_PRODUCTS = [
+  {
+    id: '01',
+    product: 'Fresh Red Apples',
+    vendor: 'GreenMart Fresh',
+    reason: 'Damaged packaging',
+    image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=120',
+  },
+  {
+    id: '02',
+    product: 'Organic Bananas',
+    vendor: 'FarmFresh Co.',
+    reason: 'Overripe / expired',
+    image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=120',
+  },
+  {
+    id: '03',
+    product: 'Chicken Breast',
+    vendor: 'MeatHub',
+    reason: 'Incorrect weight',
+    image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=120',
+  },
+  {
+    id: '04',
+    product: 'Tide Detergent',
+    vendor: 'HomeCare Pro',
+    reason: 'Open / tampered',
+    image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?w=120',
+  },
+  {
+    id: '05',
+    product: 'Coca-Cola 1.5L',
+    vendor: 'Beverages Inc.',
+    reason: 'Leaking / damaged seal',
+    image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=120',
+  },
+];
+
+export const ORDER_STATUS_DISTRIBUTION = [
+  { label: 'New Orders', count: 320, percentage: '26%', color: '#3b82f6' },
+  { label: 'Processing', count: 280, percentage: '22%', color: '#f97316' },
+  { label: 'Ready for Pickup', count: 210, percentage: '17%', color: '#8b5cf6' },
+  { label: 'Out for Delivery', count: 260, percentage: '21%', color: '#10b981' },
+  { label: 'Delivered', count: 150, percentage: '12%', color: '#06b6d4' },
+  { label: 'Cancelled', count: 28, percentage: '2%', color: '#ef4444' },
+];
+
+export const RECENT_ORDERS = [
+  {
+    id: '2456',
+    customer: 'Ali Khan',
+    vendor: 'Fresh Mart',
+    amount: '$45.00',
+    status: 'Processing',
+    badgeClass: 'bg-orange-50 text-orange-600 border border-orange-200',
+  },
+  {
+    id: '2455',
+    customer: 'Sara Ahmed',
+    vendor: 'Daily Needs',
+    amount: '$32.50',
+    status: 'Ready',
+    badgeClass: 'bg-blue-50 text-blue-600 border border-blue-200',
+  },
+  {
+    id: '2454',
+    customer: 'Usman Raza',
+    vendor: 'Meat World',
+    amount: '$68.00',
+    status: 'Out for Delivery',
+    badgeClass: 'bg-purple-50 text-purple-600 border border-purple-200',
+  },
+  {
+    id: '2453',
+    customer: 'Ayesha Malik',
+    vendor: 'Home Store',
+    amount: '$25.00',
+    status: 'Delivered',
+    badgeClass: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
+  },
+  {
+    id: '2452',
+    customer: 'Bilal Hussain',
+    vendor: 'Fresh Mart',
+    amount: '$105.00',
+    status: 'Cancelled',
+    badgeClass: 'bg-rose-50 text-rose-600 border border-rose-200',
+  },
+];
+
+export const RECENT_VENDORS = [
+  {
+    id: 1,
+    name: 'Ahmed Store',
+    status: 'Pending',
+    badgeClass: 'bg-orange-50 text-orange-600 border border-orange-200',
+  },
+  {
+    id: 2,
+    name: 'Khan Mart',
+    status: 'Pending',
+    badgeClass: 'bg-orange-50 text-orange-600 border border-orange-200',
+  },
+  {
+    id: 3,
+    name: 'Fresh Hub',
+    status: 'Pending',
+    badgeClass: 'bg-orange-50 text-orange-600 border border-orange-200',
+  },
+  {
+    id: 4,
+    name: 'Daily Bazaar',
+    status: 'Approved',
+    badgeClass: 'bg-emerald-50 text-emerald-600 border border-emerald-200',
+  },
+  {
+    id: 5,
+    name: 'Zain Traders',
+    status: 'Pending',
+    badgeClass: 'bg-orange-50 text-orange-600 border border-orange-200',
+  },
+];

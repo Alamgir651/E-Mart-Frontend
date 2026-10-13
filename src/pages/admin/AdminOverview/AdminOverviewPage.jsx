@@ -1,29 +1,45 @@
-import { Link } from 'react-router-dom';
-import { ShieldAlertIcon, CheckIcon } from '@/icons';
+import AdminHeroBanner from '@/components/admin/dashboard/AdminHeroBanner';
+import AdminStatCards from '@/components/admin/dashboard/AdminStatCards';
+import AdminSalesChart from '@/components/admin/dashboard/AdminSalesChart';
+import AdminTopProducts from '@/components/admin/dashboard/AdminTopProducts';
+import AdminReportedProducts from '@/components/admin/dashboard/AdminReportedProducts';
+import AdminOrderStatusDonut from '@/components/admin/dashboard/AdminOrderStatusDonut';
+import AdminRecentOrders from '@/components/admin/dashboard/AdminRecentOrders';
+import AdminRecentVendors from '@/components/admin/dashboard/AdminRecentVendors';
 
 export const AdminOverviewPage = () => {
   return (
-    <div className="min-h-screen bg-slate-50 p-6 sm:p-10 flex flex-col items-center justify-center text-center">
-      <div className="w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mb-4">
-        <ShieldAlertIcon size={32} />
-      </div>
-      <h1 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
-        Admin Dashboard
-      </h1>
-      <p className="text-slate-500 text-sm max-w-md mt-2">
-        Welcome to the E-Mart Central Administration Console. You have successfully authenticated through Two-Factor Authentication.
-      </p>
+    <div className="space-y-6">
+      <AdminHeroBanner />
+      <AdminStatCards />
 
-      <div className="mt-6 flex items-center gap-3">
-        <Link
-          to="/admin/login"
-          className="px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-50 transition-colors"
-        >
-          Back to Admin Login
-        </Link>
-        <div className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
-          <CheckIcon size={14} className="stroke-[3]" />
-          <span>Session Authenticated</span>
+      {/* Row 1: Sales & Orders Overview + Top Products */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <div className="lg:col-span-8 flex flex-col">
+          <AdminSalesChart />
+        </div>
+        <div className="lg:col-span-4 flex flex-col">
+          <AdminTopProducts />
+        </div>
+      </div>
+
+      {/* Row 2: Reported Products + Order Status Donut */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <div className="lg:col-span-8 flex flex-col">
+          <AdminReportedProducts />
+        </div>
+        <div className="lg:col-span-4 flex flex-col">
+          <AdminOrderStatusDonut />
+        </div>
+      </div>
+
+      {/* Row 3: Recent Orders + Recent Vendors */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
+        <div className="lg:col-span-8 flex flex-col">
+          <AdminRecentOrders />
+        </div>
+        <div className="lg:col-span-4 flex flex-col">
+          <AdminRecentVendors />
         </div>
       </div>
     </div>
