@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.13.0",
     "@tailwindcss/vite": "^4.3.3",
+    "leaflet": "^1.9.4",
     "lucide-animated": "^1.0.5",
     "motion": "^14.1.0",
     "react": "^19.2.8",

@@ -1,0 +1,48 @@
+export const VENDOR_STATS = [
+  {
+    id: 'total',
+    title: 'Total Vendors',
+    value: '186',
+    trend: '6% vs last week',
+    trendUp: true,
+    icon: 'StoreIcon',
+    color: 'blue',
+    iconBg: 'bg-blue-50 text-blue-500',
+    borderColor: 'border-l-blue-500',
+  },
+  {
+    id: 'active',
+    title: 'Active Vendors',
+    value: '142',
+    trend: '12% vs last week',
+    trendUp: true,
+    icon: 'CircleCheckIcon',
+    color: 'emerald',
+    iconBg: 'bg-emerald-50 text-emerald-500',
+    borderColor: 'border-l-emerald-500',
+  },
+  {
+    id: 'pending',
+    title: 'Pending Approval',
+    value: '12',
+    trend: '8% vs last week',
+    trendUp: false,
+    icon: 'ClockIcon',
+    color: 'orange',
+    iconBg: 'bg-orange-50 text-orange-500',
+    borderColor: 'border-l-orange-500',
+  },
+  {
+    id: 'suspended',
+    title: 'Suspended',
+    value: '8',
+    trend: '4% vs last week',
+    trendUp: false,
+    icon: 'ShieldAlertIcon',
+    color: 'red',
+    iconBg: 'bg-red-50 text-red-500',
+    borderColor: 'border-l-red-500',
+  },
+];
+
+export default VENDOR_STATS;
