@@ -61,4 +61,8 @@ export { MailIcon } from './MailIcon';
 export { BarcodeIcon } from './BarcodeIcon';
 export { StoreIcon } from './StoreIcon';
 export { ScooterIcon } from './ScooterIcon';
+export { UsersIcon } from './UsersIcon';
+export { HomeIcon } from './HomeIcon';
+export { BuildingIcon } from './BuildingIcon';
+export { UserXIcon } from './UserXIcon';
 
