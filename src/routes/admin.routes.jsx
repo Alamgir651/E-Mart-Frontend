@@ -21,6 +21,7 @@ const AdminProductDetailPage = lazy(() => import('@/pages/admin/AdminProducts/Ad
 const AdminCategoriesPage = lazy(() => import('@/pages/admin/AdminCategories/AdminCategoriesPage'));
 const AdminPayoutsPage = lazy(() => import('@/pages/admin/AdminPayouts/AdminPayoutsPage'));
 const AdminPayoutDetailPage = lazy(() => import('@/pages/admin/AdminPayouts/AdminPayoutDetailPage'));
+const AdminNotificationsPage = lazy(() => import('@/pages/admin/AdminNotifications/AdminNotificationsPage'));
 
 export const adminRoutes = (
   <>
@@ -44,6 +45,7 @@ export const adminRoutes = (
       <Route path="categories" element={<AdminCategoriesPage />} />
       <Route path="payouts" element={<AdminPayoutsPage />} />
       <Route path="payouts/:id" element={<AdminPayoutDetailPage />} />
+      <Route path="notifications" element={<AdminNotificationsPage />} />
       {adminStoreRoutes}
 
       <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />

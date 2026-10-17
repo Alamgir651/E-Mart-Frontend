@@ -68,3 +68,6 @@ export { UserXIcon } from './UserXIcon';
 export { ExternalLinkIcon } from './ExternalLinkIcon';
 export { MoreVerticalIcon } from './MoreVerticalIcon';
 export { BanIcon } from './BanIcon';
+export { CheckCheckIcon } from './CheckCheckIcon';
+export { TriangleAlertIcon } from './TriangleAlertIcon';
+export { FlagIcon } from './FlagIcon';
