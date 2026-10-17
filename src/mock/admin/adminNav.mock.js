@@ -8,12 +8,11 @@ export const ADMIN_NAV_ITEMS = [
   { id: 'categories', label: 'Categories', path: '/admin/categories', icon: 'BoxesIcon' },
   { id: 'inventory', label: 'Inventory', path: '/admin/inventory', icon: 'ArchiveIcon' },
   { id: 'payouts', label: 'Payouts', path: '/admin/payouts', badge: 8, icon: 'WalletIcon' },
-  { id: 'refunds', label: 'Refunds', path: '/admin/refunds', badge: 3, icon: 'ReceiptTextIcon' },
+  // { id: 'refunds', label: 'Refunds', path: '/admin/refunds', badge: 3, icon: 'ReceiptTextIcon' },
   { id: 'promotions', label: 'Promotions', path: '/admin/promotions', icon: 'BadgePercentIcon' },
-  { id: 'support', label: 'Support Tickets', path: '/admin/support', badge: 4, icon: 'MessageSquareIcon' },
-  { id: 'reports', label: 'Reports', path: '/admin/reports', icon: 'ChartColumnIncreasingIcon' },
+  // { id: 'reports', label: 'Reports', path: '/admin/reports', icon: 'ChartColumnIncreasingIcon' },
   { id: 'notifications', label: 'Notifications', path: '/admin/notifications', badge: 8, icon: 'BellIcon' },
-  { id: 'store-management', label: 'Store Management', path: '/admin/store', icon: 'BoxesIcon' },
+  // { id: 'store-management', label: 'Store Management', path: '/admin/store', icon: 'BoxesIcon' },
   { id: 'settings', label: 'Settings', path: '/admin/settings', icon: 'SettingsIcon' },
 ];
 

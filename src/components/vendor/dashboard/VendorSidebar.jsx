@@ -12,7 +12,6 @@ import {
   CartIcon,
   BellIcon,
   SettingsIcon,
-  CircleHelpIcon,
   XIcon,
 } from '@/icons';
 
@@ -26,7 +25,6 @@ const NAV_ITEMS = [
   { label: 'Store Management', path: '/vendor/store', icon: CartIcon },
   { label: 'Notifications', path: '/vendor/notifications', icon: BellIcon, badge: 3 },
   { label: 'Settings', path: '/vendor/settings', icon: SettingsIcon },
-  { label: 'Support', path: '/vendor/support', icon: CircleHelpIcon },
 ];
 
 const SidebarNavItem = ({ item }) => {
