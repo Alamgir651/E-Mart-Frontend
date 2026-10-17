@@ -60,4 +60,5 @@ export { TicketIcon } from './TicketIcon';
 export { MailIcon } from './MailIcon';
 export { BarcodeIcon } from './BarcodeIcon';
 export { StoreIcon } from './StoreIcon';
+export { ScooterIcon } from './ScooterIcon';
 
