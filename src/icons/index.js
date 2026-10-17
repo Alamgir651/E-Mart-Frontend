@@ -66,4 +66,5 @@ export { HomeIcon } from './HomeIcon';
 export { BuildingIcon } from './BuildingIcon';
 export { UserXIcon } from './UserXIcon';
 export { ExternalLinkIcon } from './ExternalLinkIcon';
-
+export { MoreVerticalIcon } from './MoreVerticalIcon';
+export { BanIcon } from './BanIcon';
