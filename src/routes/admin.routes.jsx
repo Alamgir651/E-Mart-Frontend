@@ -18,6 +18,7 @@ const AdminVendorOrdersPage = lazy(() => import('@/pages/admin/AdminOrders/Admin
 const AdminProductsPage = lazy(() => import('@/pages/admin/AdminProducts/AdminProductsPage'));
 const AdminVendorProductsPage = lazy(() => import('@/pages/admin/AdminProducts/AdminVendorProductsPage'));
 const AdminProductDetailPage = lazy(() => import('@/pages/admin/AdminProducts/AdminProductDetailPage'));
+const AdminCategoriesPage = lazy(() => import('@/pages/admin/AdminCategories/AdminCategoriesPage'));
 
 export const adminRoutes = (
   <>
@@ -38,6 +39,7 @@ export const adminRoutes = (
       <Route path="products" element={<AdminProductsPage />} />
       <Route path="products/vendor/:vendorId" element={<AdminVendorProductsPage />} />
       <Route path="products/:id" element={<AdminProductDetailPage />} />
+      <Route path="categories" element={<AdminCategoriesPage />} />
       {adminStoreRoutes}
 
       <Route path="*" element={<Navigate to="/admin/dashboard" replace />} />
