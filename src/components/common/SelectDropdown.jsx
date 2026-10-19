@@ -9,6 +9,8 @@ export const SelectDropdown = ({
   placeholder = 'Select option',
   className = '',
   menuWidth = 'w-48',
+  fullWidth = false,
+  disabled = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -39,20 +41,29 @@ export const SelectDropdown = ({
   };
 
   return (
-    <div className={`relative ${className}`} ref={dropdownRef}>
+    <div
+      className={`relative ${fullWidth ? 'w-full' : ''} ${className}`}
+      ref={dropdownRef}
+    >
       <button
         type="button"
-        onClick={() => setIsOpen((prev) => !prev)}
-        className={`inline-flex items-center justify-between gap-2.5 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl border transition-all cursor-pointer shadow-2xs ${
-          isOpen
-            ? 'bg-white border-orange-500 ring-2 ring-orange-500/20 text-orange-600'
-            : 'bg-white hover:bg-slate-50/80 border-slate-200/90 text-slate-700'
+        disabled={disabled}
+        onClick={() => !disabled && setIsOpen((prev) => !prev)}
+        className={`${
+          fullWidth ? 'w-full flex' : 'inline-flex'
+        } items-center justify-between gap-2.5 px-3.5 py-2.5 text-xs sm:text-sm font-semibold rounded-xl border transition-all shadow-2xs ${
+          disabled
+            ? 'bg-slate-50 border-slate-200 text-slate-400 cursor-not-allowed'
+            : isOpen
+            ? 'bg-white border-orange-500 ring-2 ring-orange-500/20 text-orange-600 cursor-pointer'
+            : 'bg-white hover:bg-slate-50/80 border-slate-200/90 text-slate-700 cursor-pointer'
         }`}
       >
-        <span>{value || placeholder}</span>
+        <span className="truncate">{value || placeholder}</span>
         <ChevronDownIcon
           size={14}
-          className={`text-slate-400 transition-transform duration-200 ${
+          animateOnHover={false}
+          className={`text-slate-400 transition-transform duration-200 shrink-0 ${
             isOpen ? 'rotate-180 text-orange-500' : ''
           }`}
         />
@@ -65,7 +76,9 @@ export const SelectDropdown = ({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className={`absolute left-0 top-full mt-1.5 ${menuWidth} max-h-64 overflow-y-auto bg-white border border-slate-200/90 rounded-2xl shadow-xl shadow-slate-900/10 py-1.5 z-40 [scrollbar-width:thin]`}
+            className={`absolute left-0 top-full mt-1.5 ${
+              fullWidth ? 'w-full' : menuWidth
+            } max-h-64 overflow-y-auto bg-white border border-slate-200/90 rounded-2xl shadow-xl shadow-slate-900/10 py-1.5 z-40 [scrollbar-width:thin]`}
           >
             {options.map((opt) => {
               const optLabel = typeof opt === 'string' ? opt : opt.label;
@@ -85,7 +98,11 @@ export const SelectDropdown = ({
                 >
                   <span className="truncate">{optLabel}</span>
                   {isSelected && (
-                    <CheckIcon size={14} className="text-orange-600 shrink-0 ml-2" />
+                    <CheckIcon
+                      size={14}
+                      animateOnHover={false}
+                      className="text-orange-600 shrink-0 ml-2"
+                    />
                   )}
                 </button>
               );
