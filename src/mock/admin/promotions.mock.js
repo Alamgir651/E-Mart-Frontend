@@ -5,6 +5,8 @@ import breadImg from '@/assets/images/orders/bread.jpg';
 
 export const PROMOTION_TABS = ['Deals', 'Coupons', 'Banner'];
 
+export * from './coupons.mock';
+
 export const DEAL_TYPES = ['All deal types', 'Flash Deal', 'New Arrival', 'Top Offers'];
 
 export const DEAL_STATUSES = ['All statuses', 'Active', 'Scheduled', 'Disabled', 'Expired'];
