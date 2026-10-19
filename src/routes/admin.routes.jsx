@@ -31,7 +31,7 @@ export const adminRoutes = (
     <Route path="/admin/2fa" element={<AdminTwoFactorPage />} />
     <Route path="/admin/reset-password" element={<AdminResetPasswordPage />} />
     <Route path="/admin" element={<AdminLayout />}>
-      <Route index element={<Navigate to="/admin/dashboard" replace />} />
+      <Route index element={<Navigate to="/admin/store/dashboard" replace />} />
       <Route path="dashboard" element={<AdminOverviewPage />} />
       <Route path="vendors" element={<AdminVendorsPage />} />
       <Route path="vendors/:id" element={<AdminVendorDetailPage />} />

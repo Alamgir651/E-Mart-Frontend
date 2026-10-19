@@ -44,6 +44,32 @@ const ICONS_MAP = {
 export const AdminNavItem = ({ item, isActive, onClose }) => {
   const [iconRef, trigger] = useAnimatedIcon();
   const Icon = ICONS_MAP[item.icon] || LayoutGridIcon;
+  const isDisabled = !!item.disabled;
+
+  if (isDisabled) {
+    return (
+      <div className="cursor-not-allowed select-none">
+        <div
+          title={`${item.label} (Disabled)`}
+          className="flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-400 opacity-40 pointer-events-none transition-all"
+        >
+          <div className="flex items-center gap-3 min-w-0">
+            <Icon
+              size={16}
+              className="shrink-0 text-slate-400"
+            />
+            <span className="truncate">{item.label}</span>
+          </div>
+
+          {item.badge && (
+            <span className="px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0 bg-slate-200 text-slate-500">
+              {item.badge}
+            </span>
+          )}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <Link
