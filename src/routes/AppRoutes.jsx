@@ -16,10 +16,10 @@ export const AppRoutes = () => {
       <Toaster />
       <Suspense fallback={<RouteLoader />}>
         <Routes>
-          <Route path="/" element={<Navigate to="/vendor/login" replace />} />
+          <Route path="/" element={<Navigate to="/admin/login" replace />} />
           {vendorRoutes}
           {adminRoutes}
-          <Route path="*" element={<Navigate to="/vendor/login" replace />} />
+          <Route path="*" element={<Navigate to="/admin/login" replace />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

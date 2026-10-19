@@ -10,13 +10,11 @@ import AdminStoreMenuItem from './AdminStoreMenuItem';
 export const AdminSidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
   const isStoreRoute = location.pathname.startsWith('/admin/store');
-  const [isStoreMenuOpen, setIsStoreMenuOpen] = useState(isStoreRoute);
+  const [isStoreMenuOpen, setIsStoreMenuOpen] = useState(true);
   const [storeIconRef, storeTrigger] = useAnimatedIcon();
 
   useEffect(() => {
-    if (isStoreRoute) {
-      setIsStoreMenuOpen(true);
-    }
+    setIsStoreMenuOpen(true);
   }, [isStoreRoute]);
 
   return (

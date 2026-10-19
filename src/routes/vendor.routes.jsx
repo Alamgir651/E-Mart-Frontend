@@ -24,8 +24,8 @@ const TicketDetailsPage = lazy(() => import('@/pages/vendor/VendorSupport/Ticket
 
 export const vendorRoutes = (
   <>
-    <Route path="/vendor/login" element={<VendorLoginPage />} />
-    <Route path="/vendor/register" element={<VendorRegisterPage />} />
+    <Route path="/vendor/login" element={<Navigate to="/admin/login" replace />} />
+    <Route path="/vendor/register" element={<Navigate to="/admin/login" replace />} />
     <Route path="/vendor" element={<VendorLayout />}>
       <Route index element={<Navigate to="/vendor/dashboard" replace />} />
       <Route path="dashboard" element={<VendorOverviewPage />} />
