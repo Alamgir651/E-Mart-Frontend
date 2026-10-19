@@ -1,40 +1,148 @@
-import { MegaphoneIcon, PlusIcon } from '@/icons';
+import { useState, useMemo, useEffect } from 'react';
+import { INITIAL_BANNERS } from '@/mock/admin/banners.mock';
+import { BannersKPIs } from './banners/BannersKPIs';
+import { BannersFilters } from './banners/BannersFilters';
+import { BannersTable } from './banners/BannersTable';
+import { BannerModal } from './banners/BannerModal';
 
-export const BannerTabContent = () => {
+export const BannerTabContent = ({
+  isCreateModalOpen = false,
+  setIsCreateModalOpen = null,
+}) => {
+  const [banners, setBanners] = useState(INITIAL_BANNERS);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedPlacement, setSelectedPlacement] = useState('All placements');
+  const [selectedStatus, setSelectedStatus] = useState('All statuses');
+
+  // Modal states
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingBanner, setEditingBanner] = useState(null);
+
+  useEffect(() => {
+    if (isCreateModalOpen) {
+      setEditingBanner(null);
+      setIsModalOpen(true);
+      setIsCreateModalOpen?.(false);
+    }
+  }, [isCreateModalOpen, setIsCreateModalOpen]);
+
+  // Toggle enabled state
+  const handleToggleEnabled = (id) => {
+    setBanners((prev) =>
+      prev.map((banner) => {
+        if (banner.id !== id) return banner;
+        const nextEnabled = !banner.enabled;
+        return {
+          ...banner,
+          enabled: nextEnabled,
+          status: nextEnabled ? 'Active' : 'Disabled',
+        };
+      })
+    );
+  };
+
+  // Save banner (create or edit)
+  const handleSaveBanner = (savedBanner) => {
+    setBanners((prev) => {
+      const exists = prev.some((b) => b.id === savedBanner.id);
+      if (exists) {
+        return prev.map((b) => (b.id === savedBanner.id ? savedBanner : b));
+      }
+      return [savedBanner, ...prev];
+    });
+  };
+
+  // Filter banners
+  const filteredBanners = useMemo(() => {
+    return banners.filter((banner) => {
+      if (
+        selectedPlacement !== 'All placements' &&
+        banner.placement.toLowerCase() !== selectedPlacement.toLowerCase()
+      ) {
+        return false;
+      }
+      if (
+        selectedStatus !== 'All statuses' &&
+        banner.status.toLowerCase() !== selectedStatus.toLowerCase()
+      ) {
+        return false;
+      }
+      if (searchQuery.trim()) {
+        const q = searchQuery.toLowerCase().trim();
+        const matchesTitle = banner.title?.toLowerCase().includes(q);
+        const matchesCategory = banner.category?.toLowerCase().includes(q);
+        const matchesDesc = banner.description?.toLowerCase().includes(q);
+        const matchesPlacement = banner.placement?.toLowerCase().includes(q);
+        if (!matchesTitle && !matchesCategory && !matchesDesc && !matchesPlacement) {
+          return false;
+        }
+      }
+      return true;
+    });
+  }, [banners, selectedPlacement, selectedStatus, searchQuery]);
+
+  const uniquePlacementsCount = useMemo(() => {
+    const placements = new Set(banners.map((b) => b.placement));
+    return placements.size;
+  }, [banners]);
+
   return (
     <div className="space-y-6">
-      {/* Subheader */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
-        <div>
-          <h2 className="text-base sm:text-lg font-bold text-slate-900">
-            Promotional Banners
-          </h2>
-          <p className="text-xs text-slate-500 mt-0.5">
-            Configure homepage banners, category carousels and announcement bars.
-          </p>
+      {/* 3 KPI Cards */}
+      <BannersKPIs banners={banners} />
+
+      {/* Banner List Table Card */}
+      <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-6 shadow-xs space-y-5">
+        <div className="flex items-center justify-between">
+          <h3 className="text-sm sm:text-base font-bold text-slate-900">
+            Banner List
+          </h3>
+          <span className="text-xs font-medium text-slate-400">
+            {banners.length} banners · {uniquePlacementsCount} placements
+          </span>
         </div>
 
-        <button
-          type="button"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold shadow-xs shadow-orange-500/25 active:scale-95 transition-all cursor-pointer self-start sm:self-auto"
-        >
-          <PlusIcon size={16} animateOnHover={false} />
-          <span>Add New Banner</span>
-        </button>
+        {/* Filter bar */}
+        <BannersFilters
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          selectedPlacement={selectedPlacement}
+          onPlacementChange={setSelectedPlacement}
+          selectedStatus={selectedStatus}
+          onStatusChange={setSelectedStatus}
+        />
+
+        {/* Banners Table */}
+        <BannersTable
+          banners={filteredBanners}
+          onEdit={(banner) => {
+            setEditingBanner(banner);
+            setIsModalOpen(true);
+          }}
+          onToggleEnabled={handleToggleEnabled}
+        />
+
+        {/* Table Footer */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs text-slate-400 font-medium">
+          <div>
+            Showing 1–{filteredBanners.length} of {banners.length} banners
+          </div>
+          <div>
+            Use Edit to change image, content or CTA.
+          </div>
+        </div>
       </div>
 
-      {/* Empty / Placeholder State */}
-      <div className="bg-white rounded-2xl border border-slate-200/80 p-12 text-center shadow-xs">
-        <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-orange-50 text-orange-500 flex items-center justify-center border border-orange-100">
-          <MegaphoneIcon size={26} />
-        </div>
-        <h3 className="text-base font-bold text-slate-900">
-          Banner Promotions
-        </h3>
-        <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto mt-1 leading-relaxed">
-          Hero sliders, seasonal campaigns and store-wide promotion banners will appear here.
-        </p>
-      </div>
+      {/* Add / Edit Banner Modal */}
+      <BannerModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setEditingBanner(null);
+        }}
+        onSave={handleSaveBanner}
+        editingBanner={editingBanner}
+      />
     </div>
   );
 };
