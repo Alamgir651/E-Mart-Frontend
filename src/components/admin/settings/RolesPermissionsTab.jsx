@@ -1,166 +1,188 @@
 import { useState } from 'react';
+import { PlusIcon } from '@/icons';
 import { toast } from '@/utils/toast';
-
-const INITIAL_ROLES = [
-  {
-    id: 'role-1',
-    name: 'Super Admin',
-    description: 'Full unrestricted access to all marketplace settings, users, and financials.',
-    membersCount: 1,
-    permissions: {
-      manageVendors: true,
-      manageRiders: true,
-      manageOrders: true,
-      manageProducts: true,
-      managePayouts: true,
-      managePromotions: true,
-      manageSettings: true,
-    },
-  },
-  {
-    id: 'role-2',
-    name: 'Operations Lead',
-    description: 'Can onboard vendors, approve products, manage orders and monitor rider fulfillment.',
-    membersCount: 1,
-    permissions: {
-      manageVendors: true,
-      manageRiders: true,
-      manageOrders: true,
-      manageProducts: true,
-      managePayouts: false,
-      managePromotions: true,
-      manageSettings: false,
-    },
-  },
-  {
-    id: 'role-3',
-    name: 'Finance Manager',
-    description: 'Full access to payout disbursements, marketplace commission and financial reconciliation.',
-    membersCount: 1,
-    permissions: {
-      manageVendors: false,
-      manageRiders: false,
-      manageOrders: true,
-      manageProducts: false,
-      managePayouts: true,
-      managePromotions: false,
-      manageSettings: false,
-    },
-  },
-  {
-    id: 'role-4',
-    name: 'Support Lead',
-    description: 'Dedicated access to customer support tickets, order dispute inquiries and complaints.',
-    membersCount: 1,
-    permissions: {
-      manageVendors: false,
-      manageRiders: false,
-      manageOrders: true,
-      manageProducts: false,
-      managePayouts: false,
-      managePromotions: false,
-      manageSettings: false,
-    },
-  },
-];
+import {
+  INITIAL_ROLES_CONFIG,
+  PERMISSION_MODULES,
+} from '@/mock/admin/adminSettings.mock';
+import { RolesListCard } from './RolesListCard';
+import { PermissionsMatrixTable } from './PermissionsMatrixTable';
+import { AddCustomRoleModal } from './AddCustomRoleModal';
 
 export const RolesPermissionsTab = () => {
-  const [roles, setRoles] = useState(INITIAL_ROLES);
+  const [roles, setRoles] = useState(INITIAL_ROLES_CONFIG);
+  const [selectedRoleId, setSelectedRoleId] = useState('role-operations');
+  const [isAddRoleOpen, setIsAddRoleOpen] = useState(false);
 
-  const handleTogglePermission = (roleId, permissionKey) => {
+  const selectedRole =
+    roles.find((r) => r.id === selectedRoleId) || roles[0];
+
+  const handleTogglePermission = (moduleName, action) => {
+    if (selectedRole.isOwner) {
+      toast.info('Super Admin permissions cannot be modified');
+      return;
+    }
+
     setRoles((prev) =>
-      prev.map((r) => {
-        if (r.id !== roleId || r.name === 'Super Admin') return r;
+      prev.map((role) => {
+        if (role.id !== selectedRoleId) return role;
+
+        const currentModPerms = role.permissions[moduleName] || {};
+        const isCurrentChecked = Boolean(currentModPerms[action]);
+
         return {
-          ...r,
+          ...role,
           permissions: {
-            ...r.permissions,
-            [permissionKey]: !r.permissions[permissionKey],
+            ...role.permissions,
+            [moduleName]: {
+              ...currentModPerms,
+              [action]: !isCurrentChecked,
+            },
           },
         };
       })
     );
-    toast.success('Role permission updated!');
+  };
+
+  const handleCancel = () => {
+    const originalRole = INITIAL_ROLES_CONFIG.find(
+      (r) => r.id === selectedRoleId
+    );
+    if (originalRole) {
+      setRoles((prev) =>
+        prev.map((r) =>
+          r.id === selectedRoleId
+            ? { ...r, permissions: JSON.parse(JSON.stringify(originalRole.permissions)) }
+            : r
+        )
+      );
+    }
+    toast.info('Changes discarded');
+  };
+
+  const handleSave = () => {
+    toast.success(`Permissions for ${selectedRole.name} saved successfully!`);
+  };
+
+  const handleCreateCustomRole = ({ name, description, template }) => {
+    const templateRole =
+      roles.find((r) => r.name.toLowerCase() === template.toLowerCase()) ||
+      roles.find((r) => r.id === 'role-operations');
+
+    let newPermissions = {};
+    if (template.includes('Blank')) {
+      newPermissions = PERMISSION_MODULES.reduce((acc, mod) => {
+        acc[mod] = {
+          View: false,
+          Create: false,
+          Edit: false,
+          Delete: false,
+          Manage: false,
+          isLocked: mod === 'Settings & admin access',
+        };
+        return acc;
+      }, {});
+    } else if (templateRole) {
+      newPermissions = JSON.parse(JSON.stringify(templateRole.permissions));
+    }
+
+    const newRole = {
+      id: `role-${Date.now()}`,
+      name,
+      description,
+      membersCount: 0,
+      memberText: '0 members',
+      type: 'Custom role',
+      isSystem: false,
+      isOwner: false,
+      assignedText: 'No members assigned yet. Invite or assign team members in Team & Admins.',
+      permissions: newPermissions,
+    };
+
+    setRoles((prev) => [...prev, newRole]);
+    setSelectedRoleId(newRole.id);
+    toast.success(`Role "${name}" created successfully!`);
   };
 
   return (
     <div className="space-y-6">
       {/* Subheader */}
-      <div className="pt-1">
-        <div className="flex items-center gap-2.5">
-          <h2 className="text-base sm:text-lg font-bold text-slate-900">
-            Roles & Permissions
-          </h2>
-          <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600">
-            Access control
-          </span>
-        </div>
-        <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-          Configure authority levels and restrict sensitive operations per administrative role.
-        </p>
-      </div>
-
-      {/* Roles Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {roles.map((role) => (
-          <div
-            key={role.id}
-            className="bg-white rounded-2xl border border-slate-200/80 p-5 shadow-xs space-y-4"
-          >
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h4 className="text-sm sm:text-base font-bold text-slate-900">
-                  {role.name}
-                </h4>
-                <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-                  {role.description}
-                </p>
-              </div>
-              <span className="text-xs font-semibold px-2.5 py-1 rounded-lg bg-orange-50 text-orange-600 border border-orange-100 shrink-0">
-                {role.membersCount} member{role.membersCount > 1 ? 's' : ''}
-              </span>
-            </div>
-
-            <div className="space-y-2 pt-2 border-t border-slate-100">
-              <span className="text-xs font-semibold text-slate-700 block mb-2">
-                Permission Scopes
-              </span>
-
-              {Object.entries(role.permissions).map(([key, enabled]) => {
-                const label = key
-                  .replace('manage', 'Manage ')
-                  .replace(/([A-Z])/g, ' $1')
-                  .trim();
-
-                const isSuperAdmin = role.name === 'Super Admin';
-
-                return (
-                  <div
-                    key={key}
-                    className="flex items-center justify-between py-1 text-xs"
-                  >
-                    <span className="text-slate-600 font-medium">{label}</span>
-                    <button
-                      type="button"
-                      disabled={isSuperAdmin}
-                      onClick={() => handleTogglePermission(role.id, key)}
-                      className={`relative inline-flex h-4 w-7 shrink-0 cursor-pointer rounded-full border border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                        enabled ? 'bg-orange-500' : 'bg-slate-300'
-                      } ${isSuperAdmin ? 'opacity-80 cursor-not-allowed' : ''}`}
-                    >
-                      <span
-                        className={`pointer-events-none inline-block h-3.5 w-3.5 transform rounded-full bg-white shadow-xs ring-0 transition duration-200 ease-in-out ${
-                          enabled ? 'translate-x-3' : 'translate-x-0'
-                        }`}
-                      />
-                    </button>
-                  </div>
-                );
-              })}
-            </div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
+        <div>
+          <div className="flex items-center gap-2.5">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900">
+              Roles & Permissions
+            </h2>
+            <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-600">
+              Marketplace settings
+            </span>
           </div>
-        ))}
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+            Define what each role can see and change across Emart.
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={() => setIsAddRoleOpen(true)}
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-semibold shadow-xs shadow-orange-500/25 active:scale-95 transition-all cursor-pointer self-start sm:self-auto"
+        >
+          <PlusIcon size={16} animateOnHover={false} />
+          <span>Add custom role</span>
+        </button>
       </div>
+
+      {/* Two-Column Master-Detail Layout */}
+      <div className="flex flex-col lg:flex-row items-start gap-6">
+        {/* Left Column: Roles list */}
+        <div className="w-full lg:w-72 shrink-0">
+          <RolesListCard
+            roles={roles}
+            selectedRoleId={selectedRoleId}
+            onSelectRole={setSelectedRoleId}
+          />
+        </div>
+
+        {/* Right Column: Permissions Matrix Table */}
+        <div className="flex-1 min-w-0 w-full">
+          <PermissionsMatrixTable
+            role={selectedRole}
+            permissions={selectedRole.permissions}
+            onTogglePermission={handleTogglePermission}
+          />
+        </div>
+      </div>
+
+      {/* Action Footer Bar */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+        <p className="text-xs text-slate-400 font-medium">
+          Role changes apply to all assigned members after saving.
+        </p>
+
+        <div className="flex items-center gap-2.5 self-end sm:self-auto">
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="px-4 py-2.5 rounded-xl border border-slate-200 text-xs sm:text-sm font-semibold text-slate-600 hover:bg-slate-100 cursor-pointer transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            className="px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs sm:text-sm font-semibold shadow-xs shadow-orange-500/25 active:scale-95 transition-all cursor-pointer"
+          >
+            Save permissions
+          </button>
+        </div>
+      </div>
+
+      {/* Add Custom Role Modal */}
+      <AddCustomRoleModal
+        isOpen={isAddRoleOpen}
+        onClose={() => setIsAddRoleOpen(false)}
+        onCreateRole={handleCreateCustomRole}
+      />
     </div>
   );
 };

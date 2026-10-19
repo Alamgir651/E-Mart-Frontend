@@ -15,6 +15,7 @@ const VendorNotificationsPage = lazy(() => import('@/pages/vendor/VendorNotifica
 const VendorSettingsPage = lazy(() => import('@/pages/vendor/VendorSettings/VendorSettingsPage'));
 const AdminStorePosPage = lazy(() => import('@/pages/admin/AdminStore/AdminStorePosPage'));
 const AdminStoreCustomersPage = lazy(() => import('@/pages/admin/AdminStore/AdminStoreCustomersPage'));
+const AdminPromotionsPage = lazy(() => import('@/pages/admin/AdminPromotions/AdminPromotionsPage'));
 
 export const adminStoreRoutes = (
   <Route path="store">
@@ -30,6 +31,7 @@ export const adminStoreRoutes = (
     <Route path="finance" element={<VendorFinancePage />} />
     <Route path="finance/payouts/:id" element={<VendorPayoutDetailsPage />} />
     <Route path="pos" element={<AdminStorePosPage />} />
+    <Route path="promotions" element={<AdminPromotionsPage />} />
     <Route path="analytics" element={<VendorAnalyticsPage />} />
     <Route path="management" element={<VendorStorePage />} />
     <Route path="notifications" element={<VendorNotificationsPage />} />

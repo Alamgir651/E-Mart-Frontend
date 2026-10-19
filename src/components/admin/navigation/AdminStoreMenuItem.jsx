@@ -13,6 +13,7 @@ import {
   BellIcon,
   SettingsIcon,
   CircleHelpIcon,
+  BadgePercentIcon,
 } from '@/icons';
 
 const STORE_ICONS_MAP = {
@@ -29,6 +30,7 @@ const STORE_ICONS_MAP = {
   BellIcon,
   SettingsIcon,
   CircleHelpIcon,
+  BadgePercentIcon,
 };
 
 export const AdminStoreMenuItem = ({ item, onClose }) => {

@@ -47,7 +47,7 @@ export const adminRoutes = (
       <Route path="categories" element={<AdminCategoriesPage />} />
       <Route path="payouts" element={<AdminPayoutsPage />} />
       <Route path="payouts/:id" element={<AdminPayoutDetailPage />} />
-      <Route path="promotions" element={<AdminPromotionsPage />} />
+      <Route path="promotions" element={<Navigate to="/admin/store/promotions" replace />} />
       <Route path="notifications" element={<AdminNotificationsPage />} />
       <Route path="settings" element={<AdminSettingsPage />} />
       {adminStoreRoutes}

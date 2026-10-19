@@ -32,11 +32,11 @@ export const AdminSettingsPage = () => {
   const paramTab = searchParams.get('tab');
   const matchedTab = paramTab ? TAB_PARAM_MAP[paramTab.toLowerCase()] : null;
 
-  const [activeTab, setActiveTab] = useState(matchedTab || 'General & Branding');
+  const [activeTab, setActiveTab] = useState(matchedTab || 'Team & Admins');
 
   const handleSelectTab = (tab) => {
     setActiveTab(tab);
-    const slug = REVERSE_TAB_PARAM_MAP[tab] || 'general';
+    const slug = REVERSE_TAB_PARAM_MAP[tab] || 'team';
     setSearchParams({ tab: slug });
   };
 
@@ -64,7 +64,7 @@ export const AdminSettingsPage = () => {
                 onClick={() => handleSelectTab(tab)}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer whitespace-nowrap ${
                   isActive
-                    ? 'bg-white text-orange-600 shadow-xs border border-slate-200/60'
+                    ? 'bg-amber-50/90 text-orange-600 shadow-xs border border-orange-200/70'
                     : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/40'
                 }`}
               >
