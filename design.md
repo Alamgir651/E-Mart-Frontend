@@ -66,6 +66,20 @@ This document defines the production-grade frontend architecture, multi-portal s
   - **Email Fields:** Disallow whitespace and validate standard RFC structure (`user@domain.com`).
 - **Rule for Future Development:** Every new input field across the application must strictly adhere to these real-time sanitizers to ensure data cleanliness and eliminate invalid inputs at the source.
 
+### 1.8 TanStack Query Caching & Server State Standard
+- **Centralized Engine:** `src/services/queryClient.js`
+- **Cache Strategy Configuration:**
+  - `staleTime: 5 mins` (`1000 * 60 * 5`) — Fetched server data stays completely fresh in cache. Remounting components or switching dashboard tabs serves instant cached data without showing loading spinners.
+  - `gcTime: 30 mins` (`1000 * 60 * 30`) — Unused query caches are retained in memory for 30 minutes before garbage collection.
+  - `refetchOnWindowFocus: false` — Eliminates aggressive background refetching when switching OS application windows.
+  - `retry: 1` — Failed queries retry once automatically before throwing an error.
+- **Query Key Factory:** `src/services/queryKeys.js`
+  - All query keys must be declared inside the `QUERY_KEYS` object (e.g. `QUERY_KEYS.PRODUCTS.ALL`, `QUERY_KEYS.ORDERS.DETAIL(id)`).
+  - No hardcoded string query keys inside components.
+- **Custom Integration Hooks:**
+  - `useApiQuery(queryKey, url, options)` in `src/hooks/useApiQuery.js`
+  - `useApiMutation(mutationFn, options)` in `src/hooks/useApiMutation.js` (with automatic `invalidateKey` triggering and toast notification).
+
 ---
 
 ## 2. Multi-Portal System Design Architecture
@@ -183,6 +197,43 @@ sequenceDiagram
     end
 ```
 
+### 3.3 TanStack Query Caching & Invalidation Architecture
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Comp as React Component
+    participant QC as Query Client (State & Cache Control)
+    participant Cache as Memory Cache Layer (gcTime: 30m)
+    participant API as Backend REST Endpoints (Axios)
+
+    Note over Comp,API: Query Phase (Data Fetching & Cache Utilization)
+    Comp->>QC: useApiQuery(queryKey, url)
+    QC->>Cache: Check for cached queryKey
+    alt Cache Hit & Fresh (staleTime < 5m)
+        Cache-->>QC: Return cached dataset
+        QC-->>Comp: Instant Data (isLoading: false, 0ms latency)
+    else Cache Miss or Stale (staleTime >= 5m)
+        QC->>API: HTTP GET url (via apiServices.get)
+        API-->>QC: 200 OK Response Payload
+        QC->>Cache: Store/Update Cache (staleTime: 5m, gcTime: 30m)
+        QC-->>Comp: Return fresh data
+    end
+
+    Note over Comp,API: Mutation Phase (Data Creation / Update / Deletion)
+    Comp->>QC: useApiMutation(mutationFn, { invalidateKey, successMessage })
+    QC->>API: HTTP POST / PUT / PATCH / DELETE
+    alt Mutation Success
+        API-->>QC: 200 OK Response Payload
+        QC->>Cache: invalidateQueries({ queryKey: invalidateKey })
+        Cache-->>QC: Mark cache as stale & auto-trigger background refetch
+        QC-->>Comp: Fire toast.success & update UI seamlessly
+    else Mutation Failure
+        API-->>QC: 4xx / 5xx Error Response
+        QC-->>Comp: Fire toast.error (suppressed for 401/403)
+    end
+```
+
 ---
 
 ## 4. Multi-Dashboard Project Directory Structure
@@ -212,7 +263,9 @@ E-Mart-Frontend/
 │   │   ├── vendor/                    # Vendor features (vendorProductSlice.js, vendorOrderSlice.js)
 │   │   └── admin/                     # Admin features (adminVendorSlice.js, platformAnalyticsSlice.js)
 │   │
-│   ├── hooks/                         # Global shared custom hooks
+│   ├── hooks/                         # Global shared custom hooks & query wrappers
+│   │   ├── useApiQuery.js             # TanStack Query GET wrapper with automatic caching
+│   │   ├── useApiMutation.js          # Mutation wrapper with auto cache-invalidation
 │   │   ├── useDebounce.js             # Search input debounce
 │   │   ├── useMediaQuery.js           # Responsive viewport listener
 │   │   └── useRole.js                 # Role checks (isVendor, isAdmin, isCustomer)
@@ -262,9 +315,12 @@ E-Mart-Frontend/
 │   │   ├── vendor.routes.jsx          # Vendor dashboard route definitions
 │   │   └── admin.routes.jsx           # Admin dashboard route definitions
 │   │
-│   ├── services/                      # API clients & network utilities
-│   │   ├── api.js                     # Axios/Fetch client with interceptors
-│   │   └── endpoints.js               # Route endpoints (store, vendor, admin)
+│   ├── services/                      # API clients, network utilities & query caching
+│   │   ├── apiBaseURL.js              # Centralized backend API base URL
+│   │   ├── apiRoutes.js               # Structured API route definitions
+│   │   ├── apiServices.js             # Axios client with interceptors & FormData helpers
+│   │   ├── queryClient.js             # TanStack Query client configuration & cache policy
+│   │   └── queryKeys.js               # Standardized query keys factory for caching
 │   │
 │   ├── utils/                         # Pure helper functions
 │   │   ├── formatCurrency.js          # Currency formatting
@@ -327,3 +383,145 @@ E-Mart-Frontend/
 - **Granular Error Boundaries:** Isolate dashboard widgets (e.g., Vendor Revenue Chart, Admin Approval Feed) within independent Error Boundaries so a single component failure doesn't crash the entire dashboard.
 - **Memory & Resource Cleanup:** Guarantee complete cleanup of chart instances, event listeners, intervals, debounced timers, and Motion animation controllers within `useEffect` return functions.
 - **Client Security:** Sanitize dynamic inputs against XSS and never persist sensitive credentials or auth secrets in unencrypted browser storage.
+
+---
+
+## 6. Backend API Integration Guide (TanStack Query + Axios Services)
+
+This section defines standard, copy-pasteable patterns for connecting frontend UI components to real backend API endpoints.
+
+### 6.1 Network Architecture Overview
+
+1. **`src/services/apiBaseURL.js`**: Defines the environment-specific base URL (e.g. `http://localhost:3000` or production API).
+2. **`src/services/apiRoutes.js`**: Structured dictionary of backend API endpoints grouped by domain (`AUTH`, `VENDOR`, `ADMIN`, etc.).
+3. **`src/services/apiServices.js`**: Core Axios client. Automatically:
+   - Injects `Authorization: Bearer <token>` from `localStorage` (`token` or `authToken`).
+   - Automatically detects `FormData` payloads and configures headers.
+   - Normalizes error response messages and triggers `toast.error(message)` (except 401/403).
+4. **`src/services/queryClient.js`**: Configures TanStack Query with production caching rules (`staleTime: 5m`, `gcTime: 30m`, `retry: 1`).
+5. **`src/services/queryKeys.js`**: Standardized factory for cache keys.
+6. **`src/hooks/useApiQuery.js`**: Pre-configured `useQuery` hook for cached GET requests.
+7. **`src/hooks/useApiMutation.js`**: Pre-configured `useMutation` hook for POST/PUT/PATCH/DELETE with automatic cache invalidation and toast feedback.
+
+---
+
+### 6.2 Data Fetching Pattern (GET with Automatic Caching)
+
+Always use `useApiQuery` for fetching server data:
+
+```jsx
+import { useApiQuery } from '@/hooks/useApiQuery';
+import { QUERY_KEYS } from '@/services/queryKeys';
+import { API_ROUTES } from '@/services/apiRoutes';
+
+export const VendorProductsTable = () => {
+  const { data: products, isLoading, isError, error, refetch } = useApiQuery(
+    QUERY_KEYS.PRODUCTS.ALL,
+    API_ROUTES.VENDOR.PRODUCTS
+  );
+
+  if (isLoading) return <TableSkeleton rows={5} />;
+  if (isError) return <ErrorMessage message={error.message} onRetry={refetch} />;
+
+  return (
+    <div>
+      {products.map((p) => (
+        <ProductRow key={p.id} product={p} />
+      ))}
+    </div>
+  );
+};
+```
+
+**Key Caching Rules:**
+- The first time the component mounts, it fetches data over the network and caches it.
+- If the user navigates away and returns within 5 minutes, the component mounts **instantly with 0ms delay** from cache (no loading skeleton).
+- To force a refresh manually, call `refetch()`.
+
+---
+
+### 6.3 Data Mutation Pattern (POST / PUT / DELETE with Auto-Invalidation)
+
+Always use `useApiMutation` when creating, updating, or deleting records:
+
+```jsx
+import { useApiMutation } from '@/hooks/useApiMutation';
+import { post, put, del } from '@/services/apiServices';
+import { QUERY_KEYS } from '@/services/queryKeys';
+import { API_ROUTES } from '@/services/apiRoutes';
+
+export const CreateProductModal = ({ isOpen, onClose }) => {
+  const { mutate: createProduct, isPending } = useApiMutation(
+    (payload) => post(API_ROUTES.VENDOR.PRODUCTS, payload),
+    {
+      invalidateKey: QUERY_KEYS.PRODUCTS.ALL, // Automatically refetches the products list!
+      successMessage: 'Product created successfully!',
+      onSuccess: () => onClose(),
+    }
+  );
+
+  const handleSubmit = (formData) => {
+    createProduct(formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      {/* Inputs */}
+      <button type="submit" disabled={isPending}>
+        {isPending ? 'Saving...' : 'Create Product'}
+      </button>
+    </form>
+  );
+};
+```
+
+---
+
+### 6.4 Multipart File Upload Pattern (Images, Documents, CSV)
+
+Use `createFormData` or pass a `FormData` instance directly. `apiServices` auto-detects `FormData`:
+
+```jsx
+import { useApiMutation } from '@/hooks/useApiMutation';
+import { uploadFile, createFormData } from '@/services/apiServices';
+import { QUERY_KEYS } from '@/services/queryKeys';
+
+export const UploadBannerCard = () => {
+  const { mutate: uploadBanner, isPending } = useApiMutation(
+    (formData) => uploadFile('/api/banners/upload', formData),
+    {
+      invalidateKey: ['banners'],
+      successMessage: 'Banner image uploaded!',
+    }
+  );
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = createFormData({
+      image: file,
+      title: 'Store Promo Banner',
+    });
+
+    uploadBanner(formData);
+  };
+
+  return <input type="file" accept="image/*" onChange={handleFileChange} disabled={isPending} />;
+};
+```
+
+---
+
+### 6.5 Query Key Naming Convention
+
+Always register new query keys in `src/services/queryKeys.js`. Follow this standard hierarchical array structure:
+
+| Operation | Query Key Pattern | Example |
+| :--- | :--- | :--- |
+| **All Records** | `[domain]` | `['products']` |
+| **Filtered List** | `[domain, 'list', filters]` | `['products', 'list', { category: 'groceries' }]` |
+| **Single Record** | `[domain, 'detail', id]` | `['products', 'detail', 'prod-123']` |
+| **Sub-Resource** | `[domain, id, subresource]` | `['orders', 'ord-456', 'timeline']` |
+
+When invalidating, calling `queryClient.invalidateQueries({ queryKey: ['products'] })` automatically invalidates all lists, details, and filtered variations under `products`!
