@@ -1,19 +1,34 @@
 import { useRef } from 'react';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
 import { UserIcon, ChevronDownIcon } from '@/icons';
+import { useSettings } from '@/hooks/useSettings';
 
-export const AccountSettingsCard = ({ data, onChange }) => {
+export const AccountSettingsCard = ({ data, onChange, onSave, isSaving = false }) => {
   const fileInputRef = useRef(null);
   const [userRef, userTrigger] = useAnimatedIcon();
+  const { uploadAvatar, isUploadingAvatar } = useSettings();
 
-  const handleAvatarChange = (e) => {
+  const handleAvatarChange = async (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        onChange('avatar', event.target.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+
+    // Fast local preview
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      onChange('avatar', event.target.result);
+    };
+    reader.readAsDataURL(file);
+
+    // Upload to Cloudinary under emart folder via hook
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await uploadAvatar(formData);
+      if (res?.data?.url) {
+        onChange('avatar', res.data.url);
+      }
+    } catch {
+      // Handled by hook
     }
   };
 
@@ -40,19 +55,25 @@ export const AccountSettingsCard = ({ data, onChange }) => {
       <div className="space-y-4">
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
           <div className="flex flex-col items-center gap-2 shrink-0">
-            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-orange-100 shadow-xs bg-slate-100">
+            <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-orange-100 shadow-xs bg-slate-100 relative">
               <img
                 src={data.avatar}
                 alt={data.fullName}
                 className="w-full h-full object-cover"
               />
+              {isUploadingAvatar && (
+                <div className="absolute inset-0 bg-black/40 flex items-center justify-center text-white text-[10px] font-semibold">
+                  Uploading...
+                </div>
+              )}
             </div>
             <button
               type="button"
+              disabled={isUploadingAvatar}
               onClick={() => fileInputRef.current?.click()}
-              className="px-3 py-1.5 border border-orange-300 text-orange-600 hover:bg-orange-50/70 font-semibold text-xs rounded-xl transition-all cursor-pointer shadow-2xs active:scale-95"
+              className="px-3 py-1.5 border border-orange-300 text-orange-600 hover:bg-orange-50/70 font-semibold text-xs rounded-xl transition-all cursor-pointer shadow-2xs active:scale-95 disabled:opacity-50"
             >
-              Change Photo
+              {isUploadingAvatar ? 'Uploading...' : 'Change Photo'}
             </button>
             <input
               ref={fileInputRef}
@@ -86,9 +107,9 @@ export const AccountSettingsCard = ({ data, onChange }) => {
                 type="email"
                 required
                 value={data.email}
-                onChange={(e) => onChange('email', e.target.value)}
-                placeholder="freshmart@example.com"
-                className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all shadow-2xs"
+                disabled
+                title="Email is your login identifier"
+                className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm font-semibold text-slate-500 cursor-not-allowed shadow-2xs"
               />
             </div>
           </div>
@@ -114,6 +135,19 @@ export const AccountSettingsCard = ({ data, onChange }) => {
             />
           </div>
         </div>
+
+        {onSave && (
+          <div className="pt-2 flex justify-end">
+            <button
+              type="button"
+              disabled={isSaving || isUploadingAvatar}
+              onClick={onSave}
+              className="px-5 py-2.5 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-xs transition-all cursor-pointer active:scale-95 disabled:opacity-50"
+            >
+              {isSaving ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

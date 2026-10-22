@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
   INITIAL_ACCOUNT_SETTINGS,
@@ -10,6 +10,7 @@ import AccountSettingsCard from '@/components/vendor/settings/AccountSettingsCar
 import PasswordSecurityCard from '@/components/vendor/settings/PasswordSecurityCard';
 import PaymentSettingsCard from '@/components/vendor/settings/PaymentSettingsCard';
 import NotificationPreferencesCard from '@/components/vendor/settings/NotificationPreferencesCard';
+import { useSettings } from '@/hooks/useSettings';
 
 export const VendorSettingsPage = () => {
   const location = useLocation();
@@ -17,15 +18,41 @@ export const VendorSettingsPage = () => {
     location.pathname.startsWith('/admin') ||
     location.pathname.includes('/store/settings');
 
+  const { profile, updateProfile, isUpdatingProfile } = useSettings();
+
   const [accountData, setAccountData] = useState(INITIAL_ACCOUNT_SETTINGS);
   const [paymentData, setPaymentData] = useState(INITIAL_PAYMENT_SETTINGS);
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATION_PREFERENCES);
+
+  useEffect(() => {
+    if (profile) {
+      setAccountData((prev) => ({
+        ...prev,
+        fullName: profile.fullName || `${profile.firstName || ''} ${profile.lastName || ''}`.trim() || prev.fullName,
+        email: profile.email || prev.email,
+        phone: profile.phone || prev.phone,
+        avatar: profile.avatar || prev.avatar,
+      }));
+    }
+  }, [profile]);
 
   const handleAccountChange = (field, value) => {
     setAccountData((prev) => ({
       ...prev,
       [field]: value,
     }));
+  };
+
+  const handleSaveAccount = async () => {
+    try {
+      await updateProfile({
+        fullName: accountData.fullName,
+        phone: accountData.phone,
+        avatar: accountData.avatar,
+      });
+    } catch {
+      // Error notifications handled by hook
+    }
   };
 
   const handleToggleNotification = (id) => {
@@ -48,6 +75,8 @@ export const VendorSettingsPage = () => {
         <AccountSettingsCard
           data={accountData}
           onChange={handleAccountChange}
+          onSave={handleSaveAccount}
+          isSaving={isUpdatingProfile}
         />
 
         <PasswordSecurityCard hideCurrentPassword={isAdminStore} />

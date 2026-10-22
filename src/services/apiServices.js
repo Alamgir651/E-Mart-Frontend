@@ -179,7 +179,7 @@ export const apiConfig = {
   },
 };
 
-export default {
+export const apiServices = {
   get,
   post,
   put,
@@ -195,3 +195,5 @@ export default {
   apiService,
   apiConfig,
 };
+
+export default apiServices;
