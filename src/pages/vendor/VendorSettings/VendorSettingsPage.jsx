@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {
   INITIAL_ACCOUNT_SETTINGS,
   INITIAL_PAYMENT_SETTINGS,
@@ -9,9 +10,13 @@ import AccountSettingsCard from '@/components/vendor/settings/AccountSettingsCar
 import PasswordSecurityCard from '@/components/vendor/settings/PasswordSecurityCard';
 import PaymentSettingsCard from '@/components/vendor/settings/PaymentSettingsCard';
 import NotificationPreferencesCard from '@/components/vendor/settings/NotificationPreferencesCard';
-import { toast } from '@/utils/toast';
 
 export const VendorSettingsPage = () => {
+  const location = useLocation();
+  const isAdminStore =
+    location.pathname.startsWith('/admin') ||
+    location.pathname.includes('/store/settings');
+
   const [accountData, setAccountData] = useState(INITIAL_ACCOUNT_SETTINGS);
   const [paymentData, setPaymentData] = useState(INITIAL_PAYMENT_SETTINGS);
   const [notifications, setNotifications] = useState(INITIAL_NOTIFICATION_PREFERENCES);
@@ -31,6 +36,10 @@ export const VendorSettingsPage = () => {
     );
   };
 
+  const displayedNotifications = isAdminStore
+    ? notifications.filter((item) => item.id !== 'payouts' && item.id !== 'messages')
+    : notifications;
+
   return (
     <div className="space-y-4 sm:space-y-6 w-full">
       <SettingsHeader />
@@ -41,16 +50,20 @@ export const VendorSettingsPage = () => {
           onChange={handleAccountChange}
         />
 
-        <PasswordSecurityCard />
+        <PasswordSecurityCard hideCurrentPassword={isAdminStore} />
 
-        <PaymentSettingsCard
-          data={paymentData}
-          onSave={setPaymentData}
-        />
+        {!isAdminStore && (
+          <PaymentSettingsCard
+            data={paymentData}
+            onSave={setPaymentData}
+          />
+        )}
 
         <NotificationPreferencesCard
-          preferences={notifications}
+          preferences={displayedNotifications}
           onToggle={handleToggleNotification}
+          className={isAdminStore ? 'lg:col-span-2' : ''}
+          isGridLayout={isAdminStore}
         />
       </div>
     </div>
