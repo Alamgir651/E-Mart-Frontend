@@ -16,4 +16,16 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'https://194.36.184.164',
+        changeOrigin: true,
+        secure: false,
+        headers: {
+          Host: 'emart.oneclickexperts.com',
+        },
+      },
+    },
+  },
 });
