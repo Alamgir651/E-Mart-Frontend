@@ -9,6 +9,8 @@ import { GoogleButton } from '@/components/common/GoogleButton';
 import { toast } from '@/utils/toast';
 import { slideUp } from '@/animation/animations';
 
+import { post } from '@/services/apiServices';
+
 export const AdminLoginForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -19,9 +21,10 @@ export const AdminLoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.identifier.trim()) {
+    const email = formData.identifier.trim();
+    if (!email) {
       toast.error('Please enter your email address.');
       return;
     }
@@ -31,13 +34,56 @@ export const AdminLoginForm = () => {
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.info('Verification code sent to your email.');
-      navigate('/admin/2fa', {
-        state: { flow: 'login', email: formData.identifier },
+    try {
+      const res = await post('/auth/admin/login', {
+        email,
+        password: formData.password,
       });
-    }, 600);
+
+      const twoFactor = res?.data?.twoFactor || res?.twoFactor;
+      const tokens = res?.data?.tokens || res?.tokens;
+      const user = res?.data?.user || res?.user;
+      const admin = res?.data?.admin || res?.admin;
+
+      if (twoFactor) {
+        toast.info(
+          twoFactor.status === 'setup_required'
+            ? 'Pair your Google Authenticator app.'
+            : 'Enter 6-digit code from Google Authenticator.'
+        );
+        navigate('/admin/2fa', {
+          state: {
+            flow: 'login',
+            email,
+            setupRequired: twoFactor.status === 'setup_required',
+            otpauthUrl: twoFactor.otpauthUrl,
+            secret: twoFactor.secret,
+            challengeToken: twoFactor.challengeToken,
+            expiresInSec: twoFactor.expiresInSec,
+          },
+        });
+      } else if (tokens?.accessToken) {
+        localStorage.setItem('token', tokens.accessToken);
+        if (tokens.refreshToken) {
+          localStorage.setItem('refreshToken', tokens.refreshToken);
+        }
+        if (user) {
+          localStorage.setItem('adminUser', JSON.stringify(user));
+        }
+        if (admin) {
+          localStorage.setItem('adminAccess', JSON.stringify(admin));
+        }
+        toast.success('Welcome back, Admin!');
+        navigate('/admin/dashboard');
+      } else {
+        toast.success('Logged in successfully!');
+        navigate('/admin/dashboard');
+      }
+    } catch (err) {
+      toast.error(err?.message || 'Login failed. Please check your credentials.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleForgotPassword = (e) => {

@@ -1,25 +1,30 @@
 import { useState, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
+import { QRCodeSVG } from 'qrcode.react';
 import { ShieldAlertIcon, ArrowRightIcon } from '@/icons';
 import { Button } from '@/components/common/Button';
 import { toast } from '@/utils/toast';
 import { slideUp } from '@/animation/animations';
+import { post } from '@/services/apiServices';
 
 export const AdminTwoFactorCard = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const flow = location.state?.flow || 'login';
-  const email = location.state?.email || 'admin@emart.com';
+  const setupRequired = location.state?.setupRequired || false;
+  const otpauthUrl = location.state?.otpauthUrl || '';
+  const secret = location.state?.secret || '';
+  const challengeToken = location.state?.challengeToken || '';
 
-  const [otp, setOtp] = useState(['4', '8', '2', '9', '1', '0']);
-  const [timer, setTimer] = useState(30);
+  const [otp, setOtp] = useState(['', '', '', '', '', '']);
+  const [timer, setTimer] = useState(location.state?.expiresInSec || 300);
   const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
   const inputRefs = useRef([]);
 
   useEffect(() => {
     if (timer <= 0) return;
-    const interval = setInterval(() => setTimer((prev) => prev - 1), 1000);
+    const interval = setInterval(() => setTimer((p) => p - 1), 1000);
     return () => clearInterval(interval);
   }, [timer]);
 
@@ -28,10 +33,7 @@ export const AdminTwoFactorCard = () => {
     const newOtp = [...otp];
     newOtp[index] = digit;
     setOtp(newOtp);
-
-    if (digit && index < 5) {
-      inputRefs.current[index + 1]?.focus();
-    }
+    if (digit && index < 5) inputRefs.current[index + 1]?.focus();
   };
 
   const handleKeyDown = (index, e) => {
@@ -49,30 +51,43 @@ export const AdminTwoFactorCard = () => {
     inputRefs.current[Math.min(pasted.length, 5)]?.focus();
   };
 
-  const handleResend = () => {
-    setTimer(30);
-    toast.success(`New 6-digit code sent to ${email}`);
+  const handleCopyKey = () => {
+    if (!secret) return;
+    navigator.clipboard.writeText(secret);
+    setCopied(true);
+    toast.success('Setup key copied!');
+    setTimeout(() => setCopied(false), 2000);
   };
 
-  const handleVerify = (e) => {
+  const handleVerify = async (e) => {
     e.preventDefault();
     const code = otp.join('');
     if (code.length < 6) {
-      toast.error('Please enter the complete 6-digit verification code.');
+      toast.error('Please enter the 6-digit code.');
       return;
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      if (flow === 'forgot-password') {
-        toast.success('Code verified! Please set a new password.');
-        navigate('/admin/reset-password', { state: { email } });
-      } else {
-        toast.success('Admin identity verified! Entering dashboard.');
-        navigate('/admin/dashboard');
+    try {
+      if (challengeToken) {
+        const res = await post('/auth/admin/2fa/verify', { challengeToken, code });
+        const tokens = res?.data?.tokens || res?.tokens;
+        const user = res?.data?.user || res?.user;
+        const adminAccess = res?.data?.admin || res?.admin;
+
+        if (tokens?.accessToken) localStorage.setItem('token', tokens.accessToken);
+        if (tokens?.refreshToken) localStorage.setItem('refreshToken', tokens.refreshToken);
+        if (user) localStorage.setItem('adminUser', JSON.stringify(user));
+        if (adminAccess) localStorage.setItem('adminAccess', JSON.stringify(adminAccess));
       }
-    }, 700);
+      toast.success('Admin identity verified! Entering dashboard.');
+      navigate('/admin/dashboard');
+    } catch {
+      setOtp(['', '', '', '', '', '']);
+      inputRefs.current[0]?.focus();
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -80,21 +95,56 @@ export const AdminTwoFactorCard = () => {
       variants={slideUp}
       initial="hidden"
       animate="visible"
-      className="w-full max-w-md bg-white rounded-3xl p-7 sm:p-10 shadow-2xl shadow-slate-900/10 border border-slate-100/80 text-center"
+      className="w-full max-w-md bg-white rounded-3xl p-6 sm:p-8 shadow-2xl shadow-slate-900/10 border border-slate-100/80 text-center"
     >
-      <div className="w-14 h-14 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 mb-4 mx-auto">
-        <ShieldAlertIcon size={26} />
+      <div className="w-12 h-12 rounded-2xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 mb-3 mx-auto">
+        <ShieldAlertIcon size={24} />
       </div>
 
-      <h2 className="text-2xl font-semibold text-slate-900 tracking-tight">
-        Enter Verification Code
+      <h2 className="text-xl sm:text-2xl font-semibold text-slate-900 tracking-tight">
+        {setupRequired ? 'Set Up Two-Factor Auth' : 'Two-Factor Authentication'}
       </h2>
-      <p className="text-xs sm:text-sm text-slate-500 mt-1.5">
-        We've sent a 6-digit code to{' '}
-        <span className="font-semibold text-orange-600">{email}</span>
+      <p className="text-xs sm:text-sm text-slate-500 mt-1">
+        {setupRequired
+          ? 'Scan this barcode with Google Authenticator or enter setup key.'
+          : 'Enter the 6-digit code from your Google Authenticator app.'}
       </p>
 
-      <form onSubmit={handleVerify} className="mt-8 space-y-6">
+      {setupRequired && (
+        <div className="my-5 p-4 bg-slate-50 border border-slate-200/80 rounded-2xl flex flex-col items-center">
+          <div className="p-2.5 bg-white rounded-xl shadow-sm border border-slate-200">
+            {otpauthUrl ? (
+              <QRCodeSVG value={otpauthUrl} size={150} level="M" />
+            ) : (
+              <div className="w-[150px] h-[150px] flex items-center justify-center bg-slate-100 text-xs text-slate-400">
+                Barcode / QR Code
+              </div>
+            )}
+          </div>
+
+          {secret && (
+            <div className="w-full mt-3">
+              <span className="text-[11px] text-slate-400 font-medium block mb-1">
+                Setup Key (Manual entry)
+              </span>
+              <div className="flex items-center justify-between gap-2 px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs">
+                <span className="font-mono text-slate-700 tracking-wider truncate select-all font-semibold">
+                  {secret}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleCopyKey}
+                  className="text-orange-600 hover:text-orange-700 font-semibold cursor-pointer shrink-0"
+                >
+                  {copied ? 'Copied!' : 'Copy'}
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      <form onSubmit={handleVerify} className="mt-5 space-y-5">
         <div className="flex items-center justify-center gap-2 sm:gap-2.5" onPaste={handlePaste}>
           {otp.map((digit, idx) => (
             <input
@@ -106,34 +156,24 @@ export const AdminTwoFactorCard = () => {
               value={digit}
               onChange={(e) => handleChange(idx, e.target.value)}
               onKeyDown={(e) => handleKeyDown(idx, e.key)}
-              className="w-11 h-12 sm:w-12 sm:h-14 text-center text-lg sm:text-xl font-semibold text-slate-900 bg-slate-50/70 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
+              className="w-10 h-11 sm:w-12 sm:h-13 text-center text-lg sm:text-xl font-semibold text-slate-900 bg-slate-50/70 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 transition-all"
             />
           ))}
         </div>
 
         <div className="text-xs text-slate-500">
-          Didn't receive the code?{' '}
-          {timer > 0 ? (
-            <span className="font-semibold text-orange-600">
-              Resend in 00:{timer < 10 ? `0${timer}` : timer}
-            </span>
-          ) : (
-            <button
-              type="button"
-              onClick={handleResend}
-              className="font-semibold text-orange-600 hover:text-orange-700 hover:underline cursor-pointer"
-            >
-              Resend Code
-            </button>
-          )}
+          Code expires in:{' '}
+          <span className="font-semibold text-orange-600 font-mono">
+            {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}
+          </span>
         </div>
 
         <Button
           type="submit"
           isLoading={isLoading}
-          className="w-full py-3 sm:py-3.5 bg-orange-600 hover:bg-orange-500 text-white font-semibold rounded-xl text-sm shadow-lg shadow-orange-600/25 transition-all cursor-pointer flex items-center justify-center gap-2"
+          className="w-full py-3 bg-orange-600 hover:bg-orange-500 text-white font-semibold rounded-xl text-sm shadow-lg shadow-orange-600/25 transition-all cursor-pointer flex items-center justify-center gap-2"
         >
-          <span>Verify Code</span>
+          <span>Verify & Enter Dashboard</span>
           <ArrowRightIcon size={16} />
         </Button>
       </form>

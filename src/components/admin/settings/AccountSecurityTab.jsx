@@ -1,13 +1,45 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AdminProfileCard } from './security/AdminProfileCard';
 import { TwoFactorAuthCard } from './security/TwoFactorAuthCard';
 import { ChangePasswordCard } from './security/ChangePasswordCard';
 import { ActiveSessionsCard } from './security/ActiveSessionsCard';
 import { TwoFactorModal } from './security/TwoFactorModal';
+import { get, post } from '@/services/apiServices';
+import { toast } from '@/utils/toast';
 
 export const AccountSecurityTab = () => {
   const [is2FAModalOpen, setIs2FAModalOpen] = useState(false);
   const [is2FAEnabled, setIs2FAEnabled] = useState(false);
+  const [isDisabling, setIsDisabling] = useState(false);
+
+  useEffect(() => {
+    const fetchStatus = async () => {
+      try {
+        const res = await get('/auth/admin/2fa/status');
+        const data = res?.data || res;
+        if (data?.enabled !== undefined) {
+          setIs2FAEnabled(Boolean(data.enabled));
+        }
+      } catch {
+        // Fallback or silent if auth pending
+      }
+    };
+    fetchStatus();
+  }, []);
+
+  const handleDisable2FA = async () => {
+    if (!window.confirm('Are you sure you want to turn off two-factor authentication?')) return;
+    setIsDisabling(true);
+    try {
+      await post('/auth/admin/2fa/disable', {});
+      setIs2FAEnabled(false);
+      toast.success('Two-factor authentication turned off.');
+    } catch (err) {
+      toast.error(err?.message || 'Failed to turn off two-factor authentication.');
+    } finally {
+      setIsDisabling(false);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -31,17 +63,12 @@ export const AccountSecurityTab = () => {
         <AdminProfileCard />
         <TwoFactorAuthCard
           onOpenSetup={() => setIs2FAModalOpen(true)}
+          onDisable2FA={handleDisable2FA}
           is2FAEnabled={is2FAEnabled}
+          isLoading={isDisabling}
         />
         <ChangePasswordCard />
         <ActiveSessionsCard />
-      </div>
-
-      {/* Footer Text */}
-      <div className="pt-2">
-        <p className="text-xs text-slate-400 font-medium">
-          Illustrative profile and session data. No password, access or sign-in changes are performed in this preview.
-        </p>
       </div>
 
       {/* 2FA Setup Modal */}
