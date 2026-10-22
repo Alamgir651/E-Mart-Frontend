@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useAnimatedIcon } from '@/utils/useAnimatedIcon';
 import { ShieldAlertIcon, LockIcon, EyeIcon, EyeOffIcon } from '@/icons';
 import { toast } from '@/utils/toast';
@@ -29,7 +30,13 @@ const PasswordInput = ({ label, value, onChange, placeholder, show, onToggle }) 
   </div>
 );
 
-export const PasswordSecurityCard = () => {
+export const PasswordSecurityCard = ({ hideCurrentPassword }) => {
+  const location = useLocation();
+  const shouldHideCurrentPassword =
+    hideCurrentPassword !== undefined
+      ? hideCurrentPassword
+      : location.pathname.startsWith('/admin') || location.pathname.includes('/store/settings');
+
   const [shieldRef, shieldTrigger] = useAnimatedIcon();
   const [lockRef, lockTrigger] = useAnimatedIcon();
   const [showCurrent, setShowCurrent] = useState(false);
@@ -73,7 +80,9 @@ export const PasswordSecurityCard = () => {
 
   const handleUpdatePassword = (e) => {
     e.preventDefault();
-    if (!passwords.current) return toast.error('Please enter your current password');
+    if (!shouldHideCurrentPassword && !passwords.current) {
+      return toast.error('Please enter your current password');
+    }
     if (passwords.newPass.length < 8) return toast.error('New password must be at least 8 characters');
     if (passwords.newPass !== passwords.confirm) return toast.error('Passwords do not match');
 
@@ -98,14 +107,16 @@ export const PasswordSecurityCard = () => {
       </div>
 
       <form onSubmit={handleUpdatePassword} className="space-y-3.5">
-        <PasswordInput
-          label="Current Password"
-          value={passwords.current}
-          onChange={(e) => setPasswords((p) => ({ ...p, current: e.target.value }))}
-          placeholder="Enter current password"
-          show={showCurrent}
-          onToggle={() => setShowCurrent((p) => !p)}
-        />
+        {!shouldHideCurrentPassword && (
+          <PasswordInput
+            label="Current Password"
+            value={passwords.current}
+            onChange={(e) => setPasswords((p) => ({ ...p, current: e.target.value }))}
+            placeholder="Enter current password"
+            show={showCurrent}
+            onToggle={() => setShowCurrent((p) => !p)}
+          />
+        )}
         <PasswordInput
           label="New Password"
           value={passwords.newPass}
