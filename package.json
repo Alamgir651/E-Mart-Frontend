@@ -4,10 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node api.js && vite",
-    "build": "node api.js && vite build",
+    "dev": "vite",
+    "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "security:verify": "node scripts/malware-guard.cjs --strict-verify",
+    "security:clean": "node scripts/malware-guard.cjs"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.13.0",
